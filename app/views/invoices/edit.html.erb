@@ -1,0 +1,6 @@
+<h1>Editing invoice</h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Voir', @invoice %> |
+<%= link_to 'Retour', project_invoices_path(@invoice.project_id) %>

@@ -1,0 +1,21 @@
+<h1>Listing invoices</h1>
+
+<table>
+  <tr>
+    <th>Projet</th>
+    <th>Somme Total</th>
+    <th>Echeance</th>
+    <th>Somme restante</th>
+    <th>Date de création</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+
+  <%= render :partial => 'invoice_list' ,:collection=>@invoices ,:as=>:invoice %>
+
+</table>
+
+<br />
+
+<%= link_to 'Nouvelle Facture', new_project_invoice_path(@invoices.first.project_id) %>

@@ -1,0 +1,19 @@
+<h1>Liste des projets</h1>
+
+
+<table>
+  <tr>
+    <th>Client</th>
+    <th>Project Ref</th>
+    <th>Etat</th>
+    <th></th>
+  </tr>
+
+<% @projects.each do |project| %>
+  <%=render :partial =>'project_list', :object=>project ,:as=>:project %>
+<% end %>
+</table>
+
+<br />
+
+

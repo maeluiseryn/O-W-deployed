@@ -1,0 +1,106 @@
+
+<div id="first_content">
+<p>
+  <b>Titre:</b>
+  <%= @client.titre %>
+</p>
+<p>
+  <b>Prénom:</b>
+  <%= @client.name %>
+</p>
+
+<p>
+  <b>Nom:</b>
+  <%= @client.surname %>
+</p>
+<p>
+  <b>Reference:</b>
+  <%= @client.reference %>
+</p>
+<p>
+<b>Type de Client:</b>
+ <%= @client.client_type %>
+   </p>
+   <p>
+ <b>Societée:</b>
+ <%= @client.society %>
+   </p>
+<p>
+<b>A des Projets:</b>
+ <%= @client.has_projects? %>
+   </p>
+   <p>
+ <b>Etat:</b>
+ <%= @client.client_state %>
+   </p>
+  <b>Disponibilité:</b>
+ <%= @client.disponibility %>
+   </p>
+</div>
+<div id="info" class="span-19">
+        <ul>
+
+          <li><a href="#addresses">Addresse de <%=@client.surname %></a></li>
+          <li><a href="#contacts">Informations contact de <%=@client.surname %></a></li>
+          <li><a href="#financial">Informations Financieres de <%=@client.surname %></a></li>
+          <li><a href="#projects">Projets de <%=@client.surname %></a></li>
+        </ul>
+
+<div id="addresses"><fieldset>
+   <legend><%= set_legend"Addresse de #{@client.name}"  %></legend>
+  <table>
+   <%= if !@client.addresses.empty? then render :partial => "shared/address_list" ,:collection=> @client.addresses ,:as=>:address end%>
+  </table>
+</fieldset></div>
+<div id="contacts"><fieldset>
+   <legend><%= set_legend"Informations de contact de #{@client.name}"  %></legend>
+  <table>
+  <%= if !@client.contacts.empty? then render :partial => "shared/contact_list", :collection => @client.contacts ,:as=>:contact end%>
+  </table>
+</fieldset></div>
+<div id="financial">
+<fieldset>
+   <legend><%= set_legend"Informations financiere de #{@client.name}"  %></legend>
+  <%= if !@client.financial_data.nil? then render :partial => "financial_data_show", :object => @client.financial_data ,:as=>:financial_data end%>
+</fieldset>
+</div>
+<div id="projects">
+<table id="projects_table" class="tablesorter"> 
+  <tr>
+    <th>Nom du client</th>
+    <th>Ref Projet</th>
+    <th>Etat du projet</th>
+    <th></th>
+    <th></th>
+  </tr>
+<%=render :partial=> 'projects/project_list',:collection => @client.projects ,:as=>:project unless @client.projects.empty?%>
+  </table>
+</div>
+</div>
+<% content_for :sidebar do %>
+<div id="vertmenu">
+      <ul id="sidebarmenu1">
+
+        <li>
+<%= link_to 'Create Project ' ,new_client_project_path(@client.id)%>
+       </li>
+   <li>
+<%= link_to 'Activer Client', client_change_state_path(@client) %>
+       </li>
+        <li>
+<%= link_to 'Edit', edit_client_path(@client) %>
+       </li>
+        <li>
+<%= link_to 'Back', clients_path %>
+       </li> 
+       </ul>
+    </div>
+<% end%>
+
+
+
+
+
+
+
+

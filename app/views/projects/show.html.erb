@@ -1,0 +1,170 @@
+
+<div id="first_content">
+  <h2>Ref Projet: <%= @project.project_ref_string %></h2>
+
+   <div id="project_info" class="span-8 prepend-1 last">
+    <h4>Creer le :
+  <%=@project.created_at%></h4>
+    <h4>Derniere modification:
+  <%=@project.updated_at%></h4>
+    <h4>Type de projet:
+  <%=@project.project_type%></h4>
+    <h4>Etat du projet:
+  <%=@project.aasm_current_state%></h4>
+  </div>
+<div id align="client_info" class="span-8">
+     <h3>
+  <%=link_to "#{@project.client.titre} #{@project.client.surname} #{@project.client.name}",client_path(@project.client_id) %> </h3>
+  <h4>
+    Type de client: <%=@project.client.client_type%>
+  </h4>
+  <h4>
+    Adresse de facturation:  <%=@project.client.addresses.first.address_to_string%>
+  </h4>
+  <h4>
+    Contacts:
+  </h4>
+    <ul>
+  <% @project.client.contacts.each do|contact|%>
+    <li><%=" "+contact.contact_to_s%></li>
+  <%end%>
+    </ul>
+  </div>
+ <div class="span-18"></div>
+</div>
+<div id="assign_project">
+<%= form_tag(assign_project_path(@project) ) do %>
+  <%= label_tag(:user_id, "Assigner à :") %>
+  <%= select_tag(:user_id,options_for_select(user_name_list)) %>
+  <%= submit_tag("Assigner") %>
+<% end %>
+</div>
+<div id="info" class="span-18">
+        <ul>
+
+          <li><a href="#addresses">Addresses de P<%=@project.project_ref %></a></li>
+          <li><a href="#contacts">Informations de contact de P<%=@project.project_ref %></a></li>
+          <li><a href="#components">Composants du project P<%=@project.project_ref %></a></li>
+          <li><a href="#files_table">Fichiers de P<%=@project.project_ref %></a></li>
+          <li><a href="#comments">Commentaire de P<%=@project.project_ref %></a></li>
+          <li><a href="#invoices">Factures de P<%=@project.project_ref %></a></li>
+        </ul>
+
+<div id="addresses">
+<table>
+   <%= if !@project.address.nil? then render :partial => "shared/address_list" ,:object=> @project.address ,:as=>:address end%>
+</table>
+</div>
+<div id="contacts">
+ <table>
+  <%= if !@project.contacts.empty? then render :partial => "shared/contact_list", :collection => @project.contacts ,:as=>:contact end%>
+ </table>
+
+</div>
+<div id="components">
+<table>
+  <%= if !@project.project_components.empty? then render :partial => "project_component_list", :collection => @project.project_components,:as=>:project_component end%>
+</table>
+
+</div>
+
+<div id="files_table">
+<table >
+     <tr>
+       <th>Id</th>
+       <th>Nom du fichier </th>
+      <!-- <th>Url</th> -->
+       <th>Type de fichier</th>
+       <th>Taille </th>
+       <th>Associé a</th>
+       <th></th>
+     </tr>
+
+  <%= if !@project.uploaded_files.empty? then render :partial => "files/show_file", :collection => @project.uploaded_files,
+                                                     :as=>:uploaded end%>
+</table>
+</div>
+<div id="comments">
+     <table>
+  <tr>
+    <th>Reference projet</th>
+    <th>Description</th>
+    <th>Content</th>
+    <th>User</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+       <%= (render :partial => 'comments/comment_list',:collection => @project.message_box.comments,:as=>:comment)unless
+                   @project.message_box.nil? %>
+
+   </table>
+   </div>
+<div id="invoices">
+<table>
+  <tr>
+    <th>Project</th>
+    <th>Total sum</th>
+    <th>Due date</th>
+    <th>Remaining sum</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+     <%= render :partial => 'invoices/invoice_list',:collection => @project.invoices,:as=>:invoice %>
+</table>
+</div>
+
+</div>
+
+
+<% content_for :sidebar do %>
+    
+    <div id="vertmenu">
+      <ul>
+
+
+     <li>
+<%= link_to'Fichiers' ,project_files_path(@project),:tabindex=>"1" %>
+       </li>
+        <li>
+         <%=  link_to 'Uploader js', upload_files_path(:format=>:js),:remote=>true,:tabindex=>'2'%>
+        </li>
+        <li>
+       <%= link_to'Uploader' ,:controller =>'projects' ,:action=>'upload_a_file',:tabindex=>'2'%></li>
+         <li>
+    <%= (link_to 'Messages  ',message_box_path(@project.message_box.id ),:tabindex=>'3')unless @project.message_box.nil? %>
+      </li>
+        <li>
+<%= link_to('Fiche de RDV' ,fiche_de_rendez_vous_path(@project),:target=>'_blank',:tabindex=>'4')%>
+       </li>
+<li>
+<%= link_to'Fiche de RDV en pdf ' ,fiche_de_rendez_vous_path(@project,:format=>'pdf'),:tabindex=>'5'%>
+       </li>
+        <li>
+<%= link_to'Fiche de RDV par mail ' ,fiche_de_rendez_vous_mail_path(@project),:tabindex=>'6'%>
+       </li>    <li>
+<%= link_to'Formulaire SAV par mail ' ,send_SAV_form_mail_path(@project),:tabindex=>'7'%>
+       </li>
+<li>
+<%= link_to'Facture' , new_project_invoice_path(@project),:tabindex=>'8'%>
+       </li>
+        <li>
+<%= link_to'Activer project' , activate_project_path(@project),:tabindex=>'9'%>
+       </li>
+
+        <li>
+      <%= (link_to 'Suivre projet ',follow_project_path(@project),:tabindex=>'10') %>
+      </li>
+      </ul>
+    </div>
+
+
+
+     <div id= "options_link"><%= link_to 'Options', upload_files_path(:format=>:js),:remote=>true %></div>
+
+
+<% end%>
+
+<%= link_to 'Modifier', edit_project_path(@project) ,:tabindex=>"1" %>
+<%= link_to 'Retour', client_path(@project.client_id),:tabindex=>"2"  %>

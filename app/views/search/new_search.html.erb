@@ -1,0 +1,35 @@
+<h2>Recherche </h2>
+<%= render :partial => 'shared/search' %>
+<%= @model.size unless @model.nil?%>
+<%if !@model.nil? %>
+
+    <div id="tableContainer" class="tableContainer">
+
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="scrollTable">
+
+   <thead class="fixedHeader">
+    <tr>
+    <%=yield :thead%>
+  </tr>
+  </thead>
+  <tbody class="scrollContent">
+
+<%=render_object_or_collection(@model)%>
+</tbody>
+  </table>
+</div>
+<%end%>
+<% content_for :thead do %>
+ <th>Titre</th>
+    <th>Name</th>
+    <th>Surname</th>
+    <th>Reference</th>
+    <th>Client_type</th>
+    <th>Society</th>
+    <th>Has_project?</th>
+    <th>State</th>
+    <th></th>
+
+<% end%>
+<div id='test'></div>
+<%=link_to 'retour',root_path %>

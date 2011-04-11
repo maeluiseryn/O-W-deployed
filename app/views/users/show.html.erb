@@ -1,0 +1,128 @@
+
+
+<div id="first_content" >
+
+
+  <h2><%= @user.name %></h2>
+
+
+<p>
+  <b>Email:</b>
+  <%= @user.email %>
+</p>
+
+<p>
+  <b>Created at:</b>
+  <%= @user.created_at %>
+</p>
+<p>
+  <b>Dossier utilisateur:</b>
+  <%= @user.home_directory %>
+</p>
+  <p>
+  <b>Etat de l'utilisateur:</b>
+  <%= @user.aasm_current_state %>
+</p>
+</div>
+
+ <div id="info" class="span-19">
+        <ul>
+
+          <li><a href="#clients_table">Clients de <%=@user.name %></a></li>
+          <li><a href="#projects_table">Projets de <%=@user.name %></a></li>
+          <li><a href="#files_table">Fichiers de <%=@user.name %></a></li>
+            <li><a href="#comments">Commentaires de <%=@user.name %></a></li>
+        </ul>
+       
+
+     <div id="clients_table">
+
+       <table class="span-18">
+       <tr>
+         <th>Name</th>
+          <th>Surname</th>
+         <th>Has_project?</th>
+         <th></th>
+
+        </tr>
+        <%=render :partial=> 'clients/client_list',:collection => @user.clients ,:as=>:client %>
+       </table>
+     </div>
+
+     <div id="projects_table">
+
+       <table class="span-18">
+
+         <tr>
+           <th>Id</th>
+           <th>Client</th>
+           <th>Reference projet</th>
+           <th></th>
+           <th></th>
+         </tr>
+        <%=render :partial=> 'projects/project_list',:collection => @user.projects ,:as=>:project %>
+       </table>
+     </div>
+  <div id="files_table">
+   <table class="span-18">
+
+     <tr >
+       <th>Id</th>
+       <th>Name </th>
+
+       <th>Content_Type</th>
+       <th>File_Size</th>
+       <th>Associé a</th>
+       <th></th>
+       <th></th>
+       <th></th>
+     </tr>
+
+     <%= render :partial => 'files/show_file' ,:collection => @user.uploaded_files ,:as=>:uploaded%>
+
+   </table>
+   </div> 
+   <div id="comments">
+     <table>
+  <tr>
+    <th>Reference projet</th>
+    <th>Description</th>
+    <th>Content</th>
+    <th>User</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+       <%= render :partial => 'comments/comment_list',:collection => @user.comments,:as=>:comment %>
+
+   </table>
+   </div>
+
+</div>
+
+<% content_for :sidebar do %>
+<div id="vertmenu">
+      <ul id="sidebarmenu1">
+       <li>
+
+           <%= link_to'Uploader' ,:controller =>'users' ,:action=>'upload_a_file'%>
+         </li>
+         <li>
+           <%= link_to'Fichiers' ,user_files_path%>
+         </li>
+         <li>
+           <%= link_to 'Retour', root_path %>
+         </li>
+         <li>
+           <%= #noinspection RubyArgCount
+            link_to 'Modifier', edit_user_path(@user) %>
+         </li>
+         <li><%= #noinspection RubyArgCountlink_to 'Profile',user_user_profiles_path(@user)
+            profile_show_or_create_link @user %>
+         </li>
+        <li><%= #noinspection RubyArgCountlink_to 'Profile',user_user_profiles_path(@user)
+            (link_to 'Messages ',message_box_path(@user.message_box.id ))unless @user.message_box.nil? %>
+         </li>
+</ul>
+</div>
+<% end %>

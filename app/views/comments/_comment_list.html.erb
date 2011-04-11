@@ -1,0 +1,10 @@
+<tr>
+
+  <td><%= comment.description %></td>
+  <td><%= truncate(comment.content, :length => 80) %></td>
+  <td><%= comment.user.name %></td>
+   <td><%= comment.comment_state %></td>
+  <td><%= link_to 'Voir', comment %></td>
+  <td><%= link_to 'Modifier', edit_comment_path(comment) %></td>
+  <td><%= link_to 'Détruire', comment, :confirm => 'Êtes-vous sûre?', :method => :delete %></td>
+</tr>
