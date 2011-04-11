@@ -85,7 +85,7 @@ def get_client_type
 end
 
  def create_home_directory(public_path)
-    self.home_directory=File.join("/data/clients/","c#{self.id.to_s}-#{self.surname.downcase}")
+    self.home_directory=File.join("/data/clients/","c#{ServerFileOperation.slugify("#{self.id.to_s}-#{self.surname.downcase}")}")
     ServerFileOperation.create_directory({:path=>"/data/clients",:name=>"/c#{self.id.to_s}-#{self.surname.downcase}"},public_path)
 
   end

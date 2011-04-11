@@ -71,10 +71,10 @@ class ClientsController < ApplicationController
   def create
     @client = Client.new(params[:client])
     @client.addresses.each do |addresse|
-      addresse.description=(@client.surname+" "+@client.name)unless !addresse.description.blank?
+      addresse.description=(@client.titre+" "+@client.surname.capitalize+" "+@client.name)unless !addresse.description.blank?
     end
     @client.contacts.each do |contact|
-      contact.description=(@client.surname+" "+@client.name) unless !contact.description.blank?
+      contact.description=(@client.titre+" "+@client.surname+" "+@client.name) unless !contact.description.blank?
     end
     respond_to do |format|
       if @client.save

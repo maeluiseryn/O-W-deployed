@@ -1,5 +1,5 @@
 class Project < ActiveRecord::Base
-PROJECT_TYPE=['Projet standard' ,'Fourniture', 'Reparation' , 'Assurance']
+PROJECT_TYPE=['Standard' ,'Fourniture', 'Reparation' , 'Assurance']
 before_create :create_ref
 include AASM
 belongs_to :client

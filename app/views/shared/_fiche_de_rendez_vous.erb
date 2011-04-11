@@ -391,7 +391,7 @@
 		</tr>
     </table>
 
- <strong><u>Personne de contact:</u><%=@project.client.name.capitalize+' '+@project.client.surname.capitalize %><%=(' Société :'+@project.client.society.capitalize) unless @project.client.society.blank? %></strong>
+ <strong><u>Personne de contact: </u><%=@project.client.titre.capitalize %> <%=@project.client.name.capitalize+' '+@project.client.surname.capitalize %><%=(' Société :'+@project.client.society.capitalize) unless @project.client.society.blank? %></strong>
 
  <br>
  <br>
@@ -442,7 +442,7 @@
   </tr></table>
   </div>
 <hr>
-<div id="titreRub"><strong><u>Details projet :</u></strong></div><div id="contRub"><table width="100%" border="0" cellspacing="5" cellpadding="5">
+<div id="titreRub"><strong><u>Details projet: <%=" "+@project.project_type %></u></strong></div><div id="contRub"><table width="100%" border="0" cellspacing="5" cellpadding="5">
   <% @project.project_components.each do|component| %>
   <tr>
     <td align="left" valign="top" class="auc"><u><%=component.component_type  %></u></td>
@@ -462,7 +462,9 @@
   </table>
   </div>
   <hr>
-  <div><u><strong>Remarques particuli&egrave;res :</strong></u></div><br>
+  <div><u><strong>Remarques particuli&egrave;res :</strong></u>
+   <%= @project.remark %>
+  </div><br>
 
 <div> </div><br>
 
