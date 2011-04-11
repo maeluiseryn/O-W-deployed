@@ -39,17 +39,15 @@ aasm_column :client_state # defaults to aasm_state
     aasm_initial_state :created
 
     aasm_state :created
-    aasm_state :active
-    aasm_state :waiting
-    aasm_state :dead
-
+    aasm_state :active_project
+    aasm_state :no_active_project
 
     aasm_event :activated do
-      transitions :to => :active, :from => [:created]
+      transitions :to => :active_project, :from => [:created ,:no_active_project]
     end
 
     aasm_event :closed do
-      transitions :to => :dead, :from => [:active, :waiting]
+      transitions :to => :no_active_project, :from => [:active, :waiting]
     end
 
 def has_projects?
@@ -87,8 +85,8 @@ def get_client_type
 end
 
  def create_home_directory(public_path)
-    self.home_directory=File.join("/data/clients/","c#{self.id.to_s}-#{self.surname.downcase}-#{Time.now.day}-#{Time.now.month}")
-    ServerFileOperation.create_directory({:path=>"/data/clients",:name=>"/c#{self.id.to_s}-#{self.surname.downcase}-#{Time.now.day}-#{Time.now.month}"},public_path)
+    self.home_directory=File.join("/data/clients/","c#{self.id.to_s}-#{self.surname.downcase}")
+    ServerFileOperation.create_directory({:path=>"/data/clients",:name=>"/c#{self.id.to_s}-#{self.surname.downcase}"},public_path)
 
   end
   def self.create_home_directory(home_directory,public_path)
@@ -96,5 +94,13 @@ end
   end
   def field_weight
     {:surname=>20 ,:name =>10,}
+  end
+  def activate_with_project_creation
+    if self.aasm_events_for_current_state.include?(:activated)
+       if self.activated
+         self.save
+       end
+
+    end
   end
 end

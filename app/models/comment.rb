@@ -23,6 +23,6 @@ class Comment < ActiveRecord::Base
       transitions :to => :archive , :from =>[:read]
     end
     aasm_event :to_trash do
-      transitions :to => :mark_for_delete, :from => [:read, :archive]
+      transitions :to => :mark_for_delete, :from => [:read, :archive ,:unread]
     end
 end

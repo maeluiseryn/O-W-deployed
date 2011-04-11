@@ -84,6 +84,7 @@ class ProjectsController < ApplicationController
          current_user.projects<<@project
          @project.create_home_directory(@public_path)
          @project.save
+         @project.client.activate_with_project_creation
 
         format.html { redirect_to(@project, :notice => 'Project was successfully created.') }
         format.xml  { render :xml => @project, :status => :created, :location => @project }

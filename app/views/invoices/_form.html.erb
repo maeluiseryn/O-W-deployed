@@ -17,7 +17,7 @@
     <%= f.text_field :total_sum %>
   </div>
   <div class="field">
-    <%= f.label :due_date %><br />
+    <%= f.label :due_date,'Echeance' %><br />
     <%= f.date_select :due_date %>
   </div>
    <%=  f.hidden_field :project_id , :value => @invoice.project_id%>

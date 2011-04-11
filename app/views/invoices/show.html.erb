@@ -41,22 +41,7 @@
       Créer le
     </th>
   </tr>
-  <%@invoice.payments.each do |payment|%>
-     <tr>
-       <td>
-         <%=payment.invoice_id %>
-       </td>
-       <td>
-         <%=payment.sum_paid %>
-       </td>
-       <td>
-         <%=payment.created_at %>
-       </td>
-        <td>
-         <%=link_to 'Detruire', payments_destroy_path(payment.id) %>
-       </td>
-     </tr>
-  <% end %>
+  <%= render :partial => 'payment_list' ,:collection=>@invoice.payments ,:as=>:payment %>
 </table>
 </div>
 

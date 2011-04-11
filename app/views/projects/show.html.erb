@@ -4,9 +4,9 @@
 
    <div id="project_info" class="span-8 prepend-1 last">
     <h4>Creer le :
-  <%=@project.created_at%></h4>
+  <%=I18n.l(@project.created_at)%></h4>
     <h4>Derniere modification:
-  <%=@project.updated_at%></h4>
+  <%=I18n.l(@project.updated_at)%></h4>
     <h4>Type de projet:
   <%=@project.project_type%></h4>
     <h4>Etat du projet:

@@ -229,5 +229,20 @@ end
     end
     array
   end
-
+  def correct_current_user(model)
+    if model.respond_to?('user_id')
+    if model.user_id==current_user.id
+      return true
+    else
+      return false
+    end
+    elsif model.respond_to?('user')
+      if
+      model.user.user_id==current_user.id
+        return true
+      else
+        return false
+      end
+    end
+    end
 end

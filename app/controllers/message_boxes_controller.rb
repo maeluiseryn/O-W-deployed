@@ -80,5 +80,13 @@ class MessageBoxesController < ApplicationController
       format.xml  { head :ok }
     end
   end
-  
+  def trashed_comments
+    @message_box=MessageBox.find(params[:id])
+    @message_box.comments.each do |comments|
+      if comments.aasm_current_state==:mark_for_delete
+        comments.destroy
+      end
+    end
+    redirect_to request.referer
+  end
 end

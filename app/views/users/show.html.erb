@@ -13,7 +13,7 @@
 
 <p>
   <b>Created at:</b>
-  <%= @user.created_at %>
+  <%=I18n.l(@user.created_at) %>
 </p>
 <p>
   <b>Dossier utilisateur:</b>
@@ -39,9 +39,9 @@
 
        <table class="span-18">
        <tr>
-         <th>Name</th>
-          <th>Surname</th>
-         <th>Has_project?</th>
+         <th>Prenom</th>
+          <th>Nom</th>
+        
          <th></th>
 
         </tr>
@@ -123,6 +123,9 @@
         <li><%= #noinspection RubyArgCountlink_to 'Profile',user_user_profiles_path(@user)
             (link_to 'Messages ',message_box_path(@user.message_box.id ))unless @user.message_box.nil? %>
          </li>
+        <li><%= link_to 'Activate', activate_user_path(@user) %>
+         </li>
+         
 </ul>
 </div>
 <% end %>

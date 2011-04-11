@@ -12,6 +12,8 @@
 <table>
 <%=render :partial=>'comments/comment_list', :collection=>@message_box.comments ,:as=>:comment%>
 </table>
+<%= link_to 'Vider Corbeille', delete_trashed_comments_path(@message_box) unless correct_current_user(@message_box)==false %>
+
 <%= link_to 'Nouveau message', new_message_box_comment_path(@message_box) %> |
 <%= link_to 'Modifier', edit_message_box_path(@message_box) %> |
 <%=  redirect_back_to_owner_polymorphic(@message_box) %>

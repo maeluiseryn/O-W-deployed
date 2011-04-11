@@ -42,6 +42,7 @@ OW::Application.routes.draw do
   resources :clients do
     resources :projects
   end
+  match "message_box/:id/delete_trashed_comments"=>"message_boxes#trashed_comments" ,:as=>:delete_trashed_comments
   match "/comments/:id/read"=>"comments#read_comment",:as=>:read_comment
   match "/comments/:id/archive"=>"comments#archive_comment",:as=>:archive_comment
   match "/comments/:id/trash"=>"comments#trash_comment",:as=>:trash_comment
