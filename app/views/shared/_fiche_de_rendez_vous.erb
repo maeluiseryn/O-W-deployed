@@ -437,7 +437,7 @@
 </tr>
   <tr>
 	<td align="left" valign="top" ></td>
-    <td align="left" valign="top" ><%= @project.contacts.first.description+" ("+@project.contacts.first.contact_data+")" %></td>
+    <td align="left" valign="top" ><%= @project.contacts.first.description+" ("+@project.contacts.first.contact_data+")" unless @project.contacts.empty?  %></td>
 
   </tr></table>
   </div>
@@ -463,7 +463,7 @@
   </div>
   <hr>
   <div><u><strong>Remarques particuli&egrave;res :</strong></u>
-   <%= @project.remark %>
+   <%=" #{@project.remark} "%>
   </div><br>
 
 <div> </div><br>
