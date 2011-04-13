@@ -152,9 +152,11 @@
         <li>
 <%= link_to'Activer project' , activate_project_path(@project),:tabindex=>'9'%>
        </li>
-
+  <li>
+<%= link_to'Fermer project' , close_project_path(@project),:tabindex=>'10'%>
+       </li>
         <li>
-      <%= (link_to 'Suivre projet ',follow_project_path(@project),:tabindex=>'10') %>
+      <%= (link_to 'Suivre projet ',follow_project_path(@project),:tabindex=>'11') %>
       </li>
       </ul>
     </div>

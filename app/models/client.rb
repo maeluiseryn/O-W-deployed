@@ -47,7 +47,7 @@ aasm_column :client_state # defaults to aasm_state
     end
 
     aasm_event :closed do
-      transitions :to => :no_active_project, :from => [:active, :waiting]
+      transitions :to => :no_active_project, :from => [:active_project, :waiting]
     end
 
 def has_projects?
@@ -103,4 +103,15 @@ end
 
     end
   end
+   def close_with_project_end
+
+      if self.aasm_events_for_current_state.include?(:closed)
+        if self.projects.where(:project_state !=:close).any?  
+          if self.closed
+             self.save
+          end
+        end
+      end
+   end
+
 end

@@ -87,6 +87,30 @@ end
     @user.save(:validate =>false)
     redirect_to request.referer
   end
+  def admin_user_on_off
+    @user=User.find(params[:id])
+    if @user.aasm_current_state==:admin
+      @user.de_adminify_user
+
+    elsif  @user.aasm_current_state==:active
+       @user.adminify_user
+
+    end
+    redirect_to request.referer
+  end
+
+  def de_re_activate_user
+    @user=User.find(params[:id])
+    if @user.aasm_current_state==:inactive
+      @user.re_activate_user
+
+    elsif  @user.aasm_current_state==:active || @user.aasm_current_state==:admin
+       @user.de_activate_user
+
+    end
+    redirect_to request.referer
+
+  end
    private
   # def authenticate
    #  deny_access unless signed_in?

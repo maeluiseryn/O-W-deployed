@@ -76,6 +76,36 @@ aasm_column :user_state # defaults to aasm_state
   def self.create_home_directory(home_directory,public_path)
     ServerFileOperation.create_directory(home_directory,public_path)
   end
+  def adminify_user
+  if self.aasm_events_for_current_state.include? :become_admin
+    self.become_admin
+    self.save_switch=true
+    self.save(:validate =>false)
+    end
+  end
+
+  def de_adminify_user
+  if self.aasm_events_for_current_state.include? :lose_admin
+    self.lose_admin
+    self.save_switch=true
+    self.save(:validate =>false)
+    end
+  end
+   def de_activate_user
+  if self.aasm_events_for_current_state.include? :deactivated
+    self.deactivated
+    self.save_switch=true
+    self.save(:validate =>false)
+    end
+  end
+   def re_activate_user
+  if self.aasm_events_for_current_state.include? :reactivated
+    self.reactivated
+    self.save_switch=true
+    self.save(:validate =>false)
+    end
+  end
+
  private
 
  def encrypt_password

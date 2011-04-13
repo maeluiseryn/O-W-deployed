@@ -47,7 +47,12 @@ OW::Application.routes.draw do
   match "/comments/:id/archive"=>"comments#archive_comment",:as=>:archive_comment
   match "/comments/:id/trash"=>"comments#trash_comment",:as=>:trash_comment
   match "/projects/:id/activate_project"=>"projects#activate_project",:as=>:activate_project
+
   match "/users/:id/activate_user"=>"users#activate_user",:as=>:activate_user
+  match "/users/:id/admin"=>"users#admin_user_on_off",:as=>:admin_user
+  match "/users/:id/deactivated"=>"users#de_re_activate_user",:as=>:deactivate_user
+
+  match "/projects/:id/close_project"=>"projects#close_project",:as=>:close_project
   match "/projects/:id/activate_project"=>"projects#activate_project",:as=>:activate_project
   match "/clients/:id/change_state"=>"clients#change_state",:as=>:client_change_state
 
@@ -74,7 +79,7 @@ OW::Application.routes.draw do
   match '/redirect', :to =>'application#redirect_to_last_visited'
   match '/projects/:id/fiche_de_rendez_vous',:to=>'projects#create_rendez_vous_fiche' ,:as=>:fiche_de_rendez_vous
   match '/projects/:id/fiche_de_rendez_vous_mail',:to=>'projects#send_fiche_de_rendez_vous_mail' ,:as=>:fiche_de_rendez_vous_mail
-  match '/projects/:id/SAV_form' ,:to=>'projects#send_SAV_form_mail',:as=>:send_SAV_form_mail
+  match '/projects/:id/SAV_form' ,:to=>'projects#send_sav_form_mail',:as=>:send_SAV_form_mail
   match '/project/:id/follow',:to=>'projects#follow_project',:as=>:follow_project
   match '/project/:id/assign',:to=>'projects#assign_project',:as=>:assign_project
   resources :user_profiles

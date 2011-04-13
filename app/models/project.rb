@@ -38,14 +38,14 @@ aasm_column :project_state # defaults to aasm_state
     aasm_state :closed
     aasm_state :waiting
     aasm_state :archive
-    aasm_state :dead
+    aasm_state :close
 
     aasm_event :activated do
       transitions :to => :active, :from => [:created]
     end
 
     aasm_event :closed do
-      transitions :to => :dead, :from => [:active, :waiting]
+      transitions :to => :close, :from => [:created, :active, :waiting]
     end
     def create_home_directory(public_path)
     self.home_directory=File.join("#{self.client.home_directory}/","p#{self.project_ref.to_s}")

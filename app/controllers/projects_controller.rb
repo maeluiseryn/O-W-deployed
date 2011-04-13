@@ -176,4 +176,11 @@ class ProjectsController < ApplicationController
     @user.projects<<@project
     redirect_to request.referer ,:notice=>"u #{@user } ,p#{@project}"
   end
+  def close_project
+    @project =Project.find(params[:id])
+    @project.closed
+    @project.save
+    @project.client.close_with_project_end
+    redirect_to request.referer
+  end
 end
