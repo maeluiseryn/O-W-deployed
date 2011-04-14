@@ -79,12 +79,10 @@ class ClientsController < ApplicationController
     respond_to do |format|
       if @client.save
 
-        current_user.clients<<@client
         define_path
         @client.create_home_directory(@public_path)
-        @client.activated
-        @client.save
-        client_user=UserClient.assign_join_type_to_user_client(current_user.id,@client.id,"created_by_#{current_user.name}")
+       if @client.save
+       # client_user=UserClient.assign_join_type_to_user_client(current_user.id,@client.id,"created_by_#{current_user.name}")
         format.html { redirect_to(@client, :notice => "Client was successfully created.") }
         format.xml  { render :xml => @client, :status => :created, :location => @client }
       else
@@ -93,6 +91,7 @@ class ClientsController < ApplicationController
       end
     end
   end
+end
 
   # PUT /clients/1
   # PUT /clients/1.xml
@@ -127,5 +126,6 @@ class ClientsController < ApplicationController
     @client.closed
     @client.save
     redirect_to request.referer
-  end
+   end
+   
 end

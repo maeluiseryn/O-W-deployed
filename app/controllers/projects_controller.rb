@@ -81,8 +81,9 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       if @project.valid?
          define_path
-         current_user.projects<<@project
+        # current_user.projects<<@project
          @project.create_home_directory(@public_path)
+         @project.activated
          @project.save
          @project.client.activate_with_project_creation
 
@@ -102,12 +103,18 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       if @project.update_attributes(params[:project])
-        format.html { redirect_to(@project, :notice => 'Project was successfully updated.') }
+         if !params[:project][:add_remark].nil?
+
+             @project.remark=@project.remark+"\nRemarque ajoutee: "+params[:project][:add_remark]
+             @project.save
+          end
+        format.html { redirect_to(@project, :notice => 'Project was successfully updated.'+notice) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
         format.xml  { render :xml => @project.errors, :status => :unprocessable_entity }
       end
+
     end
   end
 
@@ -168,13 +175,17 @@ class ProjectsController < ApplicationController
   def follow_project
     @project=Project.find(params[:id])
     current_user.projects<<@project
+    current_user.clients<<@project.client
+    @project.project_to_offer
     redirect_to(request.referer ,:notice => "Association faite")
   end
   def assign_project
     @user=User.find(params[:user_id])
     @project=Project.find(params[:id])
     @user.projects<<@project
-    redirect_to request.referer ,:notice=>"u #{@user } ,p#{@project}"
+    @user.clients<<@project.client
+    @project.project_to_offer
+    redirect_to request.referer ,:notice=>"le project #{@project.project_ref_string} est assign&eacute; &#224; #{@user }"
   end
   def close_project
     @project =Project.find(params[:id])
@@ -183,4 +194,13 @@ class ProjectsController < ApplicationController
     @project.client.close_with_project_end
     redirect_to request.referer
   end
+  def set_project_price
+    @project =Project.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end
+
+
 end

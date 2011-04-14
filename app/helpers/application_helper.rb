@@ -223,7 +223,7 @@ end
   end
   def user_name_list
     array=[]
-    users=User.all
+    users=User.active
     users.each do |user|
        array<<[user.name , user.id]
     end

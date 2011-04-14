@@ -82,6 +82,9 @@ OW::Application.routes.draw do
   match '/projects/:id/SAV_form' ,:to=>'projects#send_sav_form_mail',:as=>:send_SAV_form_mail
   match '/project/:id/follow',:to=>'projects#follow_project',:as=>:follow_project
   match '/project/:id/assign',:to=>'projects#assign_project',:as=>:assign_project
+  match '/project/:id/project_price',:to=>'projects#set_project_price',:as=>:set_project_price
+
+
   resources :user_profiles
   resources :users do
     resource :user_profiles # a verifier

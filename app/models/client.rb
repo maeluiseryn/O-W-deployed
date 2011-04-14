@@ -106,7 +106,9 @@ end
    def close_with_project_end
 
       if self.aasm_events_for_current_state.include?(:closed)
-        if self.projects.where(:project_state !=:close).any?  
+        if self.projects.incomplete.any?
+           #do nothing
+        else
           if self.closed
              self.save
           end

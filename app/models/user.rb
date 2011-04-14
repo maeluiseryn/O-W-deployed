@@ -32,6 +32,8 @@ attr_accessor :password , :save_switch
  #validates :salt, :presence=> true
 
  before_save :encrypt_password
+scope :active, :conditions => [ "user_state != 'inactive'" ]
+
 aasm_column :user_state # defaults to aasm_state
 
     aasm_initial_state :created

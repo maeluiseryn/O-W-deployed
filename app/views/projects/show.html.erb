@@ -30,8 +30,12 @@
   <%end%>
     </ul>
   </div>
+
  <div class="span-18"></div>
 </div>
+ <div  class="span-18">
+    <%="remarque :"+@project.remark%>
+  </div>
 <div id="assign_project">
 <%= form_tag(assign_project_path(@project) ) do %>
   <%= label_tag(:user_id, "Assigner à :") %>
@@ -39,6 +43,7 @@
   <%= submit_tag("Assigner") %>
 <% end %>
 </div>
+<div id="project_price'"></div>
 <div id="info" class="span-18">
         <ul>
 
@@ -158,15 +163,21 @@
         <li>
       <%= (link_to 'Suivre projet ',follow_project_path(@project),:tabindex=>'11') %>
       </li>
+         <li>
+      <%= link_to 'Projet accepter ',set_project_price_path(@project),:tabindex=>'12' %>
+      </li>
+         <li>
+      <%= link_to 'Projet accepter js ',set_project_price_path(@project,:format=>:js),:remote=>true,:tabindex=>'12' %>
+      </li>
       </ul>
     </div>
 
 
 
-     <div id= "options_link"><%= link_to 'Options', upload_files_path(:format=>:js),:remote=>true %></div>
+     <div id= "options_link"><%#= link_to 'Options', upload_files_path(:format=>:js),:remote=>true %></div>
 
 
 <% end%>
 
-<%= link_to 'Modifier', edit_project_path(@project) ,:tabindex=>"1" %>
-<%= link_to 'Retour', client_path(@project.client_id),:tabindex=>"2"  %>
+<%= link_to 'Modifier', edit_project_path(@project)  %>
+<%= link_to 'Retour', client_path(@project.client_id) %>

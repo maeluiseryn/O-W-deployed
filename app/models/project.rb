@@ -16,6 +16,8 @@ has_many :invoices
 has_many :project_actions
 accepts_nested_attributes_for :contacts ,:reject_if => lambda { |a| a[:description].blank? && a[:contact_data].blank? } ,:allow_destroy => true
 accepts_nested_attributes_for :address ,:project_components
+attr_accessor :add_remark
+scope :incomplete, :conditions => [ "project_state != 'close'" ]
 
 define_index do
       set_property :enable_star => 1
@@ -35,17 +37,36 @@ aasm_column :project_state # defaults to aasm_state
     aasm_state :offer
     aasm_state :waiting_payment # not sure
     aasm_state :production
+    aasm_state :placement
     aasm_state :closed
     aasm_state :waiting
     aasm_state :archive
     aasm_state :close
+    aasm_state :after_sales_service
 
     aasm_event :activated do
       transitions :to => :active, :from => [:created]
     end
-
+    aasm_event :to_offer do
+      transitions :to => :offer, :from => [:active ,:waiting]
+    end
+    aasm_event :accepted do
+       transitions :to => :waiting_payment, :from => [:offer , :waiting] ,:guard => :is_price_defined?
+    end
+    aasm_event :in_production_schedule do
+       transitions :to => :production , :from => [:waiting_payment]
+    end
+    aasm_event :in_placement_schedule do
+       transitions :to => :placement , :from => [:production]
+    end
     aasm_event :closed do
       transitions :to => :close, :from => [:created, :active, :waiting]
+    end
+    aasm_event :to_archive do
+      transitions :to => :archive, :from => [:closed]
+    end
+    aasm_event :to_s_a_v do
+      transitions :to => :after_sales_service, :from => [:closed,:archive]
     end
     def create_home_directory(public_path)
     self.home_directory=File.join("#{self.client.home_directory}/","p#{self.project_ref.to_s}")
@@ -74,5 +95,19 @@ aasm_column :project_state # defaults to aasm_state
   def message_box_create
    build_message_box(:description =>self.project_ref_string+" "+client.surname.capitalize,:box_type=>'project_box')
    message_box.save
+  end
+  def project_to_offer
+    if self.aasm_events_for_current_state.include?(:to_offer)
+      if self.to_offer
+          self.save
+      end
+    end
+  end
+  def is_price_defined?
+    if !self.project_price.nil?
+       true
+    else
+      false
+    end
   end
 end
