@@ -128,8 +128,12 @@ $("#model_type").live("change", function(e) {
     url: "Client/test",  //I think, it could be something else
     dataType: "json",
     contentType: "application/json; charset=utf-8",
+
     success: function(data) {
-        return $( data.client.client_type).insertAfter('#test');
+        alert(data.client.client_type);
+         $('#pre_footer').html(data.client.client_type);
+
+
 
 
     },
