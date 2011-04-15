@@ -11,6 +11,10 @@
   <%=@project.project_type%></h4>
     <h4>Etat du projet:
   <%=@project.aasm_current_state%></h4>
+    <h4>Prix du projet:
+  <%=@project.project_price%></h4>
+      <h5>Reste a payé:
+  <%=@project.project_price-get_remaining_to_pay(@project)unless @project.project_price.nil?%></h5>
   </div>
 <div id align="client_info" class="span-8">
      <h3>

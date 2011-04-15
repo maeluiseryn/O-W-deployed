@@ -29,7 +29,17 @@
   <b>Project:</b>
   <%= @project_action.project_id %>
 </p>
+<%if @project_action.aasm_current_state==:open%>
+<p>
 
+  <% form_tag success_failure_path do %>
+   <%= select_tag :success_failure ,
+               options_for_select(@project_action.aasm_events_for_current_state
+                )%>
+       <%= submit_tag "Cloturer" %>
+  <% end %>
+</p>
+<%end%>
 
-<%= link_to 'Edit', edit_project_action_path(@project_action) %> |
-<%= link_to 'Back', project_actions_path %>
+<%= link_to 'Modifier', edit_project_action_path(@project_action) %> |
+<%= link_to 'Retour', project_project_actions_path(@project_action.project) %>

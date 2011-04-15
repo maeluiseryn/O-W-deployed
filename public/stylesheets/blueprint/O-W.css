@@ -218,6 +218,11 @@ background-color: #f5f5f5;
   color: #000000;
   background-color: #eeeeee;
   }
-
+	#design,
+#development,
+#other,
+#wpbranch{
+       display: none;
+      }
 #fiche_de_rendez_vous tbody tr:nth-child(2n) td, tbody tr.even td { background:none}
-/*#clients_table tbody tr:nth-child(2n) td, tbody tr.even td { background:red}
+/*#clients_table tbody tr:nth-child(2n) td, tbody tr.even td { background:red}*/

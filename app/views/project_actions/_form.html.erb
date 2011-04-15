@@ -10,32 +10,22 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_field :description %>
-  </div>
+<div id="request" class="span-18">
+<div id="requestinfo" class="span-4">
   <div class="field">
     <%= f.label :action_type %><br />
-    <%= f.text_field :action_type %>
+    <%= f.select :action_type ,get_action_type %>
   </div>
-  <div class="field">
-    <%= f.label :user_id %><br />
-    <%= f.text_field :user_id %>
+  <div id="development">
+            <%= f.label :action_type %><br />
+    <%= f.select :action_type ,get_action_type %>
   </div>
-  <div class="field">
-    <%= f.label :action_result %><br />
-    <%= f.text_field :action_result %>
-  </div>
-  <div class="field">
-    <%= f.label :action_state %><br />
-    <%= f.text_field :action_state %>
-  </div>
-  <div class="field">
-    <%= f.label :project_id %><br />
-    <%= f.text_field :project_id %>
-  </div>
+</div>
+</div>
+    <%= f.hidden_field :project_id %>
+
   <div class="actions">
     <%= f.submit %>
+
   </div>
 <% end %>

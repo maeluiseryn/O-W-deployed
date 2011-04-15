@@ -115,5 +115,13 @@ end
         end
       end
    end
+   def reopen_with_sav
+     if self.aasm_events_for_current_state.include?(:activated)
+      if self.activated
+         self.save
+       end
+     end
+
+   end
 
 end

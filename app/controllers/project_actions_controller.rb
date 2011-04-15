@@ -56,12 +56,15 @@ class ProjectActionsController < ApplicationController
     @project_action.user_id=current_user.id
     respond_to do |format|
       if @project_action.save
-        format.html { redirect_to(@project_action, :notice => 'Project action was successfully created.') }
+         @project_action.project_state=@project_action.project.aasm_current_state
+         if @project_action.save
+        format.html { redirect_to(@project_action, :notice =>"Action: #{@project_action.description} ouverte ") }
         format.xml  { render :xml => @project_action, :status => :created, :location => @project_action }
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @project_action.errors, :status => :unprocessable_entity }
       end
+        end
     end
   end
 
@@ -91,5 +94,10 @@ class ProjectActionsController < ApplicationController
       format.html { redirect_to(project_actions_url) }
       format.xml  { head :ok }
     end
+  end
+  def success_or_failure
+    @project_action=ProjectAction.find(params[:id])
+    @project_action.success_or_failure(params[:success_failure])
+    redirect_to request.referer
   end
 end

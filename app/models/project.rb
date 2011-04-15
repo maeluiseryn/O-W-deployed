@@ -40,33 +40,33 @@ aasm_column :project_state # defaults to aasm_state
     aasm_state :placement
     aasm_state :closed
     aasm_state :waiting
-    aasm_state :archive
+    aasm_state :archive #conflict with incomplete => archive is a flag for file_system_storage+deletion so no project in the db have archive as state
     aasm_state :close
-    aasm_state :after_sales_service
+    aasm_state :after_sales_service ,:enter => :reopen_client_with_sav
 
     aasm_event :activated do
       transitions :to => :active, :from => [:created]
     end
     aasm_event :to_offer do
-      transitions :to => :offer, :from => [:active ,:waiting]
+      transitions :to => :offer, :from => [:active ,:waiting], :guard => :project_user_not_empty?
     end
     aasm_event :accepted do
        transitions :to => :waiting_payment, :from => [:offer , :waiting] ,:guard => :is_price_defined?
     end
     aasm_event :in_production_schedule do
-       transitions :to => :production , :from => [:waiting_payment]
+       transitions :to => :production , :from => [:waiting_payment] ,:guard =>:is_forty_percent_paid?
     end
     aasm_event :in_placement_schedule do
-       transitions :to => :placement , :from => [:production]
+       transitions :to => :placement , :from => [:production] ,:guard =>:is_eighty_percent_paid?
     end
     aasm_event :closed do
-      transitions :to => :close, :from => [:created, :active, :waiting]
+      transitions :to => :close, :from => [:created, :active, :waiting] ,:guard =>:hundred_percent_paid_and_no_open_actions?
     end
     aasm_event :to_archive do
       transitions :to => :archive, :from => [:closed]
     end
     aasm_event :to_s_a_v do
-      transitions :to => :after_sales_service, :from => [:closed,:archive]
+      transitions :to => :after_sales_service, :from => [:closed]
     end
     def create_home_directory(public_path)
     self.home_directory=File.join("#{self.client.home_directory}/","p#{self.project_ref.to_s}")
@@ -108,6 +108,61 @@ aasm_column :project_state # defaults to aasm_state
        true
     else
       false
+    end
+  end
+  def is_forty_percent_paid?
+    if self.invoices.paid_invoices.sum(:total_sum)>=(self.project_price*0.4)
+       true
+    else
+      false
+    end
+  end
+   def is_eighty_percent_paid?
+    if self.invoices.paid_invoices.sum(:total_sum)>=(self.project_price*0.4)
+       true
+    else
+      false
+    end
+  end
+   def is_hundred_percent_paid?
+    if self.invoices.paid_invoices.sum(:total_sum)>=self.project_price
+       true
+    else
+      false
+    end
+   end
+
+  def false_if_has_active_actions?
+    if self.project_actions.open_actions.any?
+     false
+    else
+      true
+
+    end
+
+  end
+  def hundred_percent_paid_and_no_open_actions?
+    if is_hundred_percent_paid?
+      if false_if_has_active_actions?
+        true
+      else
+        false
+      end
+    else
+      false
+    end
+
+  end
+
+
+  def reopen_client_with_sav
+    self.client.reopen_with_sav
+  end
+  def project_user_not_empty?
+    if self.users.empty?
+      false
+    else
+      true
     end
   end
 end

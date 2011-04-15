@@ -8,7 +8,7 @@
     <th>Action result</th>
     <th>Action state</th>
     <th>Project</th>
-    <th></th>
+    <th>Project state</th>
     <th></th>
     <th></th>
   </tr>
@@ -21,13 +21,15 @@
     <td><%= project_action.action_result %></td>
     <td><%= project_action.action_state %></td>
     <td><%= project_action.project_id %></td>
-    <td><%= link_to 'Show', project_action %></td>
-    <td><%= link_to 'Edit', edit_project_action_path(project_action) %></td>
-    <td><%= link_to 'Destroy', project_action, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= project_action.project_state %></td>
+    <td><%= link_to 'Voir', project_action %></td>
+    <td><%= link_to 'Modifier', edit_project_action_path(project_action) %></td>
+    <td><%= link_to 'Detruire', project_action, :confirm => 'Etes-vous sûre?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Project action', new_project_action_path %>
+<%= link_to 'Nouvelle action', new_project_project_action_path(params[:project_id]) %> |
+<%= link_to 'Retour', project_path(params[:project_id]) %>

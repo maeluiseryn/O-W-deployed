@@ -20,7 +20,8 @@ class WelcomeController < ApplicationController
     end
   end
   def link
-    
+
   end
 
 end
+#File.open(Rails.root.to_s+'/public/'+'test.yml','wb'){|f| f.write(p.to_yaml)}

@@ -25,9 +25,10 @@ OW::Application.routes.draw do
   resources :projects do
     resources :invoices
     resources :project_actions
+
     
   end
-
+  match "project_actions/:id/success_failure"=>"project_actions#success_or_failure", :as=>:success_failure
   #resources :clients
 
   root :to => 'home_page#home'

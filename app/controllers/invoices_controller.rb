@@ -108,6 +108,9 @@ class InvoicesController < ApplicationController
       if @payment.save
          @invoice.payments<<@payment
          @invoice.remaining_sum=(@invoice.remaining_sum-@payment.sum_paid)
+         if @invoice.remaining_sum<=0
+           @invoice.has_been_paid
+         end
          @invoice.save
         format.html { redirect_to(invoice_path(@invoice), :notice => 'Paiement creer.') }
 
@@ -122,6 +125,9 @@ class InvoicesController < ApplicationController
      @payment=Payment.find(params[:payment_id])
      invoice=@payment.invoice
      invoice.remaining_sum=invoice.remaining_sum+@payment.sum_paid
+     if invoice.aasm_current_state==:paid
+       invoice.reopen_due_to_error
+     end
      invoice.save
      @payment.destroy
      redirect_to request.referer

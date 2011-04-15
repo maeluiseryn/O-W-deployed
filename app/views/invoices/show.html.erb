@@ -28,6 +28,10 @@
   <b>Date de création:</b>
   <%= @invoice.created_at %>
 </p>
+<p>
+  <b>Etat facture:</b>
+  <%= @invoice.aasm_current_state %>
+</p>
 <div id="payments_table">
 <table>
   <tr>

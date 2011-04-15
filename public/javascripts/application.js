@@ -138,4 +138,25 @@ $("#model_type").live("change", function(e) {
     }
   });
 });
+$(document).ready(function(){
+$("#project_action_action_type").change(function(){
+    switch($(this).val()){
+        case "design":
+            $("#design").show();
+            $("#requestinfo select:not(#project_action_action_type, #design)").hide();
+        break;
+        case "development":
+            $("#development").show();
 
+            $("#requestinfo select:not(#project_action_action_type, #development)").hide();
+        break;
+        case "other":
+            $("#other").show();
+            $("#requestinfo select:not(#project_action_action_type, #other)").hide();
+        break;
+        case "none":
+            $("#requestinfo select:not(#project_action_action_type)").hide();
+        break;
+    }
+});
+});
