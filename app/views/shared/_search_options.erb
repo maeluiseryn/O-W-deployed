@@ -7,10 +7,27 @@
 <p>Résultats par pages: <%= select_tag :per_page ,
                options_for_select(per_page_result
                 )%></p>
+<%=link_to_function('option temps','$("#time").show(); $("#time").children().attr("disabled", false);')%>
 <div id="client">
+Type de Client:
+  <%= select_tag :client_type ,
+               options_for_select(client_type
+                )%><br />
+Etat du Client:
+  <%= select_tag :client_state ,
+               options_for_select(client_state
+                )%>
 
 </div>
 <div id="project">
+  Type de Projet:
+  <%= select_tag :project_type ,
+               options_for_select(project_type
+                )%><br />
+Etat du Projet:
+  <%= select_tag :project_state ,
+               options_for_select(project_state
+                )%>
 
 </div>
 
@@ -18,5 +35,18 @@
 
 </div>
 <div id="address">
+
+</div>
+<div id='contact'></div>
+<div id="time">
+ <%= select_tag :time_type ,
+               options_for_select(time_type
+                )%>
+<%= select_tag :time_number, options_for_select(1..30
+                )%>
+<%= select_tag :time ,
+               options_for_select(created
+                )%>
+
 
 </div>

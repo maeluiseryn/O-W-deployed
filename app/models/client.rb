@@ -1,6 +1,7 @@
 class Client < ActiveRecord::Base
 CLIENT_TITRE=['Monsieur','Madame','Mr','Mde' ]
 CLIENT_TYPE=['Independant','Entreprise','Particulier','Autre']
+CLIENT_FILTER=[['etat du client','client_state']]
 include AASM
 
 has_one   :financial_data
@@ -29,7 +30,7 @@ accepts_nested_attributes_for :addresses
      
       indexes client_type, :sortable =>true
       indexes id
-      has  created_at, updated_at
+      has  created_at, updated_at , client_state
 
 end
 

@@ -122,7 +122,7 @@ $(document).ready(function(){
 
 });
 
-$("#model_type").live("change", function(e) {
+/*$("#model_type").live("change", function(e) {
   e.preventDefault();
   $.ajax({
     url: "Client/test",  //I think, it could be something else
@@ -141,7 +141,7 @@ $("#model_type").live("change", function(e) {
 
     }
   });
-});
+});*/
 $(document).ready(function(){
 $("#rendezvous").hide();
 $("#rendezvous").children().attr("disabled", true);
@@ -232,15 +232,50 @@ $("#project_action_action_type").change(function(){
         break;
     }
 });
-jQuery(function($) {
-  // when the #search field changes
-  $("#search").change(function() {
-    // make a POST call and replace the content
-    $.post("new_search &search=hello&model_type=Client", function(data) {
-      $("#results").html(data);
-    });
-  });
-})
+
 
 });
+$(document).ready(function(){
+    $("#client").hide();
+    $("#client").children().attr("disabled", true);
+    $("#time").hide();
+    $("#time").children().attr("disabled", true);
+    $("#project").hide();
+    $("#project").children().attr("disabled", true);
 
+
+$("#model_type").change(function(){
+    $("#client").hide();
+    $("#client").children().attr("disabled", true);
+    $("#time").hide();
+    $("#time").children().attr("disabled", true);
+    $("#project").hide();
+    $("#project").children().attr("disabled", true);
+
+
+    switch($(this).val()){
+
+
+
+        case "Client":
+            /* $("#requestinfo select:not(#project_action_action_type, #development)").hide();*/
+
+            $("#client").show();
+            $("#client").children().attr("disabled", false);
+
+
+        break;
+          case "Project":
+            /* $("#requestinfo select:not(#project_action_action_type, #development)").hide();*/
+
+            $("#project").show();
+            $("#project").children().attr("disabled", false);
+
+
+        break;
+
+    }
+});
+
+
+});

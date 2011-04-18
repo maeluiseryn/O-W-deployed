@@ -16,6 +16,8 @@ class SearchController < ApplicationController
   end
 
   def search_result
+    @results=Client.all
+    render @results
   end
   def search_options
    # @options={
