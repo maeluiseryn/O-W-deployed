@@ -242,6 +242,8 @@ $(document).ready(function(){
     $("#time").children().attr("disabled", true);
     $("#project").hide();
     $("#project").children().attr("disabled", true);
+    $("#contact").hide();
+    $("#contact").children().attr("disabled", true);
 
 
 $("#model_type").change(function(){
@@ -251,6 +253,8 @@ $("#model_type").change(function(){
     $("#time").children().attr("disabled", true);
     $("#project").hide();
     $("#project").children().attr("disabled", true);
+    $("#contact").hide();
+    $("#contact").children().attr("disabled", true);
 
 
     switch($(this).val()){
@@ -270,6 +274,14 @@ $("#model_type").change(function(){
 
             $("#project").show();
             $("#project").children().attr("disabled", false);
+
+
+        break;
+         case "Contact":
+            /* $("#requestinfo select:not(#project_action_action_type, #development)").hide();*/
+
+            $("#contact").show();
+            $("#contact").children().attr("disabled", false);
 
 
         break;

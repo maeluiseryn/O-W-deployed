@@ -37,7 +37,12 @@ Etat du Projet:
 <div id="address">
 
 </div>
-<div id='contact'></div>
+<div id='contact'>
+<%= select_tag :contact_type ,
+               options_for_select(contact_type
+                )%>
+</div>
+
 <div id="time">
  <%= select_tag :time_type ,
                options_for_select(time_type
