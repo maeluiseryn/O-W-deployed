@@ -157,10 +157,7 @@ $("#placement").hide();
 $("#placement").children().attr("disabled", true);
 $("#project_action_action_type").change(function(){
     switch($(this).val()){
-        case "design":
-            $("#design").show();
-            $("#requestinfo select:not(#project_action_action_type, #design)").hide();
-        break;
+        
         case "Rendez-vous":
             /* $("#requestinfo select:not(#project_action_action_type, #development)").hide();*/
             $("#placement").hide();
