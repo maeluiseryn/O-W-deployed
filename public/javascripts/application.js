@@ -143,24 +143,104 @@ $("#model_type").live("change", function(e) {
   });
 });
 $(document).ready(function(){
+$("#rendezvous").hide();
+$("#rendezvous").children().attr("disabled", true);
+$("#remark").hide();
+ $("#remark").children().attr("disabled", true);
+$("#offre").hide();
+$("#offre").children().attr("disabled", true);
+$("#description").hide();
+$("#description").children().attr("disabled", true);
+$("#production").hide();
+$("#production").children().attr("disabled", true);
+$("#placement").hide();
+$("#placement").children().attr("disabled", true);
 $("#project_action_action_type").change(function(){
     switch($(this).val()){
         case "design":
             $("#design").show();
             $("#requestinfo select:not(#project_action_action_type, #design)").hide();
         break;
-        case "development":
-            $("#development").show();
+        case "Rendez-vous":
+            /* $("#requestinfo select:not(#project_action_action_type, #development)").hide();*/
+            $("#placement").hide();
+            $("#production").hide();
+            $("#description").hide();
+            $("#offre").hide();
+            $("#remark").show();
+            $("#remark").children().attr("disabled", false);
+            $("#rendezvous").show();
+            $("#rendezvous").children().attr("disabled", false);
 
-            $("#requestinfo select:not(#project_action_action_type, #development)").hide();
+
         break;
-        case "other":
-            $("#other").show();
-            $("#requestinfo select:not(#project_action_action_type, #other)").hide();
+        case "Offre":
+            $("#placement").hide();
+             $("#production").hide();
+            $("#description").hide();
+            $("#rendezvous").hide();
+            $("#offre").show();
+            ("#offre").children().attr("disabled", false);
+            $("#remark").show();
+            $("#remark").children().attr("disabled", false);
+
+           /* $("#requestinfo select:not(#project_action_action_type, #other)").hide();*/
         break;
-        case "none":
-            $("#requestinfo select:not(#project_action_action_type)").hide();
+        case "Autres":
+           $("#placement").hide();
+            $("#production").hide();
+            $("#rendezvous").hide();
+            $("#offre").hide();
+            $("#description").show();
+            $("#description").children().attr("disabled", false);    
+            $("#remark").show();
+            $("#remark").children().attr("disabled", false);
+
+           /* $("#requestinfo select:not(#project_action_action_type, #other)").hide();*/
+        break;
+         case "Production":
+           $("#placement").hide();
+           $("#offre").hide();
+           $("#rendezvous").hide();
+           $("#description").hide();
+           $("#production").show();
+           $("#production").children().attr("disabled", false);
+           $("#remark").show();
+           $("#remark").children().attr("disabled", false);
+           /* $("#requestinfo select:not(#project_action_action_type, #other)").hide();*/
+        break;
+         case "Placement":
+
+           $("#offre").hide();
+           $("#rendezvous").hide();
+           $("#description").hide();
+           $("#production").hide();
+           $("#placement").show();
+           $("#placement").children().attr("disabled", false);
+           $("#remark").show();
+           $("#remark").children().attr("disabled", false);
+           /* $("#requestinfo select:not(#project_action_action_type, #other)").hide();*/
+        break;
+
+        case "Choisir type d'action":
+            $("#offre").hide();
+            $("#rendezvous").hide();
+            $("#remark").hide();
+            $("#description").hide();
+            $("#production").hide();
+            $("#placement").hide();
         break;
     }
 });
+jQuery(function($) {
+  // when the #search field changes
+  $("#search").change(function() {
+    // make a POST call and replace the content
+    $.post("new_search &search=hello&model_type=Client", function(data) {
+      $("#results").html(data);
+    });
+  });
+})
+
 });
+

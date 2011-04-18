@@ -82,9 +82,11 @@ class ProjectsController < ApplicationController
       if @project.valid?
          define_path
         # current_user.projects<<@project
-         @project.create_home_directory(@public_path)
+
          @project.activated
          @project.save
+         @project.create_home_directory(@public_path)
+
          @project.client.activate_with_project_creation
 
         format.html { redirect_to(@project, :notice => 'Project was successfully created.') }

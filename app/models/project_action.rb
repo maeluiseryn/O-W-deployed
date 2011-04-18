@@ -1,9 +1,15 @@
 class ProjectAction < ActiveRecord::Base
   include AASM
-   ACTION_TYPE=["none","development","design","Rendez-vous","Offre de Prix","Emission de Facture","Production","Placement"]
+   ACTION_TYPE=["Choisir type d'action","Rendez-vous","Offre","Production","Placement","Autres"] #emission de facture trouver un truc
+   PRODUCING_SOCIETY=["Interwindows","Prowood"]
    belongs_to :user
    belongs_to :project
+
    scope :open_actions , :conditions => [ "action_state == 'open'" ]
+   scope :failed_actions , :conditions => [ "action_state == 'failure'" ]
+   scope :succeeded_actions , :conditions => [ "action_state == 'success'" ]
+   #scope :invoice_action , :conditions => [ "action_type == 'facturation'" ]
+
    aasm_column :action_state # defaults to aasm_state
 
        aasm_initial_state :open
@@ -25,11 +31,15 @@ class ProjectAction < ActiveRecord::Base
    def self.get_action_type
      ACTION_TYPE
    end
+   def self.get_producing_society
+     PRODUCING_SOCIETY
+   end
    def success_or_failure(result)
-     if result='success'
+      self.action_end=Date.today
+     if result=='success'
        self.succeed
        self.save
-     elsif result='failure'
+     elsif result=='failure'
        self.failed
        self.save
      end

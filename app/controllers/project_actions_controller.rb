@@ -54,6 +54,9 @@ class ProjectActionsController < ApplicationController
     @project=Project.find(params[:project_action][:project_id])
     @project_action = ProjectAction.new(params[:project_action])
     @project_action.user_id=current_user.id
+    if @project_action.description.blank?
+       @project_action.description="#{@project_action.project.project_ref_string} #{@project_action.action_type}"
+    end
     respond_to do |format|
       if @project_action.save
          @project_action.project_state=@project_action.project.aasm_current_state
@@ -98,6 +101,7 @@ class ProjectActionsController < ApplicationController
   def success_or_failure
     @project_action=ProjectAction.find(params[:id])
     @project_action.success_or_failure(params[:success_failure])
+
     redirect_to request.referer
   end
 end

@@ -38,7 +38,6 @@ aasm_column :project_state # defaults to aasm_state
     aasm_state :waiting_payment # not sure
     aasm_state :production
     aasm_state :placement
-    aasm_state :closed
     aasm_state :waiting
     aasm_state :archive #conflict with incomplete => archive is a flag for file_system_storage+deletion so no project in the db have archive as state
     aasm_state :close
@@ -60,17 +59,21 @@ aasm_column :project_state # defaults to aasm_state
        transitions :to => :placement , :from => [:production] ,:guard =>:is_eighty_percent_paid?
     end
     aasm_event :closed do
-      transitions :to => :close, :from => [:created, :active, :waiting] ,:guard =>:hundred_percent_paid_and_no_open_actions?
+      transitions :to => :close, :from => [:placement] ,:guard =>:hundred_percent_paid_and_no_open_actions?
+    end
+    aasm_event :lost do
+       transitions :to => :close, :from => [:active ,:waiting,:offer]
     end
     aasm_event :to_archive do
-      transitions :to => :archive, :from => [:closed]
+      transitions :to => :archive, :from => [:close]
     end
     aasm_event :to_s_a_v do
-      transitions :to => :after_sales_service, :from => [:closed]
+      transitions :to => :after_sales_service, :from => [:close]
     end
     def create_home_directory(public_path)
     self.home_directory=File.join("#{self.client.home_directory}/","p#{self.project_ref.to_s}")
     ServerFileOperation.create_directory({:path=>"#{self.client.home_directory}",:name=>"p#{self.project_ref.to_s}"},public_path)
+    self.save
 
   end
   def self.create_home_directory(home_directory,public_path)
@@ -165,4 +168,11 @@ aasm_column :project_state # defaults to aasm_state
       true
     end
   end
+ # def invoice_action
+  #  self.project_actions.create :action_type=>'facturation' , :project_id=>self.id , :description=>"#{self.project_ref_string} facturation"
+  #end
+   #def invoice_action_close
+    #invoice_action=self.project_actions
+    #invoice_action.save
+  #end
 end
