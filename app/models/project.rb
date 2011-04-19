@@ -24,9 +24,11 @@ define_index do
       set_property :min_infix_len => 3
       indexes client_id
       indexes project_ref
+      indexes project_state
+      indexes project_type
       indexes client.surname , :as => :client_surname
       indexes client.name ,:as=>:client_name
-      has  created_at, updated_at , project_state
+      has  created_at, updated_at 
 end
 aasm_column :project_state # defaults to aasm_state
 

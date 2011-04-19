@@ -30,7 +30,8 @@ accepts_nested_attributes_for :addresses
      
       indexes client_type, :sortable =>true
       indexes id
-      has  created_at, updated_at , client_state
+      indexes  client_state
+      has  created_at, updated_at 
 
 end
 

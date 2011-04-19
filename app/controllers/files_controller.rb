@@ -2,10 +2,10 @@
 
    before_filter :define_path
 
-   def download
+   def download #changed file path to file url + rails.root
     file= UploadedFile.find(params[:id])
     if file.file_exist_on_disk?
-      send_file file.path , :type =>file.content_type , :filename => file.filename ,:disposition =>file.disposition
+      send_file Rails.root.to_s+'/public'+file.file_url , :type =>file.content_type , :filename => file.filename ,:disposition =>file.disposition
     else
       file.destroy
       redirect_to files_path , :flash => { :error => "Sorry , The file doesn't exist on disk  " }

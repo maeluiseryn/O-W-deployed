@@ -12,7 +12,8 @@ class Contact < ActiveRecord::Base
       set_property :min_infix_len => 3
       indexes description
       indexes contact_data
-      has  created_at, updated_at , genre
+      indexes genre
+      has  created_at, updated_at
   end
 
 def get_contact_type

@@ -226,3 +226,10 @@ background-color: #f5f5f5;
       }
 #fiche_de_rendez_vous tbody tr:nth-child(2n) td, tbody tr.even td { background:none}
 /*#clients_table tbody tr:nth-child(2n) td, tbody tr.even td { background:red}*/
+.valign{
+    margin-top:10px;
+}
+#search_page select {width: 120px}
+
+#time select {width:58px ;}
+#time_type select{width:120px; }

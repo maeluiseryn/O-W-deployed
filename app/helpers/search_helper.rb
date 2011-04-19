@@ -24,9 +24,21 @@ module SearchHelper
     [['Tous','all']]+Contact::CONTACT_TYPE
   end
   def time_type
-    [['Modifier',:created_at],['Creer',:updated_at]]
+    [['Creer',:created_at],['Modifier',:updated_at]]
   end
   def created
     [['jours',:day],['semaines',:weak],['mois',:month],['ans',:year]]
+  end
+  def link_for_model_options_search(model_type)
+     if model_type=='Client'
+       link_to_function('option client','$("#client").show(); $("#client").children().attr("disabled", false);')
+     elsif  model_type=='Project'
+       link_to_function('option Projet','$("#project").show(); $("#project").children().attr("disabled", false);')
+     elsif  model_type=='Address'
+       link_to_function('option Address','$("#address").show(); $("#address").children().attr("disabled", false);')
+     elsif  model_type=='UploadedFiles'
+     elsif  model_type=='Contact'
+     end
+
   end
 end

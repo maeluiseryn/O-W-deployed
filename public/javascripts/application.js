@@ -241,6 +241,8 @@ $(document).ready(function(){
     $("#project").children().attr("disabled", true);
     $("#contact").hide();
     $("#contact").children().attr("disabled", true);
+    $("#general").hide();
+    $("#general").children().attr("disabled", true);
 
 
 $("#model_type").change(function(){
@@ -252,8 +254,10 @@ $("#model_type").change(function(){
     $("#project").children().attr("disabled", true);
     $("#contact").hide();
     $("#contact").children().attr("disabled", true);
-
-
+    $("#general").hide();
+    $("#general").children().attr("disabled", true);
+    $("#optiongeneral").show();
+    $("#optiontemps").show();
     switch($(this).val()){
 
 
