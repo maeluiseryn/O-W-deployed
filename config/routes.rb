@@ -44,6 +44,9 @@ OW::Application.routes.draw do
     resources :projects
   end
   match "message_box/:id/delete_trashed_comments"=>"message_boxes#trashed_comments" ,:as=>:delete_trashed_comments
+  match "message_box/:id/archive_comments"=>"message_boxes#archived_comments" ,:as=>:archive_yml_comments
+  match "/comments/:id/salvage"=>"comments#salvage_comment",:as=>:salvage_comment
+  match "/comments/:id/restore"=>"comments#restore_comment",:as=>:restore_comment
   match "/comments/:id/read"=>"comments#read_comment",:as=>:read_comment
   match "/comments/:id/archive"=>"comments#archive_comment",:as=>:archive_comment
   match "/comments/:id/trash"=>"comments#trash_comment",:as=>:trash_comment
@@ -105,6 +108,9 @@ OW::Application.routes.draw do
   match '/file_browser/delete' => 'file_browser#delete', :as => :delete_file_file_browser
   match '/file_browser/dir/create'  => 'file_browser#create_dir',  :as => :create_dir_file_browser
   match '/file_browser/file/create'  => 'file_browser#create_file',  :as => :create_file_file_browser
+  match '/file_browser/archive'  => 'file_browser#list_for_archive',  :as => :file_browser_archive
+  match '/file_browser/retrieve_archive'  => 'file_browser#retrieve_archive',  :as => :file_browser_retrieve_archive
+
   get "welcome/index"
   resources :supports, :only => [:new, :create]
   # The priority is based upon order of creation:

@@ -1,10 +1,14 @@
 <% form_tag search_search_result_path(:format=>:js),:remote=>true ,:method => 'get' do %>
     <div id="search">
-    <p>
+     <div class="span-8">
 
       <%= text_field_tag :search, params[:search] %>
-      <%= submit_tag "Chercher", :name => nil %> </p>
-
+      <%= submit_tag "Chercher", :name => nil %>
+   </div><div class="span-5'">
+      <%=link_to_function('options temps','$("#time").show(); $("#time").children().attr("disabled", false); $("#optiontemps").hide();',:id=>'optiontemps')%>
+      <%=link_to_function('options generales','$("#general").show(); $("#general").children().attr("disabled", false);  $("#optiongeneral").hide();',:id=>'optiongeneral')%>
+      
+   </div>
     <%= render :partial => 'shared/search_options'  %>
       
     <%end%>

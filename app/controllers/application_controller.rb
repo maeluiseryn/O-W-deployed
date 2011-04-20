@@ -24,7 +24,13 @@ before_filter :set_time_zone
     @current_url = params[:dir] || @uploads_url
     @current_path = File.join(@public_path, @current_url)+ '/*'
    end
-
+   def define_archive
+    @public_path = File.join(Rails.root.to_s, 'public')
+    @uploads_url = '/archives'
+    @upload_path = File.join(@public_path, @uploads_url)
+    @current_url = params[:dir] || @uploads_url
+    @current_path = File.join(@public_path, @current_url)+ '/*'
+   end
 
   def set_time_zone #Time.zone=+1 c.created_at.in_time_zone
     Time.zone = +1

@@ -72,5 +72,9 @@ def self.save(post_upload,public_path,model)
   def self.list(current_path,public_path,current_url)
      return ServerFileOperation.list(current_path,public_path,current_url)
   end
+  def self.retrieve_archive(path)
+    comments=ServerFileOperation.retrieve_collection_from_yml_file(path)
+    return comments
+  end
 end
 

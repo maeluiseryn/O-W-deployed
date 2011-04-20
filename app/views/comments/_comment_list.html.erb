@@ -6,6 +6,6 @@
    <td><%= comment.comment_state %></td>
    <td><%=I18n.l(comment.created_at) %></td>
   <td><%= link_to 'Voir', comment %></td>
-  <td><%= link_to 'Modifier', edit_comment_path(comment) unless correct_current_user(comment)==false %></td>
-  <td><%= link_to 'Détruire', comment, :confirm => 'Êtes-vous sûre?', :method => :delete %></td>
+  <td><%= link_to 'Modifier', edit_comment_path(comment) unless correct_current_user(comment)==false || comment.comment_state !='unread' %>
+  
 </tr>

@@ -179,5 +179,33 @@ class ServerFileOperation
   end
    def self.directory_exist_on_disk (directory)
      File.directory? directory
-  end
+   end
+
+   def self.archive_collection_to_yml_file(collection)
+     hash=Hash.new
+     array=Array.new
+     if !collection.empty?
+       hash[:model]=collection[0].class.to_s
+       collection.each do |record|
+         array<<record.attributes
+       end
+     hash[:data]=array
+     File.open(Rails.root.to_s+'/public/archives/'+collection.first.class.to_s+"-"+Date.today.to_s+'.yml','wb'){|f| f.write(hash.to_yaml)}
+     end
+   end
+
+   def self.retrieve_collection_from_yml_file(path)
+     full_path=Rails.root.to_s+"/public"+path
+     array=Array.new
+     yaml_file=YAML.load(File.open(full_path,'r'){|f| f.read()})
+     model_name= yaml_file[:model].constantize
+     yaml_file[:data].each do |rec|
+          c=model_name.new()
+          c.attributes=rec
+          c.save
+          array<<c
+
+     end
+     array
+   end
 end

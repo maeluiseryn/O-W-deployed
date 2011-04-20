@@ -25,4 +25,11 @@ class Comment < ActiveRecord::Base
     aasm_event :to_trash do
       transitions :to => :mark_for_delete, :from => [:read, :archive ,:unread]
     end
+    aasm_event :salvage do
+      transitions :to => :read, :from => [:mark_for_delete]
+    end
+    aasm_event :restore do
+      transitions :to => :read, :from => [:archive]
+    end
+    
 end

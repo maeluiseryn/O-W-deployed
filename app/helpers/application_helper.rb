@@ -100,7 +100,7 @@ def authenticate # doublon avec users controller
                  :projects=>link_to(" Tous les Projets ", projects_path)},
 
       :Fichiers=>{:file_browser=>link_to('Explorer les fichiers',file_browser_path),
-                  :user_files=>link_to('Explorer les fichiers utilisateurs',user_files_path)},
+                  :user_files=>link_to('Explorer les fichiers utilisateurs',user_files_path),:archive=>link_to('Restaurer une archive ',file_browser_archive_path)},
       :Messages=>{:message_box=>link_to('Mes messages',message_box_path(current_user.message_box)),:new_message=>link_to('Nouveau message',
                                                                               new_message_box_comment_path(current_user.message_box))} ,
       :Recherche=>{:Global=>link_to('Globale',search_new_search_path)}}
@@ -206,6 +206,8 @@ def render_partial_collection (model)
       render :partial => "projects/project_list" ,:collection=>model,:as=>:project
    elsif model[0].instance_of? Contact
       render :partial => "shared/contact_list" ,:collection=>model,:as=>:contact
+    elsif model[0].instance_of? Comment
+      render :partial => "comments/comment_list" ,:collection=>model,:as=>:comment
    end
 end
 #def link_if_image(file)
@@ -244,5 +246,14 @@ end
         return false
       end
     end
+  end
+  def correct_current_user_message_box(box)
+    if box.box_owner==current_user
+      return true
+    else
+      return false
+
     end
+
+  end
 end

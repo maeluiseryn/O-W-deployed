@@ -89,4 +89,17 @@ class MessageBoxesController < ApplicationController
     end
     redirect_to request.referer
   end
+   def archived_comments
+    array=Array.new
+    @message_box=MessageBox.find(params[:id])
+    @message_box.comments.each do |comments|
+      if comments.aasm_current_state==:archive
+        array<<comments
+        comments.destroy
+      end
+
+      end
+    ServerFileOperation.archive_collection_to_yml_file(array)
+    redirect_to request.referer
+  end
 end

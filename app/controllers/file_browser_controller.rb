@@ -1,6 +1,19 @@
 class FileBrowserController < ApplicationController
   
   before_filter :define_path
+  def list_for_archive
+    session[:model_id]=nil
+    session[:model]=nil
+    define_archive
+    list=UploadedFile.list(@current_path,@public_path,@current_url)
+    @dirs=list[:dir]
+    @files=list[:file]
+    @breadcrumb=list[:breadcrumb]
+  end
+  def retrieve_archive
+    @comments=UploadedFile.retrieve_archive(params[:archive_url])
+    
+  end
 
   def list
     session[:model_id]=nil

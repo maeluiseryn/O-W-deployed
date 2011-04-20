@@ -1,4 +1,6 @@
+<br />
 <div class="span-11" id="search_page">
+
 <div id='searchoption'>
 <% if params[:model_type].nil? %>
 <div class="valign span-4">  Rechercher un ? &nbsp</div>
@@ -12,8 +14,6 @@
   <%=link_for_model_options_search params[:model_type] %>
  <%end%>
 
-<%=link_to_function('options temps','$("#time").show(); $("#time").children().attr("disabled", false); $("#optiontemps").hide();',:id=>'optiontemps')%>
-<%=link_to_function('options generales','$("#general").show(); $("#general").children().attr("disabled", false);  $("#optiongeneral").hide();',:id=>'optiongeneral')%>
 <div id="client">
 <div class="valign span-4">
 Type de Client:
@@ -21,7 +21,7 @@ Type de Client:
 <div class="span-4">
   <%= select_tag :client_type ,
                options_for_select(client_type
-                )%><br />
+                )%>
 </div>
 <div class="valign span-4">
 Etat du Client:
@@ -33,14 +33,14 @@ Etat du Client:
 </div>
 </div>
 <div id="project">
-  Type de Projet:
-  <%= select_tag :project_type ,
+<div class="valign span-4">  Type de Projet:</div>
+<div class="span-4">  <%= select_tag :project_type ,
                options_for_select(project_type
-                )%><br />
-Etat du Projet:
-  <%= select_tag :project_state ,
+                )%></div>
+<div class="valign span-4">Etat du Projet:</div>
+  <div class="span-4"> <%= select_tag :project_state ,
                options_for_select(project_state
-                )%>
+                )%></div>
 
 </div>
 
@@ -51,10 +51,14 @@ Etat du Projet:
 
 </div>
 <div id='contact'>
-Type de Contact:
+<div class="valign span-4">
+  Type de Contact:</div>
+  <div class="span-4">
+
 <%= select_tag :contact_type ,
                options_for_select(contact_type
                 )%>
+</div>
 </div>
 
 <div id="time">

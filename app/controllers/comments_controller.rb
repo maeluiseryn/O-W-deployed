@@ -112,4 +112,16 @@ class CommentsController < ApplicationController
     @comment.save
     redirect_to request.referer
   end
+  def salvage_comment
+    @comment =Comment.find(params[:id])
+    @comment.salvage
+    @comment.save
+    redirect_to request.referer
+  end
+  def restore_comment
+    @comment =Comment.find(params[:id])
+    @comment.restore
+    @comment.save
+    redirect_to request.referer
+  end
 end
