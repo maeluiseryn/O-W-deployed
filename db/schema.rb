@@ -38,8 +38,8 @@ ActiveRecord::Schema.define(:version => 20110418132532) do
     t.string   "client_type"
     t.string   "society"
     t.string   "home_directory"
-    t.string   "disponibility"
     t.boolean  "delta",          :default => true, :null => false
+    t.string   "disponibility"
   end
 
   create_table "comments", :force => true do |t|

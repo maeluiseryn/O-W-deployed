@@ -202,9 +202,9 @@ class ServerFileOperation
      yaml_file[:data].each do |rec|
           c=model_name.new()
           c.attributes=rec
-          c.save
+          if c.save
           array<<c
-
+          end
      end
      array
    end

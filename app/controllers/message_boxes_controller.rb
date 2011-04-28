@@ -1,4 +1,5 @@
 class MessageBoxesController < ApplicationController
+  before_filter :authenticate
   # GET /message_boxes
   # GET /message_boxes.xml
   def index

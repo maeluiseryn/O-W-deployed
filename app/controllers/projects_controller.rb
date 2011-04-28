@@ -1,4 +1,8 @@
 class ProjectsController < ApplicationController
+   before_filter :authenticate
+   before_filter :user_is_following_project , :only=>[:edit]
+
+
   # GET /projects
   # GET /projects.xml
   def current_user_projects
@@ -203,6 +207,10 @@ class ProjectsController < ApplicationController
       format.js
     end
   end
-
+private
+   def user_is_following_project
+     @project = Project.find(params[:id])
+     redirect_to(project_path params[:id],:notice =>'pas authoriser a modifer ce projet') unless( @project.users.include?(current_user)|| current_user.is_admin?)
+  end
 
 end

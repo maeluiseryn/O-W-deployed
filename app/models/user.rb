@@ -107,7 +107,13 @@ aasm_column :user_state # defaults to aasm_state
     self.save(:validate =>false)
     end
   end
-
+def is_admin?
+  if self.aasm_current_state == :admin
+   true
+  else
+   false
+  end
+  end
  private
 
  def encrypt_password
@@ -147,5 +153,6 @@ end
    message_box.save
   
  end
+
 
 end

@@ -1,4 +1,5 @@
 class ClientsController < ApplicationController
+  before_filter :authenticate
   # GET /clients
   # GET /clients.xml
   def current_user_clients

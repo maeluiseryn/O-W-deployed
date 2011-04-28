@@ -1,4 +1,5 @@
 class InvoicesController < ApplicationController
+  before_filter :authenticate
   # GET /invoices
   # GET /invoices.xml
   def index

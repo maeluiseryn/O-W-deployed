@@ -1,4 +1,5 @@
 class SearchController < ApplicationController
+  before_filter :authenticate
   def new_search
 
 

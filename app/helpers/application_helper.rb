@@ -66,7 +66,10 @@ end
 def authenticate # doublon avec users controller
      deny_access unless signed_in?
  end
+def is_admin
 
+     redirect_to( request.referer,:notice =>'not authorized to access this page') unless current_user.is_admin?
+end
   def populate_menu_ul
     ret=''.html_safe
     @arr=[link_to('1', users_path),link_to('2',root_path),link_to('3',user_path(current_user))]
@@ -238,9 +241,9 @@ end
     else
       return false
     end
-    elsif model.respond_to?('user')
+    elsif model.respond_to?('user') ##marche pas
       if
-      model.user.user_id==current_user.id
+      model.user.user_id==current_user.id ##  marche pas
         return true
       else
         return false

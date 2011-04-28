@@ -1,5 +1,5 @@
 class FileBrowserController < ApplicationController
-  
+  before_filter :authenticate
   before_filter :define_path
   def list_for_archive
     session[:model_id]=nil

@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  before_filter :authenticate
   def new
     @title='User Sign-In'
     respond_to do |format|

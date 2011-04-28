@@ -1,5 +1,5 @@
  class FilesController < ApplicationController
-
+   before_filter :authenticate
    before_filter :define_path
 
    def download #changed file path to file url + rails.root

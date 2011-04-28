@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
-  before_filter :authenticate , :only=>[:edit, :update ,:show]
+  before_filter :authenticate #, :only=>[:edit, :update ,:show]
   before_filter :correct_user, :only => [:edit, :update]
+  before_filter :is_admin, :only => [:index]
   def index
     @title='Users List'
     @users = User.order('id')
@@ -117,7 +118,8 @@ end
    #end
   def correct_user
      @user = User.find(params[:id])
-     redirect_to(users_path,:notice =>'not authorized to access this user') unless current_user?(@user)
+     redirect_to(users_path,:notice =>'not authorized to access this user') unless( current_user?(@user)|| current_user.is_admin?)
   end
+ 
 
 end

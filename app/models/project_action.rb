@@ -35,13 +35,19 @@ class ProjectAction < ActiveRecord::Base
      PRODUCING_SOCIETY
    end
    def success_or_failure(result)
+
       self.action_end=Date.today
-     if result=='success'
+     if result=='succeed'
        self.succeed
        self.save
-     elsif result=='failure'
+
+       notice='success'
+
+     elsif result=='failed'
        self.failed
        self.save
+        notice='failure'
+       return notice
      end
    end
 

@@ -1,4 +1,5 @@
 class ProjectActionsController < ApplicationController
+ before_filter :authenticate
   # GET /project_actions
   # GET /project_actions.xml
   def index
@@ -100,8 +101,9 @@ class ProjectActionsController < ApplicationController
   end
   def success_or_failure
     @project_action=ProjectAction.find(params[:id])
-    @project_action.success_or_failure(params[:success_failure])
-
-    redirect_to request.referer
+    notice=""
+    notice=notice+@project_action.success_or_failure(params[:success_failure]).to_s
+    notice=notice+params[:id].to_s
+    redirect_to(request.referer ,:notice=>notice)
   end
 end
