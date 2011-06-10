@@ -1,3 +1,4 @@
+#encoding: UTF-8
 class ProjectsController < ApplicationController
    before_filter :authenticate
    before_filter :user_is_following_project , :only=>[:edit]
@@ -109,12 +110,16 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       if @project.update_attributes(params[:project])
-         if !params[:project][:add_remark].nil?
+        if params[:price_set]=='1'
+         if !params[:project][:add_remark].blank?
 
              @project.remark=@project.remark+"\nRemarque ajoutee: "+params[:project][:add_remark]
-             @project.save
-          end
-        format.html { redirect_to(@project, :notice => 'Project was successfully updated.'+notice) }
+
+         end
+         @project.accepted
+         @project.save
+        end
+        format.html { redirect_to(@project, :notice => 'Project was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -165,12 +170,12 @@ class ProjectsController < ApplicationController
    def send_fiche_de_rendez_vous_mail
      project=Project.find params[:id]
      project.send_fiche_de_rendez_vous
-     redirect_to(request.referer,:notice =>"Fiche de rendez-vous envoy&eacute;e")
+     redirect_to(request.referer,:notice =>"Fiche de rendez-vous envoyé")
    end
    def send_sav_form_mail
      project=Project.find params[:id]
      project.send_sav_form
-    redirect_to(request.referer,:notice =>"Formulaire de service apres-vente envoy&eacute;e")
+    redirect_to(request.referer,:notice =>"Formulaire de service apres-vente envoyé")
    end
   def activate_project
     @project =Project.find(params[:id])
@@ -191,7 +196,7 @@ class ProjectsController < ApplicationController
     @user.projects<<@project
     @user.clients<<@project.client
     @project.project_to_offer
-    redirect_to request.referer ,:notice=>"le project #{@project.project_ref_string} est assign&eacute; &#224; #{@user }"
+    redirect_to request.referer ,:notice=>"le project #{@project.project_ref_string} est assigné &#224; #{@user }"
   end
   def close_project
     @project =Project.find(params[:id])

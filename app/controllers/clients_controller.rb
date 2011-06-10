@@ -24,8 +24,8 @@ class ClientsController < ApplicationController
     session[:model]=nil
     session[:model_id]=nil
 
-    @clients = Client.all
-
+    #@clients = Client.all
+    @clients=Client.paginate(:page=>params[:page])
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @clients }
@@ -82,6 +82,7 @@ class ClientsController < ApplicationController
 
         define_path
         @client.create_home_directory(@public_path)
+      end
        if @client.save
        # client_user=UserClient.assign_join_type_to_user_client(current_user.id,@client.id,"created_by_#{current_user.name}")
         format.html { redirect_to(@client, :notice => "Client was successfully created.") }
@@ -90,7 +91,7 @@ class ClientsController < ApplicationController
         format.html { render :action => "new" }
         format.xml  { render :xml => @client.errors, :status => :unprocessable_entity }
       end
-    end
+
   end
 end
 
@@ -115,6 +116,8 @@ end
   # DELETE /clients/1.xml
   def destroy
     @client = Client.find(params[:id])
+    define_path
+    ServerFileOperation.delete(@client.home_directory,@public_path)
     @client.destroy
 
     respond_to do |format|

@@ -43,13 +43,7 @@
  <div  class="span-18">
     <%="remarque :"+@project.remark%>
   </div>
-<div id="assign_project">
-<%= form_tag(assign_project_path(@project) ) do %>
-  <%= label_tag(:user_id, "Assigner à :") %>
-  <%= select_tag(:user_id,options_for_select(user_name_list)) %>
-  <%= submit_tag("Assigner") %>
-<% end %>
-</div>
+<%= render :partial => 'assign_project' unless !current_user.is_admin? %>
 <div id="project_price'"></div>
 <div id="info" class="span-18">
         <ul>
@@ -177,7 +171,7 @@
       <%= link_to 'Projet accepter js ',set_project_price_path(@project,:format=>:js),:remote=>true,:tabindex=>'12' %>
       </li>
          <li>
-      <%= link_to 'nouvel action ',new_project_project_action_path(@project) %>
+      <%= link_to 'Nouvelle action ',new_project_project_action_path(@project) %>
       </li>
       </ul>
     </div>

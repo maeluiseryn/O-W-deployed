@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :authenticate #, :only=>[:edit, :update ,:show]
+  before_filter :authenticate , :only=>[:edit, :update ,:show]
   before_filter :correct_user, :only => [:edit, :update]
   before_filter :is_admin, :only => [:index]
   def index
@@ -22,6 +22,8 @@ class UsersController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
+    define_path
+    ServerFileOperation.delete(@user.home_directory,@public_path)
     @user.destroy
 
     respond_to do |format|
@@ -34,7 +36,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
-        format.html { redirect_to(@user, :notice => 'User was successfully updated.') }
+        format.html { redirect_to(@user, :notice => 'Utilisateur mis a jour avec succes.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -68,7 +70,7 @@ end
          define_path
          @user.create_home_directory(@public_path)
          @user.save
-         format.html { redirect_to(@user, :notice => 'User was successfully created.') }
+         format.html { redirect_to(@user, :notice => 'Utilisateur cree avec succes.') }
          format.xml  { render :xml => @user, :status => :created, :location => @user }
        else
          format.html { render :action => "new" }
@@ -118,7 +120,7 @@ end
    #end
   def correct_user
      @user = User.find(params[:id])
-     redirect_to(users_path,:notice =>'not authorized to access this user') unless( current_user?(@user)|| current_user.is_admin?)
+     redirect_to(users_path,:notice =>'Accés non autorisé') unless( current_user?(@user)|| current_user.is_admin?)
   end
  
 

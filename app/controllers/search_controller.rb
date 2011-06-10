@@ -95,6 +95,7 @@ class SearchController < ApplicationController
         # at last...
          end
     end
+    if params[:time_opt]=='1' #!!!!!! good but not yet tested
     if !params[:time_type].nil?
        time_option=make_time_search_options
        if options[:with].nil?
@@ -107,6 +108,7 @@ class SearchController < ApplicationController
 
          end
        end
+    end
     end
     if !params[:per_page].nil?
 

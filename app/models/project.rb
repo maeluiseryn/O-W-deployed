@@ -51,7 +51,7 @@ aasm_column :project_state # defaults to aasm_state
     aasm_event :to_offer do
       transitions :to => :offer, :from => [:active ,:waiting], :guard => :project_user_not_empty?
     end
-    aasm_event :accepted do
+    aasm_event :accepted ,:error => :error_raised do
        transitions :to => :waiting_payment, :from => [:offer , :waiting] ,:guard => :is_price_defined?
     end
     aasm_event :in_production_schedule do
@@ -177,4 +177,8 @@ aasm_column :project_state # defaults to aasm_state
     #invoice_action=self.project_actions
     #invoice_action.save
   #end
+def error_raised(error)
+
+logger.debug("Erreur AASM : #{error.message}")
+end
 end

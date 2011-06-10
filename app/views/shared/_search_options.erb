@@ -81,7 +81,7 @@ Etat du Client:
                 )%>
 </div>
  <div class='valign span-2'>
-<%=link_to_function('Cacher','$("#time").hide(); $("#time").children().attr("disabled", true);  $("#optiontemps").show();')%>
+<%=link_to_function('Cacher','$("#time").hide(); $("#time").children().attr("disabled", true);  $("#optiontemps").show();$("#time_opt:hidden").val(0);')%>
 </div>
 
 
@@ -91,7 +91,7 @@ Etat du Client:
                options_for_select(per_page_result
                 )%></div>
   <div class='valign span-2'>
-<%=link_to_function('Cacher','$("#general").hide(); $("#general").children().attr("disabled", true);  $("#optiongeneral").show();')%>
+<%=link_to_function('Cacher','$("#general").hide(); $("#general").children().attr("disabled", true);  $("#optiongeneral").show();$("#gen_opt:hidden").val(0);')%>
 </div>
 </div>
 

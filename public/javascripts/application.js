@@ -173,11 +173,11 @@ $("#project_action_action_type").change(function(){
         break;
         case "Offre":
             $("#placement").hide();
-             $("#production").hide();
+            $("#production").hide();
             $("#description").hide();
             $("#rendezvous").hide();
             $("#offre").show();
-            ("#offre").children().attr("disabled", false);
+            $("#offre").children().attr("disabled", false);
             $("#remark").show();
             $("#remark").children().attr("disabled", false);
 

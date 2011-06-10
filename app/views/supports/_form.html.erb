@@ -1,6 +1,6 @@
 <% form_for @support, :url => { :action => "create" }, :html => { :method => :post } do |f| %>
 	  <p>
-	    <%= f.label "Name" %>
+	    <%= f.label "Nom" %>
 	  </p>
 
 	  <p>
@@ -18,7 +18,7 @@
 	    <%= f.label "Type" %>
 	  </p>
 	  <p>
-	    <%= f.select :support_type, options_for_select(["Bug", "Ask", "Idea"]) %>
+	    <%= f.select :support_type, options_for_select(["Bug", "Demande", "Idée"]) %>
 	  </p>
 	  <p>
 	    <%= f.label "Details" %>	  </p>
