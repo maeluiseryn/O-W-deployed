@@ -15,7 +15,9 @@
      <h4>Prix du projet:
   <%=@project.project_price%></h4>
       <h5>Reste a payé:
-  <%=@project.project_price-get_remaining_to_pay(@project)unless @project.project_price.nil?%></h5>
+  <%#=@project.project_price-get_remaining_to_pay(@project)unless @project.project_price.nil?%>
+      <%= project_remaining_to_pay(@project)%>
+      </h5>
   <%end %>
   </div>
 
