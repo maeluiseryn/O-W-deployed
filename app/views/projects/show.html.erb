@@ -153,7 +153,7 @@
 <%= link_to'Formulaire SAV par mail ' ,send_SAV_form_mail_path(@project),:tabindex=>'7'%>
        </li>
 <li>
-<%= link_to'Facture' , new_project_invoice_path(@project),:tabindex=>'8'%>
+<%= link_to'Factures du projet' , project_invoices_path(@project),:tabindex=>'8'%>
        </li>
         <li>
 <%= link_to'Activer project' , activate_project_path(@project),:tabindex=>'9'%>
