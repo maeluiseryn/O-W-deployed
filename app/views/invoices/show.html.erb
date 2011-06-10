@@ -52,7 +52,7 @@
 <% content_for :sidebar do %>
   <div id="vertmenu">
       <ul id="sidebarmenu1">
-      <% if !@invoice.aasm_current_state==:paid %>
+      <% if @invoice.aasm_current_state!=:paid %>
         <li>
           <%= link_to 'Nouveau paiement js', new_payments_path(@invoice,:format=>:js),:remote=>true %>
        </li>
