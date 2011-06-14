@@ -259,5 +259,9 @@ end
     end
 
   end
+  def new_line_in_text string_text
+    string_text.gsub(/\n/,'<br/>').html_safe
+
+  end
  
 end
