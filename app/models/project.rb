@@ -123,7 +123,7 @@ aasm_column :project_state # defaults to aasm_state
     end
   end
    def is_eighty_percent_paid?
-    if self.invoices.paid_invoices.sum(:total_sum)>=(self.project_price*0.4)
+    if self.invoices.paid_invoices.sum(:total_sum)>=(self.project_price*0.8)
        true
     else
       false

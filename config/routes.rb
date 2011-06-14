@@ -50,6 +50,7 @@ OW::Application.routes.draw do
   match "/comments/:id/read"=>"comments#read_comment",:as=>:read_comment
   match "/comments/:id/archive"=>"comments#archive_comment",:as=>:archive_comment
   match "/comments/:id/trash"=>"comments#trash_comment",:as=>:trash_comment
+  match "/comments/:id/respond"=>"comments#respond_to_comment",:as=>:respond_comment
   match "/projects/:id/activate_project"=>"projects#activate_project",:as=>:activate_project
 
   match "/users/:id/activate_user"=>"users#activate_user",:as=>:activate_user
@@ -81,6 +82,7 @@ OW::Application.routes.draw do
   match '/signin', :to => 'sessions#new'
   match '/signout', :to => 'sessions#destroy'
   match '/redirect', :to =>'application#redirect_to_last_visited'
+  match '/projects/:id/facture',:to=>'projects#create_facture' ,:as=>:facture
   match '/projects/:id/fiche_de_rendez_vous',:to=>'projects#create_rendez_vous_fiche' ,:as=>:fiche_de_rendez_vous
   match '/projects/:id/fiche_de_rendez_vous_mail',:to=>'projects#send_fiche_de_rendez_vous_mail' ,:as=>:fiche_de_rendez_vous_mail
   match '/projects/:id/SAV_form' ,:to=>'projects#send_sav_form_mail',:as=>:send_SAV_form_mail

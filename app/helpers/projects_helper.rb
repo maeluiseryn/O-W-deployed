@@ -14,4 +14,12 @@ module ProjectsHelper
       project.invoices.sum(:total_sum)-project.invoices.sum(:remaining_sum)
     end
   end
+  def already_associated project
+    if project.users.include?(current_user)
+      true
+    else
+      false
+    end
+
+  end
 end

@@ -39,7 +39,15 @@ class CommentsController < ApplicationController
       format.xml  { render :xml => @comment }
     end
   end
+  def respond_to_comment
+    @base_comment=Comment.find(params[:id])
+    @comment=Comment.new
+    respond_to do |format|
+      format.html # new.html.erb
+      format.xml  { render :xml => @comment }
+    end
 
+  end
   # GET /comments/1/edit
   def edit
     @comment = Comment.find(params[:id])
@@ -48,11 +56,16 @@ class CommentsController < ApplicationController
   # POST /comments
   # POST /comments.xml
   def create
+    if params[:base_comment_message_box_id].nil?
     if session[:message_box_id].nil?
     box=MessageBox.find(params[:comment][:message_box_id])
+
     else
       box=MessageBox.find(session[:message_box_id])
 
+    end
+    else
+      box=MessageBox.find(params[:base_comment_message_box_id])
     end
     @comment = box.comments.new(params[:comment])
     session[:message_box_id]=nil

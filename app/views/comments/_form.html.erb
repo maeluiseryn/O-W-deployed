@@ -10,15 +10,17 @@
       </ul>
     </div>
   <% end %>
-
-
+   <% if params[:action]=='respond_to_comment' %>
+   <%= hidden_field_tag :base_comment_message_box_id, @base_comment.user.message_box.id %> 
+   <%else%>
    <%if session[:message_box_id].nil? %>
         <%= f.select(:message_box_id,get_availlable_message_box_list)  %>
    <%else%>
         <%=  f.hidden_field :message_box_id , :value =>session[:message_box_id]%>
    <%end%>
+   <%end%>
   <div class="field">
-    <%= f.label :description ,'Descrition' %><br />
+    <%= f.label :description ,'Description' %><br />
     <%= f.text_field :description %>
   </div>
   <div class="field">

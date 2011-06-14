@@ -1,5 +1,7 @@
+# encoding: UTF-8
 class MessageBoxesController < ApplicationController
   before_filter :authenticate
+  before_filter :correct_user, :only=>[:show,:edit,:destroy]
   # GET /message_boxes
   # GET /message_boxes.xml
   def index
@@ -102,5 +104,11 @@ class MessageBoxesController < ApplicationController
       end
     ServerFileOperation.archive_collection_to_yml_file(array)
     redirect_to request.referer
-  end
+   end
+   def correct_user
+     m_b=MessageBox.find(params[:id])
+     if m_b.box_type=='user_box'
+       redirect_to(request.referer,:notice =>'Accés non autorisé') unless( current_user?(m_b.box_owner)|| current_user.is_admin?)
+     end
+   end
 end

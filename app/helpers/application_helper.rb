@@ -157,15 +157,15 @@ def file_associated_with(file)
 end
 def redirect_back_to_owner_polymorphic(model)
   if model.instance_of? Address
-     link_to 'Back', model.place
+     link_to 'Retour', model.place
   elsif model.instance_of? UploadedFile
-    link_to 'Back', model.file_owner
+    link_to 'Retour', model.file_owner
   elsif model.instance_of? Contact
-    link_to 'Back', model.contact_ref
+    link_to 'Retour', model.contact_ref
   elsif model.instance_of? Comment
-    link_to 'Back', model.comment_owner
+    link_to 'Retour', model.comment_owner
   elsif model.instance_of? MessageBox
-    link_to 'Back', model.box_owner
+    link_to 'Retour', model.box_owner
   end
 end
 def redirect_back_to_owner(model)

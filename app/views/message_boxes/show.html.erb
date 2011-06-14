@@ -9,6 +9,13 @@
   <b>Box type:</b>
   <%= @message_box.box_type %>
 </p>
+<ul>
+  <li>Messages non lus (<%=unread_count @message_box.comments%>)</li>
+  <li>Messages lus (<%=read_count @message_box.comments%>)</li>
+  <li>Messages à archiver (<%=to_archive_count @message_box.comments%>)</li>
+  <li>Messages dans la corbeille (<%=to_delete_count @message_box.comments%>)</li>
+</ul>
+
 <table>
 <%=render :partial=>'comments/comment_list', :collection=>@message_box.comments ,:as=>:comment%>
 </table>

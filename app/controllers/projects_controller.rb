@@ -94,7 +94,7 @@ class ProjectsController < ApplicationController
 
          @project.client.activate_with_project_creation
 
-        format.html { redirect_to(@project, :notice => 'Project was successfully created.') }
+        format.html { redirect_to(@project, :notice => 'Projet créé avec succes.') }
         format.xml  { render :xml => @project, :status => :created, :location => @project }
       else
         format.html { render :action => "new" }
@@ -119,7 +119,7 @@ class ProjectsController < ApplicationController
          @project.accepted
          @project.save
         end
-        format.html { redirect_to(@project, :notice => 'Project was successfully updated.') }
+        format.html { redirect_to(@project, :notice => 'Projet modifié avec succes.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -167,6 +167,30 @@ class ProjectsController < ApplicationController
       end
     end
    end
+   def create_facture
+     @project=Project.find(params[:id])
+
+
+     respond_to do |format|
+        format.html do
+
+          options={:pdf => "my_pdf", # pdf will download as my_pdf.pdf
+        :layout => 'pdf', # uses views/layouts/pdf.haml
+        :save_only=>true,
+         :save_to_file =>File.join(Rails.root.to_s, "/public#{@project.home_directory}/P#{@project.client_id}C#{@project.project_ref}-#{@project.client.surname}facture.pdf"),
+        :show_as_html => params[:debug].present?}
+
+          render_with_wicked_pdf(options)
+          render :layout => 'pdf', :pdf_file=>true
+        end
+        format.xml
+        format.pdf do
+        render :pdf => "my_pdf", # pdf will download as my_pdf.pdf
+        :layout => 'pdf', # uses views/layouts/pdf.haml
+        :show_as_html => params[:debug].present? # renders html version if you set debug=true in URL
+      end
+    end
+   end
    def send_fiche_de_rendez_vous_mail
      project=Project.find params[:id]
      project.send_fiche_de_rendez_vous
@@ -185,18 +209,27 @@ class ProjectsController < ApplicationController
   end
   def follow_project
     @project=Project.find(params[:id])
-    current_user.projects<<@project
-    current_user.clients<<@project.client
-    @project.project_to_offer
-    redirect_to(request.referer ,:notice => "Association faite")
+    if @project.users.include?(current_user)
+      redirect_to(request.referer ,:notice => "Déja associé")
+    else
+      current_user.projects<<@project
+      current_user.clients<<@project.client
+      @project.project_to_offer
+      redirect_to(request.referer ,:notice => "Association faite")
+    end
   end
   def assign_project
     @user=User.find(params[:user_id])
     @project=Project.find(params[:id])
-    @user.projects<<@project
-    @user.clients<<@project.client
-    @project.project_to_offer
-    redirect_to request.referer ,:notice=>"le project #{@project.project_ref_string} est assigné &#224; #{@user }"
+     if @project.users.include?(@user)
+       redirect_to(request.referer ,:notice => "Déja assigné")
+     else
+       @user.projects<<@project
+       @user.clients<<@project.client
+       @project.project_to_offer
+       redirect_to request.referer ,:notice=>"Le projet #{@project.project_ref_string} est assigné à #{@user.name }"
+     end
+
   end
   def close_project
     @project =Project.find(params[:id])
@@ -215,7 +248,7 @@ class ProjectsController < ApplicationController
 private
    def user_is_following_project
      @project = Project.find(params[:id])
-     redirect_to(project_path params[:id],:notice =>'pas authoriser a modifer ce projet') unless( @project.users.include?(current_user)|| current_user.is_admin?)
+     redirect_to(project_path params[:id],:notice =>'Pas authorisé a modifer ce projet') unless( @project.users.include?(current_user)|| current_user.is_admin?)
   end
 
 end

@@ -163,11 +163,15 @@
   <li>
 <%= link_to'Fermer project' , close_project_path(@project),:tabindex=>'10'%>
        </li>
+
+       <% if !already_associated(@project) %>
         <li>
-      <%= (link_to 'Suivre projet ',follow_project_path(@project),:tabindex=>'11') %>
+      <%= (link_to 'Suivre projet ',follow_project_path(@project),:tabindex=>'11')  %>
       </li>
+        <%end%>    
+
          <li>
-      <%= link_to 'Projet accepter ',set_project_price_path(@project),:tabindex=>'12' %>
+           <%= link_to 'Projet accepter ',set_project_price_path(@project),:tabindex=>'12' %>
       </li>
          <li>
       <%= link_to 'Projet accepter js ',set_project_price_path(@project,:format=>:js),:remote=>true,:tabindex=>'12' %>
