@@ -61,7 +61,7 @@ aasm_column :project_state # defaults to aasm_state
        transitions :to => :placement , :from => [:production] ,:guard =>:is_eighty_percent_paid?
     end
     aasm_event :closed do
-      transitions :to => :close, :from => [:placement] ,:guard =>:hundred_percent_paid_and_no_open_actions?
+      transitions :to => :close, :from => [:placement ,:production] ,:guard =>:hundred_percent_paid_and_no_open_actions?
     end
     aasm_event :lost do
        transitions :to => :close, :from => [:active ,:waiting,:offer]
@@ -170,6 +170,18 @@ aasm_column :project_state # defaults to aasm_state
       true
     end
   end
+   def invoice_state_transition
+     if self.aasm_events_for_current_state.include?(:in_production_schedule)
+       if self.in_production_schedule
+         self.save
+       end
+     end
+     if self.aasm_events_for_current_state.include?(:in_placement_schedule)
+       if self.in_placement_schedule
+         self.save
+       end
+     end
+   end
  # def invoice_action
   #  self.project_actions.create :action_type=>'facturation' , :project_id=>self.id , :description=>"#{self.project_ref_string} facturation"
   #end

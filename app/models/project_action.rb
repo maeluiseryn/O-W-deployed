@@ -5,9 +5,9 @@ class ProjectAction < ActiveRecord::Base
    belongs_to :user
    belongs_to :project
 
-   scope :open_actions , :conditions => [ "action_state == 'open'" ]
-   scope :failed_actions , :conditions => [ "action_state == 'failure'" ]
-   scope :succeeded_actions , :conditions => [ "action_state == 'success'" ]
+   scope :open_actions , :conditions => [ "action_state = 'open'" ]
+   scope :failed_actions , :conditions => [ "action_state = 'failure'" ]
+   scope :succeeded_actions , :conditions => [ "action_state = 'success'" ]
    #scope :invoice_action , :conditions => [ "action_type == 'facturation'" ]
 
    aasm_column :action_state # defaults to aasm_state

@@ -114,8 +114,12 @@ class InvoicesController < ApplicationController
          @invoice.remaining_sum=(@invoice.remaining_sum-@payment.sum_paid)
          if @invoice.remaining_sum<=0
            @invoice.has_been_paid
+           @invoice.save
+           @invoice.project.invoice_state_transition
          end
+         
          @invoice.save
+
         format.html { redirect_to(invoice_path(@invoice), :notice => 'Paiement creer.') }
 
       else
