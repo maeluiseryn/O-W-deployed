@@ -1,8 +1,9 @@
 <h1>Listing invoices</h1>
-<p> Somme restante a payer: <%=project_remaining_to_pay(@invoices.first.project)  %>
+<p> Somme restante a payer: <%=project_remaining_to_pay(@project)   %>
 <table>
   <tr>
     <th>Projet</th>
+    <th>Référence facture</th>
     <th>Somme Total</th>
     <th>Echeance</th>
     <th>Somme restante</th>
@@ -18,5 +19,5 @@
 
 <br />
 
-<%= link_to 'Nouvelle Facture', new_project_invoice_path(@invoices.first.project_id) unless  project_remaining_to_pay_equal_zero(@invoices.first.project) %> 
-<%= link_to 'Retour au projet', project_path(@invoices.first.project_id) %>
+<%= link_to 'Nouvelle Facture', new_project_invoice_path(@project) unless  project_remaining_to_pay_equal_zero(@project) %>
+<%= link_to 'Retour au projet', project_path(@project) %>

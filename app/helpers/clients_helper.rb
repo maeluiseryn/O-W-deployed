@@ -8,4 +8,7 @@ module ClientsHelper
   def get_tva_rate
      FinancialData.get_tva_rate
   end
+  def string_name client
+    "#{client.titre} #{client.surname.capitalize} #{client.name}"
+  end
 end

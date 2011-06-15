@@ -157,9 +157,7 @@
 <li>
 <%= link_to'Factures du projet' , project_invoices_path(@project),:tabindex=>'8'%>
        </li>
-        <li>
-<%= link_to'Activer project' , activate_project_path(@project),:tabindex=>'9'%>
-       </li>
+
   <li>
 <%= link_to'Fermer project' , close_project_path(@project),:tabindex=>'10'%>
        </li>
@@ -169,13 +167,14 @@
       <%= (link_to 'Suivre projet ',follow_project_path(@project),:tabindex=>'11')  %>
       </li>
         <%end%>    
-
+       <% if  @project.aasm_current_state == :offer %>
          <li>
            <%= link_to 'Projet accepter ',set_project_price_path(@project),:tabindex=>'12' %>
       </li>
          <li>
       <%= link_to 'Projet accepter js ',set_project_price_path(@project,:format=>:js),:remote=>true,:tabindex=>'12' %>
       </li>
+        <%end%>
          <li>
       <%= link_to 'Nouvelle action ',new_project_project_action_path(@project) %>
       </li>

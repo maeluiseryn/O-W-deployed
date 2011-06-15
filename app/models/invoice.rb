@@ -22,5 +22,15 @@ class Invoice < ActiveRecord::Base
     aasm_event :reopen_due_to_error do
       transitions :to => :emitted, :from => [:paid]
     end
+    def create_invoice_num
+       if Time.now < Time.new(Time.now.year,7,1)
+      "#{Time.now.year-1}" +Invoice.where("created_at > '#{Time.new(Time.now.year-1,7,1)}'").size.to_s
+      else
+      "#{Time.now.year}" +Invoice.where("created_at > '#{Time.new(Time.now.year,7,1)}'").size.to_s
+      end
+    end
 
+    def create_invoice_ref
+      "FS "+self.create_invoice_num+self.project.client.surname[0..3].upcase
+    end
 end

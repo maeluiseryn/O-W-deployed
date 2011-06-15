@@ -81,7 +81,9 @@ class ProjectsController < ApplicationController
   def create
     #@client=Client.find(params[:project][:client_id])
     @project=Project.new(params[:project])
-
+     @project.contacts.each do |contact|
+      contact.description=(@project.client.titre+" "+@project.client.surname+" "+@project.client.name) unless !contact.description.blank?
+    end
 
     respond_to do |format|
       if @project.valid?
@@ -108,8 +110,10 @@ class ProjectsController < ApplicationController
   def update
     @project = Project.find(params[:id])
 
+
     respond_to do |format|
       if @project.update_attributes(params[:project])
+
         if params[:price_set]=='1'
          if !params[:project][:add_remark].blank?
 
@@ -167,30 +171,7 @@ class ProjectsController < ApplicationController
       end
     end
    end
-   def create_facture
-     @project=Project.find(params[:id])
 
-
-     respond_to do |format|
-        format.html do
-
-          options={:pdf => "my_pdf", # pdf will download as my_pdf.pdf
-        :layout => 'pdf', # uses views/layouts/pdf.haml
-        :save_only=>true,
-         :save_to_file =>File.join(Rails.root.to_s, "/public#{@project.home_directory}/P#{@project.client_id}C#{@project.project_ref}-#{@project.client.surname}facture.pdf"),
-        :show_as_html => params[:debug].present?}
-
-          render_with_wicked_pdf(options)
-          render :layout => 'pdf', :pdf_file=>true
-        end
-        format.xml
-        format.pdf do
-        render :pdf => "my_pdf", # pdf will download as my_pdf.pdf
-        :layout => 'pdf', # uses views/layouts/pdf.haml
-        :show_as_html => params[:debug].present? # renders html version if you set debug=true in URL
-      end
-    end
-   end
    def send_fiche_de_rendez_vous_mail
      project=Project.find params[:id]
      project.send_fiche_de_rendez_vous

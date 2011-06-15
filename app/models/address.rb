@@ -33,7 +33,7 @@ def format_url_for_mappy_itinerary source_address_mappy_string #not proper place
   "http://fr.mappy.com/itinerary#d[]=#{source_address_mappy_string}&d[]=#{address_to_mappy_string}"
 end
 def street_info_to_string
-   " #{street}#{street_number}"
+   " #{street} #{street_number}"
 end
 def zip_city_to_string
    "#{zip} #{city}"

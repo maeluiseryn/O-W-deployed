@@ -9,6 +9,7 @@ OW::Application.routes.draw do
   match "/invoices/:invoice_id/payments/new"=>'invoices#new_payment' ,:as=>:new_payments
    match "/invoices/:invoice_id/payments/create"=>'invoices#create_payment' ,:as=>:payments
   match "/payments/:payment_id"=>'invoices#destroy_payment',:as=>:payments_destroy
+   match '/invoices/:id/facture',:to=>'invoices#create_facture' ,:as=>:facture
   resources :documents
 
   get "search/new_search"
@@ -82,7 +83,7 @@ OW::Application.routes.draw do
   match '/signin', :to => 'sessions#new'
   match '/signout', :to => 'sessions#destroy'
   match '/redirect', :to =>'application#redirect_to_last_visited'
-  match '/projects/:id/facture',:to=>'projects#create_facture' ,:as=>:facture
+
   match '/projects/:id/fiche_de_rendez_vous',:to=>'projects#create_rendez_vous_fiche' ,:as=>:fiche_de_rendez_vous
   match '/projects/:id/fiche_de_rendez_vous_mail',:to=>'projects#send_fiche_de_rendez_vous_mail' ,:as=>:fiche_de_rendez_vous_mail
   match '/projects/:id/SAV_form' ,:to=>'projects#send_sav_form_mail',:as=>:send_SAV_form_mail
