@@ -26,7 +26,7 @@ class SupportsController < ApplicationController
       @support = Support.new(:sender_name=>params[:sender_name],:email=>params[:email],:content=>params[:content],:subject=>params[:subject])
 
       if @support.valid?
-      Document.custom_mail(@support,@file,current_user).deliver
+      CustomMailer.custom_mail(@support,@file,current_user).deliver
       redirect_to request.referer
       else
       redirect_to root_path

@@ -469,7 +469,11 @@
   </div>
   <hr>
   <div><u><strong>Remarques particuli&egrave;res :</strong></u>
-   <%=new_line_in_text(@project.remark) %>
+   <% if @flag==1 %>
+    <%=@project.new_line_in_remark%>
+   <%else %>
+    <%=new_line_in_text(@project.remark) %>
+   <% end %>
   </div><br>
 
 <div> </div><br>

@@ -193,4 +193,8 @@ def error_raised(error)
 
 logger.debug("Erreur AASM : #{error.message}")
 end
+  def new_line_in_remark
+      self.remark.gsub(/\n/,'<br/>').html_safe
+
+    end
 end
