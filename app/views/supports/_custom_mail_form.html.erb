@@ -1,0 +1,43 @@
+<%# form_for @support, :url => { :action => "send_custom_mail" }, :html => { :method => :post }  do |f| %>
+<%form_tag send_custom_mail_path ,:multipart=>true  do %>
+	 <% if current_user.nil?%>
+	   <p>
+	    <%= label_tag "Nom" %>
+	  </p>
+
+	  <p>
+
+
+      <%= text_field_tag :sender_name %>
+	  </p>
+
+      <%else%>
+       <%= hidden_field_tag :sender_name, current_user.name %>
+       <%= hidden_field_tag :email, current_user.email %>
+      <% end %>
+     <p>
+	    <%= label_tag "Destinataire" %>
+	  </p>
+	  <p>
+	    <%= text_field_tag :email %>
+	  </p>
+      <p>
+	    <%= label_tag "Sujet" %>	  </p>
+	  <p>
+	    <%= text_field_tag :subject %>
+	  </p>
+
+	  <p>
+	    <%= label_tag "Details" %>	  </p>
+	  <p>
+	    <%= text_area_tag :content %>
+	  </p>
+       <p>
+	    <%= label_tag "Piece-jointe" %>	  </p>
+       <p>
+	    <%= file_field_tag :file %>
+	  </p>
+	  <p>
+	    <%= submit_tag "Envoyer" %>
+	  </p>
+	<% end %>

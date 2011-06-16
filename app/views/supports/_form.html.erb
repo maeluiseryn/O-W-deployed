@@ -1,5 +1,6 @@
 <% form_for @support, :url => { :action => "create" }, :html => { :method => :post } do |f| %>
-	  <p>
+	 <% if current_user.nil?%>
+	   <p>
 	    <%= f.label "Nom" %>
 	  </p>
 
@@ -14,6 +15,10 @@
 	  <p>
 	    <%= f.text_field :email %>
 	  </p>
+      <%else%>
+       <%= f.hidden_field :sender_name, :value =>current_user.name %>
+       <%= f.hidden_field :email, :value =>current_user.email %>
+      <% end %>
 	  <p>
 	    <%= f.label "Type" %>
 	  </p>
@@ -26,6 +31,6 @@
 	    <%= f.text_area :content %>
 	  </p>
 	  <p>
-	    <%= f.submit "Submit" %>
+	    <%= f.submit "Envoyer" %>
 	  </p>
 	<% end %>

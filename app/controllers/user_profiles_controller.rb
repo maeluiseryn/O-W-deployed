@@ -1,6 +1,6 @@
 class UserProfilesController < ApplicationController
    before_filter :authenticate
-   before_filter :correct_user_profile 
+   before_filter :correct_user_profile, :only=>[:show,:edit] 
 
    def edit
      user=User.find(params[:user_id])

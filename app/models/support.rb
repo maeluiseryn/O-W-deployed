@@ -2,9 +2,9 @@ class Support
 
  include ActiveModel::Validations
 
-	  validates_presence_of :email, :sender_name, :support_type, :content
+	  validates_presence_of :email, :sender_name , :content
 	  # to deal with form, you must have an id attribute
-	  attr_accessor :id, :email, :sender_name, :support_type, :content
+	  attr_accessor :id, :email, :sender_name, :support_type, :content ,:subject, :file
 
 	  def initialize(attributes = {})
 	    attributes.each do |key, value|
@@ -23,9 +23,14 @@ class Support
 	  def save
 	    if self.valid?
 	      Notifier.support_notification(self).deliver
+
 	      return true
 	    end
 	    return false
+    end
+    def new_line_in_content
+      self.content.gsub(/\n/,'<br/>').html_safe
+
     end
     
 end

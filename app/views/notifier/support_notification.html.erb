@@ -3,6 +3,6 @@
 <p>Email de contact: <%=@sender.email%></p>
 <p>Type de demande: <%=@sender.support_type%></p>
 <p>Description :</p>
-<p><%= @sender.content %></p>
+<p><%=@sender.new_line_in_content %></p>
 <br>
 <p>Emise le <%=I18n.l(Time.now)%></p>

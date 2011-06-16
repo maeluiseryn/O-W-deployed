@@ -117,7 +117,7 @@ class ProjectsController < ApplicationController
         if params[:price_set]=='1'
          if !params[:project][:add_remark].blank?
 
-             @project.remark=@project.remark+"\nRemarque ajoutee: "+params[:project][:add_remark]
+             @project.remark=@project.remark+"\nRemarque ajoutee: "+params[:project][:add_remark]+"."
 
          end
          @project.accepted
@@ -175,12 +175,16 @@ class ProjectsController < ApplicationController
    def send_fiche_de_rendez_vous_mail
      project=Project.find params[:id]
      project.send_fiche_de_rendez_vous
-     redirect_to(request.referer,:notice =>"Fiche de rendez-vous envoyé")
+     redirect_to(request.referer,:notice =>"Fiche de rendez-vous envoyé.")
    end
    def send_sav_form_mail
      project=Project.find params[:id]
+     if project.client.contacts.where("genre = 'Email'").any?
      project.send_sav_form
-    redirect_to(request.referer,:notice =>"Formulaire de service apres-vente envoyé")
+    redirect_to(request.referer,:notice =>"Formulaire de service apres-vente envoyé.")
+     else
+    redirect_to(request.referer,:notice =>"Aucune adresse Email pour ce client.")
+     end
    end
   def activate_project
     @project =Project.find(params[:id])
@@ -191,33 +195,39 @@ class ProjectsController < ApplicationController
   def follow_project
     @project=Project.find(params[:id])
     if @project.users.include?(current_user)
-      redirect_to(request.referer ,:notice => "Déja associé")
+      redirect_to(request.referer ,:notice => "Project déja associé a cet utilisateur.")
     else
       current_user.projects<<@project
       current_user.clients<<@project.client
       @project.project_to_offer
-      redirect_to(request.referer ,:notice => "Association faite")
+      redirect_to(request.referer ,:notice => "Association faite.")
     end
   end
   def assign_project
     @user=User.find(params[:user_id])
     @project=Project.find(params[:id])
      if @project.users.include?(@user)
-       redirect_to(request.referer ,:notice => "Déja assigné")
+       redirect_to(request.referer ,:notice => "Project déja assigné a cet utilisateur.")
      else
        @user.projects<<@project
        @user.clients<<@project.client
        @project.project_to_offer
-       redirect_to request.referer ,:notice=>"Le projet #{@project.project_ref_string} est assigné à #{@user.name }"
+       redirect_to request.referer ,:notice=>"Le projet #{@project.project_ref_string} est assigné à #{@user.name }."
      end
 
   end
   def close_project
+    notice=""
     @project =Project.find(params[:id])
+    if @project.aasm_events_for_current_state.include? :closed
     @project.closed
     @project.save
     @project.client.close_with_project_end
-    redirect_to request.referer
+    notice="Project #{@project.project_ref_string} est fermé."
+    else
+    notice="Transition d'état invalide."  
+    end
+    redirect_to request.referer, :notice =>notice
   end
   def set_project_price
     @project =Project.find(params[:id])
@@ -229,7 +239,7 @@ class ProjectsController < ApplicationController
 private
    def user_is_following_project
      @project = Project.find(params[:id])
-     redirect_to(project_path params[:id],:notice =>'Pas authorisé a modifer ce projet') unless( @project.users.include?(current_user)|| current_user.is_admin?)
+     redirect_to(project_path params[:id],:notice =>'Pas authorisé a modifier ce projet') unless( @project.users.include?(current_user)|| current_user.is_admin?)
   end
 
 end

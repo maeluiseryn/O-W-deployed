@@ -115,7 +115,26 @@ end
     redirect_to request.referer
 
   end
-   private
+  def set_smtp_account_settings
+     respond_to do |format|
+         format.html
+         format.js
+       end
+  end
+  def save_smtp_account_settings
+
+   smtp_settings= YAML.load_file("#{RAILS_ROOT}/config/mailers.yml")
+   smtp_settings[Rails.env][current_user.name]={"enable_starttls_auto"=>true,
+              "address"=>"smtp.gmail.com",
+              "port"=>587,
+              "domain"=>"gmail.com",
+              "authentication"=>"plain",
+              "user_name"=>params[:email_address],
+              "password"=>params[:password]}
+    File.open("#{RAILS_ROOT}/config/mailers.yml", "wb") { |f| f.write(smtp_settings.to_yaml) }
+    redirect_to current_user.user_profile
+  end
+  private
   # def authenticate
    #  deny_access unless signed_in?
    #end

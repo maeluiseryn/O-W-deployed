@@ -158,6 +158,10 @@ html ul.topnav li ul.subnav li a:hover { /*--Hover effect for subnav links--*/
 
 
 }
+form #content{
+    background-color: white
+
+}
 #container{
     background-color: #f5f5f5;
 

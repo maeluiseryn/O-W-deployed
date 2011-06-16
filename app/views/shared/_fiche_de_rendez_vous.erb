@@ -426,8 +426,14 @@
   </tr>
   <tr>
 
-    <td align="left" valign="top" ><%=@project.client.addresses.first.address_to_string %> </td>
-    <td align="left" valign="top" ><%=@project.address.address_to_string%></td>
+    <td align="left" valign="top" ><%=@project.client.addresses.first.street_info_to_string %> </td>
+    <td align="left" valign="top" ><%=@project.address.street_info_to_string%></td>
+
+ </tr>
+    <tr>
+
+    <td align="left" valign="top" ><%=@project.client.addresses.first.zip_city_to_string %> </td>
+    <td align="left" valign="top" ><%=@project.address.zip_city_to_string%></td>
 
  </tr>
 
@@ -463,7 +469,7 @@
   </div>
   <hr>
   <div><u><strong>Remarques particuli&egrave;res :</strong></u>
-   <%=" #{@project.remark} "%>
+   <%=new_line_in_text(@project.remark) %>
   </div><br>
 
 <div> </div><br>

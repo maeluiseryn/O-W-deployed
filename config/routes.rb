@@ -15,8 +15,9 @@ OW::Application.routes.draw do
   get "search/new_search"
   get "search/search_options",:as =>:search_options
   get "search/search_result"
- match "search/:model_id/test"=>"search#test"
-
+  match "search/:model_id/test"=>"search#test"
+  match "supports/custom_mail"=>"supports#custom_mail", :as=>:custom_mail
+  match "supports/send_custom_mail"=>"supports#send_custom_mail", :as=>:send_custom_mail
   resources :supports
 
   resources :comments
@@ -57,7 +58,8 @@ OW::Application.routes.draw do
   match "/users/:id/activate_user"=>"users#activate_user",:as=>:activate_user
   match "/users/:id/admin"=>"users#admin_user_on_off",:as=>:admin_user
   match "/users/:id/deactivated"=>"users#de_re_activate_user",:as=>:deactivate_user
-
+   match "/users/smtp_settings"=>"users#set_smtp_account_settings",:as=>:set_smtp_account_settings
+  match "/users/save_smtp_settings"=>"users#save_smtp_account_settings",:as=>:save_smtp_account_settings
   match "/projects/:id/close_project"=>"projects#close_project",:as=>:close_project
   match "/projects/:id/activate_project"=>"projects#activate_project",:as=>:activate_project
   match "/clients/:id/change_state"=>"clients#change_state",:as=>:client_change_state

@@ -1,0 +1,10 @@
+<div>
+<h1>Paramètre compte Email Gmail</h1>
+<%= form_tag  save_smtp_account_settings_path do %>
+<%=hidden_field_tag :user_id,current_user.id   %>
+<%=label_tag "Adresse Email" %>
+<%= text_field_tag :email_address %>
+<%=label_tag "Mot de passe" %>
+<%= text_field_tag :password %>
+<%= submit_tag "Envoyer" %>
+<% end %></div>
