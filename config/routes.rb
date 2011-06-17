@@ -105,7 +105,8 @@ OW::Application.routes.draw do
 
   resources :files
   resources :sessions, :only => [:new, :create, :destroy]
-
+  match '/file_browser/pieces_jointes' => 'file_browser#list_for_piece_jointe', :as => :piece_jointes
+   match '/file_browser/set_pieces_jointes' => 'file_browser#set_piece_jointe', :as => :set_piece_jointes
   match '/file_browser' => 'file_browser#list', :as => :file_browser
   match '/user_files' => 'file_browser#user_files', :as => :user_files
    match '/projects/:project_id/project_files' => 'file_browser#project_files', :as => :project_files

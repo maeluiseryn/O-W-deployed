@@ -31,5 +31,5 @@ class Comment < ActiveRecord::Base
     aasm_event :restore do
       transitions :to => :read, :from => [:archive]
     end
-    
+
 end

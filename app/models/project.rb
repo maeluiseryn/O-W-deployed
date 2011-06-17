@@ -43,6 +43,7 @@ aasm_column :project_state # defaults to aasm_state
     aasm_state :waiting
     aasm_state :archive #conflict with incomplete => archive is a flag for file_system_storage+deletion so no project in the db have archive as state
     aasm_state :close
+    aasm_state :project_lost
     aasm_state :after_sales_service ,:enter => :reopen_client_with_sav
 
     aasm_event :activated do
@@ -64,7 +65,7 @@ aasm_column :project_state # defaults to aasm_state
       transitions :to => :close, :from => [:placement ,:production] ,:guard =>:hundred_percent_paid_and_no_open_actions?
     end
     aasm_event :lost do
-       transitions :to => :close, :from => [:active ,:waiting,:offer]
+       transitions :to => :project_lost, :from => [:active ,:waiting,:offer]
     end
     aasm_event :to_archive do
       transitions :to => :archive, :from => [:close]

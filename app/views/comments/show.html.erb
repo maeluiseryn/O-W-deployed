@@ -34,7 +34,7 @@
 <%= link_to 'Restaurer', restore_comment_path(@comment) %>
 <% end %>
 <% end %>
-    <% end %>
+<%= link_to 'Repondre', respond_comment_path(@comment) unless @comment.user_id == current_user.id %>
+<% end %>
 <%= link_to 'Modifier le messsage', edit_comment_path(@comment)unless correct_current_user(@comment)==false || @comment.comment_state !='unread' %> |
 <%=link_back_message_box(@comment)%>
-<%= link_to 'Repondre', respond_comment_path(@comment) unless @comment.user_id == current_user.id %>

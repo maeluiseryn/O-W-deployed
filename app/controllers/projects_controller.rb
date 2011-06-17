@@ -203,6 +203,7 @@ class ProjectsController < ApplicationController
       redirect_to(request.referer ,:notice => "Association faite.")
     end
   end
+
   def assign_project
     @user=User.find(params[:user_id])
     @project=Project.find(params[:id])

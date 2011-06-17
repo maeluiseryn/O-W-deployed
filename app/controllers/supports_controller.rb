@@ -20,13 +20,19 @@ class SupportsController < ApplicationController
 
     end
     def send_custom_mail
-
+      @server_file={}
+      if session[:piece_jointe_url].nil?
       @file=params[:file]
-
+      else
+      @server_file[:url]=session[:piece_jointe_url]
+      @server_file[:name]=session[:piece_jointe_name]
+      session[:piece_jointe_url]=nil
+      session[:piece_jointe_name]=nil
+      end
       @support = Support.new(:sender_name=>params[:sender_name],:email=>params[:email],:content=>params[:content],:subject=>params[:subject])
 
       if @support.valid?
-      CustomMailer.custom_mail(@support,@file,current_user).deliver
+      CustomMailer.custom_mail(@support,@file,@server_file,current_user).deliver
       redirect_to request.referer
       else
       redirect_to root_path

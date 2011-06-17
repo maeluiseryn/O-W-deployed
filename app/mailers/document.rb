@@ -1,6 +1,18 @@
 # encoding: UTF-8
-class Document < ActionMailer::Base
 
+class Document < ActionMailer::Base
+   def receive(email)
+   body=nil
+
+    email.body.parts.each do |p|
+       if p.mime_type == "text/html"
+             body = p.body
+
+          end
+       end
+
+    File.open("#{RAILS_ROOT}/public/mails.html", "a+") { |f| f.write(body)}
+   end
    def fiche_de_rendez_vous(project)
         @flag=1
         @project=project

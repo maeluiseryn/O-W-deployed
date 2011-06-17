@@ -10,11 +10,25 @@ class FileBrowserController < ApplicationController
     @files=list[:file]
     @breadcrumb=list[:breadcrumb]
   end
+
+
   def retrieve_archive
     @comments=UploadedFile.retrieve_archive(params[:archive_url])
     
   end
-
+  def list_for_piece_jointe
+    session[:model_id]=nil
+    session[:model]=nil
+    list=UploadedFile.list(@current_path,@public_path,@current_url)
+    @dirs=list[:dir]
+    @files=list[:file]
+    @breadcrumb=list[:breadcrumb]
+  end
+  def set_piece_jointe
+    session[:piece_jointe_url]=params[:piece_jointe_url]
+    session[:piece_jointe_name]=params[:piece_jointe_name]
+    redirect_to custom_mail_path
+  end
   def list
     session[:model_id]=nil
     session[:model]=nil

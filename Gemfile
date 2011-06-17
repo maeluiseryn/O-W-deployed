@@ -11,6 +11,7 @@ gem 'jquery-rails'
 gem 'thinking-sphinx'
 gem 'wkhtmltopdf-binary'
 gem 'will_paginate','3.0.pre2'
+gem 'nokogiri'
 
 # Use unicorn as the web server
 # gem 'unicorn'

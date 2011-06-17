@@ -12,13 +12,18 @@ class CustomMailer < ActionMailer::Base
           }
         end
 
- def custom_mail(email,file,current_user)
+ def custom_mail(email,file,server_file,current_user)
      self.smtp_settings_reload(current_user.name)
       @email=email
       @file=file
-     if @file != nil
+      @server_file=server_file
+     if @server_file[:name]!=nil# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+       attachments[@server_file[:name]]= File.read(Rails.root.to_s+"/public"+@server_file[:url])
+     elsif @file != nil
       attachments[@file.original_filename] = @file.read
      end
+
+
       mail(:to => @email.email,
          :from =>"n0st4lg1af0r1nf1n1ty@gmail.com",
          :subject => @email.subject)

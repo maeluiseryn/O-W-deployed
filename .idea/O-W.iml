@@ -30,6 +30,12 @@
     </requirement>
     <requirement>
       <requirement>
+        <dependency name="nokogiri" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
+      </requirement>
+      <source from="Gemfile" />
+    </requirement>
+    <requirement>
+      <requirement>
         <dependency name="pg" version="0" bound="GREATER_OR_EQUAL" git="false" path="false" doRequire="true" />
       </requirement>
       <source from="Gemfile" />
@@ -87,6 +93,7 @@
     <orderEntry type="library" scope="PROVIDED" name="[gem] riddle (v1.2.2, /home/maeluiseryn/.rvm/gems/ruby-1.9.2-p136/gems/riddle-1.2.2)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] wkhtmltopdf-binary (v0.9.5.1, /home/maeluiseryn/.rvm/gems/ruby-1.9.2-p136/gems/wkhtmltopdf-binary-0.9.5.1)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] will_paginate (v3.0.pre2, /home/maeluiseryn/.rvm/gems/ruby-1.9.2-p136/gems/will_paginate-3.0.pre2)" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="[gem] nokogiri (v1.4.4, /home/maeluiseryn/.rvm/gems/ruby-1.9.2-p136/gems/nokogiri-1.4.4)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] rake (v0.8.7, /home/maeluiseryn/.rvm/gems/ruby-1.9.2-p136/gems/rake-0.8.7)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] arel (v2.0.9, /home/maeluiseryn/.rvm/gems/ruby-1.9.2-p136/gems/arel-2.0.9)" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="[gem] builder (v2.1.2, /home/maeluiseryn/.rvm/gems/ruby-1.9.2-p136/gems/builder-2.1.2)" level="application" />
