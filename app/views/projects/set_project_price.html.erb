@@ -1,4 +1,5 @@
-<div class="span-10">
+<div class="span-7" >
+<h2>Inserez le prix du projet</h2>
 <%= form_for @project do |f| %>
   <% if @project.errors.any? %>
     <div id="error_explanation">
@@ -13,7 +14,7 @@
   <% end %>
    <%= hidden_field_tag :price_set,  1 %>
  <div class="field">
-    <%= f.label :project_price,'Montant du projet: ' %><br />
+    <%= f.label :project_price,'Prix du projet: ' %><br />
     <%= f.text_field :project_price %>€
   </div>
 

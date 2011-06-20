@@ -28,7 +28,7 @@ width: 200px;
 
 #content{
     background-color:#555;
-    min-height:400px;
+    min-height:500px;
     }
 
 
@@ -137,7 +137,7 @@ html ul.topnav li ul.subnav li a:hover { /*--Hover effect for subnav links--*/
 
 
 #footer {
-   position:absolute;
+  /* position:absolute;*/
    bottom:0;
    
    height:60px;   /* Height of the footer */
@@ -163,7 +163,7 @@ form #content{
 
 }
 #container{
-    background-color: #f5f5f5;
+
 
 }
 #pre_footer{
@@ -176,7 +176,7 @@ form #content{
 background-color: #f5f5f5;
 }
 #first_content {
-    min-height: 200px
+    min-height: 125px
 }
 #vertmenu {
   font-family: Verdana, Arial, Helvetica, sans-serif;
@@ -237,3 +237,9 @@ background-color: #f5f5f5;
 
 #time select {width:58px ;}
 #time_type select{width:120px; }
+#project_add_remark{
+  width:250px;
+}
+#simplemodal-data h2 , #simplemodal-data h1 {
+    color:white;
+}

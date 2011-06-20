@@ -55,8 +55,7 @@
           <li><a href="#contacts">Informations de contact de P<%=@project.project_ref %></a></li>
           <li><a href="#components">Composants du project P<%=@project.project_ref %></a></li>
           <li><a href="#files_table">Fichiers de P<%=@project.project_ref %></a></li>
-          <li><a href="#comments">Commentaire de P<%=@project.project_ref %></a></li>
-          <li><a href="#invoices">Factures de P<%=@project.project_ref %></a></li>
+
         </ul>
 
 <div id="addresses">
@@ -93,36 +92,8 @@
                                                      :as=>:uploaded end%>
 </table>
 </div>
-<div id="comments">
-     <table>
-  <tr>
-    <th>Reference projet</th>
-    <th>Description</th>
-    <th>Content</th>
-    <th>User</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-       <%= (render :partial => 'comments/comment_list',:collection => @project.message_box.comments,:as=>:comment)unless
-                   @project.message_box.nil? %>
 
-   </table>
-   </div>
-<div id="invoices">
-<table>
-  <tr>
-    <th>Project</th>
-    <th>Total sum</th>
-    <th>Due date</th>
-    <th>Remaining sum</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-     <%= render :partial => 'invoices/invoice_list',:collection => @project.invoices,:as=>:invoice %>
-</table>
-</div>
+
 
 </div>
 

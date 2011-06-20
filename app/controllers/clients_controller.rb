@@ -4,7 +4,7 @@ class ClientsController < ApplicationController
   # GET /clients.xml
   def current_user_clients
 
-     @clients = current_user.clients
+     @clients = current_user.clients.paginate(:page=>params[:page])
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @clients }

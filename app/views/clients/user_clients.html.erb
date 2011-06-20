@@ -1,7 +1,7 @@
 <h1>Liste des Clients de <%=@user.name %></h1>
 
 <table>
-  <tr>
+  <thead>
     <th>Titre</th>
     <th>Prénom</th>
     <th>Nom</th>
@@ -9,9 +9,10 @@
     <th>Type de client</th>
     <th>Entreprise</th>
     <th>A des projets ?</th>
-    <th>Etat du projet</th>
     <th></th>
-  </tr>
+    <th></th>
+  <th></th>
+  </thead>
 <%= render :partial => 'client_list',:collection => @clients ,:as=>:client %>
 </table>
 

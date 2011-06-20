@@ -106,6 +106,8 @@ end
                   :user_files=>link_to('Explorer les fichiers utilisateurs',user_files_path),:archive=>link_to('Restaurer une archive ',file_browser_archive_path)},
       :Messages=>{:message_box=>link_to('Mes messages',message_box_path(current_user.message_box)),:new_message=>link_to('Nouveau message',
                                                                               new_message_box_comment_path(current_user.message_box))} ,
+      :Emails=>{:email=>link_to('Nouvel e-mail',custom_mail_path),:new_message=>link_to('Nouvel e-mail avec piece-jointe sur serveur',
+                                                                              piece_jointes_path)} ,
       :Recherche=>{:Global=>link_to('Globale',search_new_search_path)}}
     @arr.each_pair do|key,value|
       ret=ret+content_tag(:li,"<a href='#'>#{key}</a>".html_safe+sub_nav_ul(value))
@@ -170,7 +172,7 @@ def redirect_back_to_owner_polymorphic(model)
 end
 def redirect_back_to_owner(model)
   if model.instance_of? Project
-    link_to 'Client', model.client
+    link_to "#{model.client.surname} #{model.client.name} ", model.client
   elsif model.instance_of? Payment
     link_to 'Facture', model.payments
   end
@@ -262,6 +264,9 @@ end
   def new_line_in_text string_text
     string_text.gsub(/\n/,'<br/>').html_safe
 
+  end
+  def size_collection array
+    array.size
   end
  
 end

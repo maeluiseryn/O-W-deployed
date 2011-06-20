@@ -198,7 +198,7 @@ class ProjectsController < ApplicationController
       redirect_to(request.referer ,:notice => "Project déja associé a cet utilisateur.")
     else
       current_user.projects<<@project
-      current_user.clients<<@project.client
+      current_user.clients<<@project.client  unless current_user.clients.include?(@project.client)
       @project.project_to_offer
       redirect_to(request.referer ,:notice => "Association faite.")
     end
@@ -211,7 +211,7 @@ class ProjectsController < ApplicationController
        redirect_to(request.referer ,:notice => "Project déja assigné a cet utilisateur.")
      else
        @user.projects<<@project
-       @user.clients<<@project.client
+       @user.clients<<@project.client unless @user.clients.include?(@project.client)
        @project.project_to_offer
        redirect_to request.referer ,:notice=>"Le projet #{@project.project_ref_string} est assigné à #{@user.name }."
      end

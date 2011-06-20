@@ -7,7 +7,7 @@
 
 <p>
   <b>Project:</b>
-  <%='C'+@invoice.project.client.id.to_s+'P'+@invoice.project.project_ref.to_s %>
+  <%=@invoice.project.project_ref_string %>
 </p>
 
 <p>
@@ -26,7 +26,7 @@
 </p>
 <p>
   <b>Date de création:</b>
-  <%= @invoice.created_at %>
+  <%=I18n.l(@invoice.created_at)  %>
 </p>
 <p>
   <b>Etat facture:</b>
@@ -34,7 +34,7 @@
 </p>
 <div id="payments_table">
 <table>
-  <tr>
+  <thead>
     <th>
       ref facture
     </th>
@@ -44,7 +44,10 @@
     <th>
       Créer le
     </th>
-  </tr>
+    <th>
+
+    </th>
+  </thead>
   <%= render :partial => 'payment_list' ,:collection=>@invoice.payments ,:as=>:payment %>
 </table>
 </div>

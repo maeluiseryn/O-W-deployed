@@ -1,27 +1,140 @@
-<p id="notice"><%= notice %></p>
 
-<p>
-  <b>Description:</b>
-  <%= @message_box.description %>
-</p>
 
-<p>
-  <b>Box type:</b>
-  <%= @message_box.box_type %>
-</p>
-<ul>
-  <li>Messages non lus (<%=unread_count @message_box.comments%>)</li>
-  <li>Messages lus (<%=read_count @message_box.comments%>)</li>
-  <li>Messages à archiver (<%=to_archive_count @message_box.comments%>)</li>
-  <li>Messages dans la corbeille (<%=to_delete_count @message_box.comments%>)</li>
+<div class="span-18" style="min-height:100px">
+  <h2>Boîte à message de
+  <b><%= @message_box.description.capitalize %></b></h2>
+
+
+</div>
+
+<% if !@message_box.comments.empty? %>
+<b>Messages:</b>
+<ul style="list-style-type: none;":>
+  <li><%=link_to_function("Messages non-lus (#{unread_count @message_box.comments} )"," $('#unread_table').toggle();
+  ") unless (unread_count @message_box.comments)==0 %></li>
+  <li><%=link_to_function("Messages lus (#{read_count @message_box.comments})"," $('#read_table').toggle();") unless ((read_count @message_box.comments)==0) %></li>
+  <li><%=link_to_function("Messages à archiver (#{to_archive_count @message_box.comments})"," $('#archive_table').toggle();") unless ((to_archive_count @message_box.comments)==0)%></li>
+  <li> <%=link_to_function("Messages dans la corbeille(#{to_delete_count @message_box.comments})"," $('#trash_table').toggle();") unless (to_delete_count @message_box.comments)==0 %></li>
+  <li><%=link_to_function("Messages envoyés par l'utilisateur(#{size_collection @message_box.box_owner.comments})"," $('#sent_table').toggle();") unless (size_collection @message_box.box_owner.comments)==0%></li>
 </ul>
-
+<hr>
+<div id="unread_table" style="display:none">
 <table>
-<%=render :partial=>'comments/comment_list', :collection=>@message_box.comments ,:as=>:comment%>
-</table>
-<%= link_to 'Vider Corbeille', delete_trashed_comments_path(@message_box) unless correct_current_user_message_box(@message_box)==false %>
-<%= link_to 'Archiver', archive_yml_comments_path(@message_box) unless correct_current_user_message_box(@message_box)==false %>
 
-<%= link_to 'Nouveau message', new_message_box_comment_path(@message_box) %> |
-<%= link_to 'Modifier', edit_message_box_path(@message_box) %> |
-<%=  redirect_back_to_owner_polymorphic(@message_box) %>
+ <thead>
+    <th>Message de</th>
+    <th>Sujet</th>
+    <th>Date de création</th>
+    <th>Etat</th>
+
+    <th></th>
+    <th></th>
+    <th></th>
+</thead>
+<%=render :partial=>'comments/comment_list', :collection=>@message_box.comments.unread ,:as=>:comment%>
+</table>
+</div>
+<div id="read_table" style="display:none">
+<table>
+
+ <thead>
+    <th>Message de</th>
+    <th>Sujet</th>
+    <th>Date de création</th>
+    <th>Etat</th>
+
+    <th></th>
+    <th></th>
+    <th></th>
+</thead>
+
+<%=render :partial=>'comments/comment_list', :collection=>@message_box.comments.read ,:as=>:comment%>
+</table>
+</div>
+<div id="archive_table" style="display:none">
+<table>
+
+ <thead>
+    <th>Message de</th>
+    <th>Sujet</th>
+    <th>Date de création</th>
+    <th>Etat</th>
+
+    <th></th>
+    <th></th>
+    <th></th>
+</thead>
+<%=render :partial=>'comments/comment_list', :collection=>@message_box.comments.archive ,:as=>:comment%>
+</table>
+</div>
+<div id="trash_table" style="display:none">
+<table>
+
+ <thead>
+    <th>Message de</th>
+    <th>Sujet</th>
+    <th>Date de création</th>
+    <th>Etat</th>
+
+    <th></th>
+    <th></th>
+    <th></th>
+</thead>
+<%=render :partial=>'comments/comment_list', :collection=>@message_box.comments.mark_for_delete ,:as=>:comment%>
+</table>
+</div>
+<div id="sent_table" style="display:none">
+<table>
+
+ <thead>
+    <th>Message de</th>
+    <th>Sujet</th>
+    <th>Date de création</th>
+    <th>Etat</th>
+
+    <th></th>
+    <th></th>
+    <th></th>
+</thead>
+<%=render :partial=>'comments/comment_list', :collection=>@message_box.box_owner.comments ,:as=>:comment%>
+</table>
+</div>
+<%else%>
+ <hr>
+<div class="span-10">
+
+
+ <h3 align="right">
+   Boite à message Vide.</h3>
+</div>
+
+
+<%end%>
+<% content_for :sidebar do %>
+  <div id="vertmenu">
+      <ul id="sidebarmenu1">
+
+        <li>
+         <%= link_to 'Nouveau message', new_message_box_comment_path(@message_box) %>
+       </li>
+       <%if correct_current_user_message_box(@message_box)  %>
+        <li>
+         <%= link_to 'Archiver', archive_yml_comments_path(@message_box)  %>
+       </li>
+
+       <li>
+         <%= link_to 'Vider Corbeille', delete_trashed_comments_path(@message_box) %>
+       </li>
+        <%end%>
+        <li>
+         <%=  redirect_back_to_owner_polymorphic(@message_box) %>
+       </li>
+
+
+       </ul>
+  </div>
+<% end%>
+
+
+
+

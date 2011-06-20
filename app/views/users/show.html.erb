@@ -1,104 +1,173 @@
 
 
-<div id="first_content" >
+<div id="first_content" class="span-18">
 
 
-  <h2><%= @user.name %></h2>
+<div  class="span-18">  <h2><%= @user.name %></h2><hr></div>
 
-
-<p>
-  <b>Email:</b>
-  <%= @user.email %>
+<div  class="span-12"><br/><p><b>Etat de l'utilisateur:</b> <%= @user.aasm_current_state %>
 </p>
 
-<p>
-  <b>Created at:</b>
-  <%=I18n.l(@user.created_at) %>
-</p>
-<p>
-  <b>Dossier utilisateur:</b>
-  <%= @user.home_directory %>
-</p>
-  <p>
-  <b>Etat de l'utilisateur:</b>
-  <%= @user.aasm_current_state %>
-</p>
+
+<b>Projets actifs :</b>
+<ul style="list-style-type: none;":>
+  <li><%=link_to_function("Offre(#{size_collection @user.projects.offer} )"," $('#offer_table').toggle();
+  ")%></li>  
+  <li><%=link_to_function("En attente de paiement(#{size_collection @user.projects.waiting_payment})"," $('#waiting_payment_table').toggle();")%></li>
+  <li><%=link_to_function("Production(#{size_collection @user.projects.production})"," $('#production_table').toggle();")%></li>
+  <li> <%=link_to_function("Placement(#{size_collection @user.projects.placement})"," $('#placement_table').toggle();")%></li>
+  <li><%=link_to_function("Service après-vente(#{size_collection @user.projects.after_sales_service})"," $('#after_sales_service_table').toggle();")%></li>
+</ul>
+<p><b><%=link_to_function("Clients(#{size_collection @user.clients})"," $('#clients_table').toggle();") %></b></p>
+<p><b><%=link_to_function("Fichiers(#{size_collection @user.uploaded_files})"," $('#files_table').toggle();") %></b></p>
 </div>
+<div class='span-5 last box' id="message" style="min-height: 100px">
+ <% if @user.message_box.nil? %>
+  <p> Boîte a message pas encore créée</p>
+  <%else%>
+  <p><b><%=(link_to 'Boite à Messages: ',message_box_path(@user.message_box.id )) %> </b></p>
+  <ul style="list-style-type: none;":>
+  <li>Messages non lus (<%=unread_count @user.message_box.comments%>)</li>
+  <li>Messages lus (<%=read_count @user.message_box.comments%>)</li>
+  <li>Messages à archiver (<%=to_archive_count @user.message_box.comments%>)</li>
+  <li>Messages dans la corbeille (<%=to_delete_count @user.message_box.comments%>)</li>
 
- <div id="info" class="span-19">
-        <ul>
+</ul>
+<% end %>
 
-          <li><a href="#clients_table">Clients de <%=@user.name %></a></li>
-          <li><a href="#projects_table">Projets de <%=@user.name %></a></li>
-          <li><a href="#files_table">Fichiers de <%=@user.name %></a></li>
-          <li><a href="#comments">Commentaires de <%=@user.name %></a></li>
-        </ul>
-       
 
-     <div id="clients_table">
+</div>
+</div>
+<hr>
+ 
+
+     <div id="clients_table" style="display:none">
 
        <table class="span-18">
        <tr>
-         <th>Prenom</th>
-          <th>Nom</th>
-        
-         <th></th>
+    <thead>
+    <th>Titre</th>
+    <th>Prénom</th>
+    <th>Nom</th>
+    <th>Reference</th>
+    <th>Type de client</th>
+    <th>Entreprise</th>
 
-        </tr>
+    <th>Etat du client</th>
+    <th></th>
+    <th></th>
+    <th></th>
+
+    </thead>
         <%=render :partial=> 'clients/client_list',:collection => @user.clients ,:as=>:client %>
        </table>
      </div>
 
-     <div id="projects_table">
+     <div id="offer_table" style="display:none">
 
        <table class="span-18">
 
-         <tr>
-           <th>Id</th>
+         <thead>
+
            <th>Client</th>
            <th>Reference projet</th>
+           <th>Etat du projet</th>
+           <th>Date de création</th>
            <th></th>
            <th></th>
-         </tr>
-        <%=render :partial=> 'projects/project_list',:collection => @user.projects ,:as=>:project %>
+           <th></th>
+         </thead>
+        <%=render :partial=> 'projects/project_list',:collection => @user.projects.offer ,:as=>:project %>
        </table>
      </div>
-  <div id="files_table">
+    <div id="waiting_payment_table" style="display:none">
+
+       <table class="span-18">
+
+         <thead>
+
+           <th>Client</th>
+           <th>Reference projet</th>
+           <th>Etat du projet</th>
+           <th>Date de création</th>
+           <th></th>
+           <th></th>
+           <th></th>
+         </thead>
+        <%=render :partial=> 'projects/project_list',:collection => @user.projects.waiting_payment ,:as=>:project %>
+       </table>
+     </div>
+   <div id="production_table" style="display:none">
+
+       <table class="span-18">
+
+         <thead>
+
+           <th>Client</th>
+           <th>Reference projet</th>
+           <th>Etat du projet</th>
+           <th>Date de création</th>
+           <th></th>
+           <th></th>
+           <th></th>
+         </thead>
+        <%=render :partial=> 'projects/project_list',:collection => @user.projects.production ,:as=>:project %>
+       </table>
+     </div>
+   <div id="placement_table" style="display:none">
+
+       <table class="span-18">
+
+   <thead>
+
+           <th>Client</th>
+           <th>Reference projet</th>
+           <th>Etat du projet</th>
+           <th>Date de création</th>
+           <th></th>
+           <th></th>
+           <th></th>
+         </thead>
+        <%=render :partial=> 'projects/project_list',:collection => @user.projects.placement ,:as=>:project %>
+       </table>
+     </div>
+   <div id="after_sales_service_table" style="display:none">
+
+       <table class="span-18">
+
+           <thead>
+
+           <th>Client</th>
+           <th>Reference projet</th>
+           <th>Etat du projet</th>
+           <th>Date de création</th>
+           <th></th>
+           <th></th>
+           <th></th>
+         </thead>
+        <%=render :partial=> 'projects/project_list',:collection => @user.projects.after_sales_service ,:as=>:project %>
+       </table>
+     </div>
+  <div id="files_table" style="display:none">
    <table class="span-18">
+<tr>
+              <thead>
+              <th></th>
+              <th>Nom du Fichier</th>
+              <th>Type de Fichier</th>
+              <th>Taille du Fichier</th>
+              <th>Propriétaire du Fichier</th>
+              <th>SlideShow</th>
+              <th></th>
 
-     <tr >
-       <th>Id</th>
-       <th>Name </th>
-
-       <th>Content_Type</th>
-       <th>File_Size</th>
-       <th>Associé a</th>
-       <th></th>
-       <th></th>
-       <th></th>
-     </tr>
-
+              </thead>
      <%= render :partial => 'files/show_file' ,:collection => @user.uploaded_files ,:as=>:uploaded%>
 
    </table>
-   </div> 
-   <div id="comments">
-     <table>
-  <tr>
-    <th>Reference projet</th>
-    <th>Description</th>
-    <th>Content</th>
-    <th>User</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-       <%= render :partial => 'comments/comment_list',:collection => @user.comments,:as=>:comment %>
+ </div> 
 
-   </table>
-   </div>
 
-</div>
+
 
 <% content_for :sidebar do %>
 <div id="vertmenu">

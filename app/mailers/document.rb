@@ -4,6 +4,7 @@ class Document < ActionMailer::Base
    def receive(email)
    body=nil
 
+
     email.body.parts.each do |p|
        if p.mime_type == "text/html"
              body = p.body
@@ -12,6 +13,9 @@ class Document < ActionMailer::Base
        end
 
     File.open("#{RAILS_ROOT}/public/mails.html", "a+") { |f| f.write(body)}
+    #html =File.open("#{RAILS_ROOT}/public/mails.html", "r").read
+    #doc = Nokogiri::HTML(html)
+    #puts doc
    end
    def fiche_de_rendez_vous(project)
         @flag=1

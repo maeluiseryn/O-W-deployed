@@ -18,7 +18,12 @@ accepts_nested_attributes_for :contacts ,:reject_if => lambda { |a| a[:descripti
 accepts_nested_attributes_for :address ,:project_components
 attr_accessor :add_remark
 scope :incomplete, :conditions => [ "project_state != 'close'" ]
-
+scope :complete, :conditions => [ "project_state = 'close'" ]
+#scope :offer, :conditions => [ "project_state = 'offer'" ]
+#scope :waiting_payment, :conditions => [ "project_state = 'waiting_payment'" ]
+#scope :production, :conditions => [ "project_state = 'production'" ]
+#scope :placement, :conditions => [ "project_state = 'placement'" ]
+#scope :after_sales_service, :conditions => [ "project_state = 'after_sales_service'" ]
 define_index do
       set_property :enable_star => 1
       set_property :min_infix_len => 3
