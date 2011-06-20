@@ -1,37 +1,54 @@
-<p id="notice"><%= notice %></p>
-
+<div class="span-18" style="min-height:50px">
+<h2>Facture numero: <%= @invoice.invoice_num%></h2>
+</div>
+<div class="span-18">
+<div class="span-6">
 <p>
-  <b>Client:</b>
-  <%=@invoice.project.client.surname+' '+ @invoice.project.client.name%>
+ <b>Client:</b>
+ <%=link_to("#{@invoice.project.client.surname.capitalize} #{@invoice.project.client.name}" ,client_path(@invoice.project.client_id))%>
+
 </p>
-
 <p>
-  <b>Project:</b>
-  <%=@invoice.project.project_ref_string %>
+  <b>Reference projet:</b>
+  <%=link_to @invoice.project.project_ref_string,project_path(@invoice.project_id) %>
 </p>
-
+</div>
+<div class="span-5">
 <p>
-  <b>Total sum:</b>
+  <b>Somme totale:</b>
   <%= @invoice.total_sum %>
 </p>
 
-<p>
-  <b>Due date:</b>
-  <%= @invoice.due_date %>
-</p>
 
 <p>
-  <b>Remaining sum:</b>
+  <b>Solde restant:</b>
   <%= @invoice.remaining_sum %>
 </p>
+</div>
+<div class="span-6">
 <p>
   <b>Date de création:</b>
   <%=I18n.l(@invoice.created_at)  %>
 </p>
+
 <p>
-  <b>Etat facture:</b>
-  <%= @invoice.aasm_current_state %>
+
+  <b>Echeance de la facture:</b>
+  <%= @invoice.due_date %>
 </p>
+</div>
+<div class="span-15">
+  <br/>
+  <h3><b>Etat de la facture:</b>
+  <%= @invoice.aasm_current_state %>
+</h3>
+</div>
+</div>
+<hr>
+<h3>Paiements de <%= @invoice.invoice_ref%></h3>
+<% if @invoice.payments.empty? %>
+<p align="center"><b>Aucun paiement effectué</b></p>
+<%else%>    
 <div id="payments_table">
 <table>
   <thead>
@@ -42,7 +59,7 @@
       Somme payée
     </th>
     <th>
-      Créer le
+      Créé le
     </th>
     <th>
 
@@ -51,7 +68,7 @@
   <%= render :partial => 'payment_list' ,:collection=>@invoice.payments ,:as=>:payment %>
 </table>
 </div>
-
+<%end%>
 <% content_for :sidebar do %>
   <div id="vertmenu">
       <ul id="sidebarmenu1">

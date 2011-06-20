@@ -221,10 +221,13 @@ class ProjectsController < ApplicationController
     notice=""
     @project =Project.find(params[:id])
     if @project.aasm_events_for_current_state.include? :closed
-    @project.closed
+    if @project.closed
     @project.save
     @project.client.close_with_project_end
     notice="Project #{@project.project_ref_string} est fermé."
+    else
+    notice='Le projet ne satisfait pas aux conditions de clotûre'  
+    end
     else
     notice="Transition d'état invalide."  
     end
