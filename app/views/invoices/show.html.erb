@@ -1,6 +1,8 @@
 <div class="span-18" style="min-height:50px">
 <h2>Facture numero: <%= @invoice.invoice_num%></h2>
+
 </div>
+<hr>
 <div class="span-18">
 <div class="span-6">
 <p>
@@ -16,13 +18,13 @@
 <div class="span-5">
 <p>
   <b>Somme totale:</b>
-  <%= @invoice.total_sum %>
+  <%= @invoice.total_sum %>€
 </p>
 
 
 <p>
   <b>Solde restant:</b>
-  <%= @invoice.remaining_sum %>
+  <%= @invoice.remaining_sum %>€
 </p>
 </div>
 <div class="span-6">
@@ -74,11 +76,9 @@
       <ul id="sidebarmenu1">
       <% if @invoice.aasm_current_state!=:paid %>
         <li>
-          <%= link_to 'Nouveau paiement js', new_payments_path(@invoice,:format=>:js),:remote=>true %>
+          <%= link_to 'Nouveau paiement', new_payments_path(@invoice,:format=>:js),:remote=>true %>
        </li>
-<li>
-         <%= link_to 'Nouveau paiement', new_payments_path(@invoice) %>
-       </li>
+
        <li>
          <%= link_to 'Générer document facture', facture_path(@invoice) %>
        </li>

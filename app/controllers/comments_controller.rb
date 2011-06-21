@@ -68,6 +68,9 @@ class CommentsController < ApplicationController
       box=MessageBox.find(params[:base_comment_message_box_id])
     end
     @comment = box.comments.new(params[:comment])
+    if box.box_type=='project_box'
+      @comment.project_msg
+    end
     session[:message_box_id]=nil
     respond_to do |format|
       if @comment.save

@@ -42,17 +42,29 @@
 </div>
 <div class='span-18'>
 <div id="addresses" class='span-18'>
-  <p><b>Adresse de <%= @user_profile.surname.capitalize+" "+@user_profile.name.capitalize %></b> </p>
-<hr>  
+  <hr>
+  <h4><b>Adresse de <%= @user_profile.surname.capitalize+" "+@user_profile.name.capitalize %></b> </h4>
+
    <%= if @user_profile.address !=nil then render :partial => "shared/address_show" ,:object=> @user_profile.address ,:as=>:address end%>
 </div>
 <div class="span-18" style="height: 30px">
 
 </div>
-<p><b>Informations de contact de <%= @user_profile.surname.capitalize+" "+@user_profile.name.capitalize %> </b></p>
-<hr>
-<div id="contacts" class='span-18'>
-  <%= if !@user_profile.contacts.empty? then render :partial => "shared/contact_show", :collection => @user_profile.contacts ,:as=>:contact end%>
+  <hr>
+<h4><b>Informations de contact de <%= @user_profile.surname.capitalize+" "+@user_profile.name.capitalize %> </b></h4>
+
+<div id="contacts" class='span-17'>
+<table>
+ <thead>
+
+           <th>Description</th>
+           <th>Type de contact</th>
+           <th>Donnée de contact</th>
+
+
+         </thead>
+  <%= if !@user_profile.contacts.empty? then render :partial => "shared/contact_list", :collection => @user_profile.contacts ,:as=>:contact end%>
+</table>
 </div>
 </div>
 
@@ -64,13 +76,16 @@
         <li>
           <%= link_to 'Modifier le profile', edit_user_user_profiles_path(@user_profile.user_id) %>
          </li>
-
+         <li>
+           <%= #noinspection RubyArgCount
+            link_to "Modifier l'utilisateur", edit_user_path(@user_profile.user_id) %>
+         </li>
 
         <li>
           <%= link_to 'Paramètres Email ',set_smtp_account_settings_path(:format=>:js),:remote=>true %>
          </li>
         <li>
-          <%= link_to 'Retour a l utilisateur' , user_path(@user_profile.user_id)%>
+          <%= link_to "Retour à l'utilisateur" , user_path(@user_profile.user_id)%>
          </li>
 
 

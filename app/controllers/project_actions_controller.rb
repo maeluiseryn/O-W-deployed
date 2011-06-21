@@ -57,6 +57,8 @@ class ProjectActionsController < ApplicationController
     @project_action.user_id=current_user.id
     if @project_action.description.blank?
        @project_action.description="#{@project_action.project.project_ref_string} #{@project_action.action_type}"
+    else
+      @project_action.description="#{@project_action.project.project_ref_string} #{@project_action.description}"
     end
     respond_to do |format|
       if @project_action.save

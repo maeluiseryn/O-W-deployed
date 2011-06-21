@@ -19,6 +19,13 @@ module ProjectsHelper
   def get_already_paid_amount project
     project.invoices.paid_invoices.sum(:total_sum)
   end
+  def get_payment_from_unfinished_invoices project
+    total=0
+    project.invoices.emitted.each do |invoice|
+      total=total+invoice.payments.sum(:sum_paid)
+    end
+   return total
+  end
   def get_already_paid_invoices_ref_string project ,invoice
     ref_string=""
     array=project.invoices.paid_invoices.where("invoice_ref <'#{invoice.invoice_ref}'")

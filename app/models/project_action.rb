@@ -38,13 +38,16 @@ class ProjectAction < ActiveRecord::Base
 
       self.action_end=Date.today
      if result=='succeed'
+
        self.succeed
+       self.action_result='succes'
        self.save
 
        notice='success'
 
      elsif result=='failed'
        self.failed
+        self.action_result='echec'
        self.save
         notice='failure'
        return notice

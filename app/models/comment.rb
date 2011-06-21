@@ -14,7 +14,7 @@ class Comment < ActiveRecord::Base
     aasm_state :read
     aasm_state :archive
     aasm_state :mark_for_delete
-
+    aasm_state :project_message
 
     aasm_event :has_been_read do
       transitions :to => :read, :from => [:unread]
@@ -30,6 +30,9 @@ class Comment < ActiveRecord::Base
     end
     aasm_event :restore do
       transitions :to => :read, :from => [:archive]
+    end
+    aasm_event :project_msg do
+      transitions :to => :project_message, :from => [:unread]
     end
 
 end

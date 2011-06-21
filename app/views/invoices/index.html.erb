@@ -1,11 +1,13 @@
 <% if !@project.nil? %>
-<h2>Factures du projet: <%=" "+@project.project_ref_string%> </h2>
-<p> Somme restante a payer: <%=project_remaining_to_pay(@project)   %>
+<div class="span-18" style="min-height:50px"><h2>Factures du projet: <%=" "+@project.project_ref_string%> </h2></div>
+
 <%else%>
-<h2>Liste des factures</h2>
+<div class="span-18" style="min-height:50px"><h2>Liste des factures</h2></div>
+
 <% end %>
+<hr>
 <% if @invoices.empty? %>
-<p> Aucune facture emises</p>  
+<h4 align="center"> Aucune facture emises</h4>
 <% else %>
 <table>
   <thead>
@@ -24,6 +26,11 @@
   <%= render :partial => 'invoice_list' ,:collection=>@invoices ,:as=>:invoice %>
 
 </table>
+<% if !@project.nil? %>
+<br/>
+
+<h4><b> Somme restante a payer:</b> <%=project_remaining_to_pay(@project)   %>€</h4>
+    <%end%>
 <% end%>
 <br />
 <% content_for :sidebar do %>

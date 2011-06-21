@@ -13,12 +13,16 @@
 
 
   <div class="field">
-    <%= f.label :total_sum %><br />
-    <%= f.text_field :total_sum %>
+    <p>
+    <%= f.label "Montant de la facture" %><br />
+    <%= f.text_field :total_sum,:size=>23 %>€
+    </p>
   </div>
   <div class="field">
+    <p>
     <%= f.label :due_date,'Echeance' %><br />
     <%= f.date_select :due_date %>
+    </p>
   </div>
    <%=  f.hidden_field :project_id , :value => @invoice.project_id%>
   <div class="actions">

@@ -233,6 +233,22 @@ class ProjectsController < ApplicationController
     end
     redirect_to request.referer, :notice =>notice
   end
+   def lost_project
+    notice=""
+    @project =Project.find(params[:id])
+    if @project.aasm_events_for_current_state.include? :lost
+    if @project.lost
+    @project.save
+    @project.client.close_with_project_end
+    notice="Project #{@project.project_ref_string} est fermé."
+    else
+    notice='Le projet ne satisfait pas aux conditions de clotûre'
+    end
+    else
+    notice="Transition d'état invalide."
+    end
+    redirect_to request.referer, :notice =>notice
+  end
   def set_project_price
     @project =Project.find(params[:id])
     respond_to do |format|

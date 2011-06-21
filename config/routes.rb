@@ -61,6 +61,7 @@ OW::Application.routes.draw do
    match "/users/smtp_settings"=>"users#set_smtp_account_settings",:as=>:set_smtp_account_settings
   match "/users/save_smtp_settings"=>"users#save_smtp_account_settings",:as=>:save_smtp_account_settings
   match "/projects/:id/close_project"=>"projects#close_project",:as=>:close_project
+  match "/projects/:id/lost_project"=>"projects#lost_project",:as=>:lost_project
   match "/projects/:id/activate_project"=>"projects#activate_project",:as=>:activate_project
   match "/clients/:id/change_state"=>"clients#change_state",:as=>:client_change_state
 

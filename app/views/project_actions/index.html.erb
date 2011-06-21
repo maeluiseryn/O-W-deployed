@@ -1,32 +1,23 @@
 <h1>Listing project_actions</h1>
 
 <table>
-  <tr>
+  <thead>
     <th>Description</th>
-    <th>Action type</th>
-    <th>User</th>
-    <th>Action result</th>
-    <th>Action state</th>
-    <th>Project</th>
-    <th>Project state</th>
+    <th>Type d'action</th>
+    <th>Utilisateur</th>
+    <th>Résultat</th>
+    <th>Etat de l'action</th>
+    <th>Reference projet</th>
+    <th>Etat du projet</th>
     <th></th>
     <th></th>
-  </tr>
+  <th></th>
+  </thead>
 
-<% @project_actions.each do |project_action| %>
-  <tr>
-    <td><%= project_action.description %></td>
-    <td><%= project_action.action_type %></td>
-    <td><%= project_action.user_id %></td>
-    <td><%= project_action.action_result %></td>
-    <td><%= project_action.action_state %></td>
-    <td><%= project_action.project_id %></td>
-    <td><%= project_action.project_state %></td>
-    <td><%= link_to 'Voir', project_action %></td>
-    <td><%= link_to 'Modifier', edit_project_action_path(project_action) %></td>
-    <td><%= link_to 'Detruire', project_action, :confirm => 'Etes-vous sûre?', :method => :delete %></td>
-  </tr>
-<% end %>
+
+  <%= render :partial => 'project_action_list' , :collection => @project_actions,
+                                                     :as=>:project_action %>
+
 </table>
 
 <br />
