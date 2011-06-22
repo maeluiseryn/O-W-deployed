@@ -1,6 +1,6 @@
  <tr>
 
-    <td><%= redirect_back_to_owner(project) %></td>
+    <td><%= redirect_back_to_owner(project) unless project.client==nil %></td>
     <td><%= "C#{project.client_id}P#{project.project_ref}" %></td>
     <td><%= project.aasm_current_state %></td>
     <td><%=I18n.l(project.created_at) %></td>

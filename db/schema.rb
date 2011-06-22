@@ -10,11 +10,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110615142621) do
+ActiveRecord::Schema.define(:version => 20110622142409) do
 
   create_table "addresses", :force => true do |t|
     t.string   "street"
-    t.integer  "street_number"
     t.integer  "zip"
     t.string   "city"
     t.string   "country"
@@ -25,7 +24,7 @@ ActiveRecord::Schema.define(:version => 20110615142621) do
     t.integer  "floor"
     t.string   "description"
     t.string   "mail_box"
-    t.string   "str_street_number"
+    t.string   "street_number"
   end
 
   create_table "clients", :force => true do |t|
@@ -39,8 +38,8 @@ ActiveRecord::Schema.define(:version => 20110615142621) do
     t.string   "client_type"
     t.string   "society"
     t.string   "home_directory"
-    t.string   "disponibility"
     t.boolean  "delta",          :default => true, :null => false
+    t.string   "disponibility"
   end
 
   create_table "comments", :force => true do |t|
@@ -139,8 +138,8 @@ ActiveRecord::Schema.define(:version => 20110615142621) do
     t.integer  "project_ref"
     t.string   "home_directory"
     t.string   "project_type"
-    t.float    "project_price"
     t.string   "remark"
+    t.float    "project_price"
   end
 
   create_table "uploaded_files", :force => true do |t|

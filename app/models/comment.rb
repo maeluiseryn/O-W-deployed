@@ -4,7 +4,7 @@ class Comment < ActiveRecord::Base
   attr_accessor :message_box_id
   belongs_to :user
   belongs_to :comment_owner , :polymorphic => true
-  has_many :contacts , :as=>:contact_ref
+  has_many :contacts , :as=>:contact_ref , :dependent => :destroy
   accepts_nested_attributes_for :contacts ,:reject_if => lambda { |a| a[:description].blank? && a[:contact_data].blank? } ,:allow_destroy => true
   aasm_column :comment_state # defaults to aasm_state
 

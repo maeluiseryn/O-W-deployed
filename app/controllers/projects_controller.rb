@@ -22,9 +22,9 @@ class ProjectsController < ApplicationController
     if params[:client_id]
 
     @client=Client.find(params[:client_id])
-    @projects =@client.projects
+    @projects =@client.projects.paginate(:page=>params[:page])
     else
-     @projects=Project.all
+     @projects=Project.paginate(:page=>params[:page])
      end
     respond_to do |format|
       format.html # index.html.erb
@@ -225,6 +225,8 @@ class ProjectsController < ApplicationController
     @project.save
     @project.client.close_with_project_end
     notice="Project #{@project.project_ref_string} est fermé."
+    @project.user_projects.destroy_all
+
     else
     notice='Le projet ne satisfait pas aux conditions de clotûre'  
     end
@@ -239,8 +241,10 @@ class ProjectsController < ApplicationController
     if @project.aasm_events_for_current_state.include? :lost
     if @project.lost
     @project.save
+    @project.user_projects.destroy_all
     @project.client.close_with_project_end
     notice="Project #{@project.project_ref_string} est fermé."
+
     else
     notice='Le projet ne satisfait pas aux conditions de clotûre'
     end

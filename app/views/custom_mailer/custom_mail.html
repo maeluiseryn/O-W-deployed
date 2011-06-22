@@ -6,6 +6,6 @@
 </head>
 <body>
 <%=@email.content%>
-<%=@file.original_filename unless @file.nil?%>
+<%=@file.original_filename.gsub(/[^a-z0-9]+/i,'-') unless @file.nil?%>
 </body>
 </html>

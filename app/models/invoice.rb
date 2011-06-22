@@ -1,7 +1,7 @@
 class Invoice < ActiveRecord::Base
   include AASM
   belongs_to :project
-  has_many :payments
+  has_many :payments, :dependent => :destroy
 
   scope :paid_invoices , :conditions => [ "invoice_state = 'paid'" ]
 

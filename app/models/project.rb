@@ -6,18 +6,19 @@ belongs_to :client
 
 has_one  :address ,  :as => :place
 
-has_many :user_projects
+has_many :user_projects,:dependent => :destroy
 has_many :users, :through => :user_projects
-has_many :project_components
-has_many :contacts , :as=> :contact_ref
-has_one :message_box ,:as =>:box_owner
-has_many :uploaded_files , :as=>:file_owner
-has_many :invoices
-has_many :project_actions
+has_many :project_components, :dependent => :destroy
+has_many :contacts , :as=> :contact_ref, :dependent => :destroy
+has_one :message_box ,:as =>:box_owner, :dependent => :destroy
+has_many :uploaded_files , :as=>:file_owner , :dependent => :destroy
+has_many :invoices, :dependent => :destroy
+has_many :project_actions, :dependent => :destroy
 accepts_nested_attributes_for :contacts ,:reject_if => lambda { |a| a[:description].blank? && a[:contact_data].blank? } ,:allow_destroy => true
 accepts_nested_attributes_for :address ,:project_components
 attr_accessor :add_remark
 scope :incomplete, :conditions => [ "project_state != 'close'" ]
+scope :not_lost,:conditions => [ " project_state != 'project_lost'" ]
 scope :complete, :conditions => [ "project_state = 'close'" ]
 #scope :offer, :conditions => [ "project_state = 'offer'" ]
 #scope :waiting_payment, :conditions => [ "project_state = 'waiting_payment'" ]

@@ -2,13 +2,13 @@ class User < ActiveRecord::Base
 include AASM
 has_one :user_address, :through => :user_profile, :source => :address
 has_one :user_profile ,:dependent =>:destroy
-has_one :message_box , :as=>:box_owner
+has_one :message_box , :as=>:box_owner, :dependent => :destroy
 has_many :user_projects , :dependent =>:destroy #maybe not necessary
 has_many :projects, :through => :user_projects
 has_many :user_clients , :dependent =>:destroy
 has_many :clients ,:through => :user_clients
 has_many :uploaded_files ,:as =>:file_owner
-has_many :comments
+has_many :comments, :dependent => :destroy
 has_many :project_actions
 
 attr_accessor :password , :save_switch

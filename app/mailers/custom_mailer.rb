@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class CustomMailer < ActionMailer::Base
   def smtp_settings_reload(name)
           options = YAML.load_file("#{RAILS_ROOT}/config/mailers.yml")[Rails.env][name]

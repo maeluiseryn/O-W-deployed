@@ -56,7 +56,7 @@ class SearchController < ApplicationController
   private
   def make_search_options
 
-    options={}
+    options={:page=>params[:page]}
     case params[:model_type]
       when 'Client'
         if !params[:client_type].nil?

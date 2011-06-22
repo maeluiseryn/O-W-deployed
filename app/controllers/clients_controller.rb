@@ -102,7 +102,7 @@ end
 
     respond_to do |format|
       if @client.update_attributes(params[:client])
-        client_user=UserClient.assign_join_type_to_user_client(current_user.id,@client.id,"updated_by_#{current_user.name}")
+        #client_user=UserClient.assign_join_type_to_user_client(current_user.id,@client.id,"updated_by_#{current_user.name}")
         format.html { redirect_to(@client, :notice => 'Client was successfully updated.') }
         format.xml  { head :ok }
       else

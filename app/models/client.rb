@@ -6,9 +6,9 @@ include AASM
 
 has_one   :financial_data
 
-has_many  :projects
-has_many  :addresses , :as => :place
-has_many  :contacts , :as => :contact_ref
+has_many  :projects ,:dependent => :destroy
+has_many  :addresses , :as => :place ,:dependent => :destroy
+has_many  :contacts , :as => :contact_ref ,:dependent => :destroy
 has_many  :user_clients , :dependent => :destroy
 has_many  :users ,:through => :user_clients
 #has_many :project_addresses, :through => :projects, :source => :addresses
@@ -108,11 +108,13 @@ end
    def close_with_project_end
 
       if self.aasm_events_for_current_state.include?(:closed)
-        if self.projects.incomplete.any?
+        if self.projects.incomplete.not_lost.any?
            #do nothing
         else
           if self.closed
-             self.save
+            self.user_clients.destroy_all
+            self.save
+
           end
         end
       end

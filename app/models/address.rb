@@ -2,8 +2,8 @@ class Address < ActiveRecord::Base
 
   belongs_to :place , :polymorphic => true
 
-  validates :description ,:street , :city  , :presence => true
-  validates :street_number, :zip , :presence => true , :numericality => true
+  validates :street_number,:description ,:street , :city  , :presence => true
+  validates  :zip , :presence => true , :numericality => true
 
 define_index do
 
