@@ -18,6 +18,7 @@ class CustomMailer < ActionMailer::Base
       @email=email
       @file=file
       @server_file=server_file
+      @email.content=new_line_in_content @email.content
      if @server_file[:name]!=nil# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
        attachments[@server_file[:name]]= File.read(Rails.root.to_s+"/public"+@server_file[:url])
      elsif @file != nil
@@ -28,5 +29,9 @@ class CustomMailer < ActionMailer::Base
       mail(:to => @email.email,
          :from =>"n0st4lg1af0r1nf1n1ty@gmail.com",
          :subject => @email.subject)
-   end
+ end
+def new_line_in_content string_text
+  string_text.gsub(/\n/,'<br/>').html_safe
+
+end
 end

@@ -5,7 +5,11 @@
     <title><%="Email envoyé par #{@email.sender_name}" %></title>
 </head>
 <body>
+<p>
 <%=@email.content%>
-<%=@file.original_filename.gsub(/[^a-z0-9]+/i,'-') unless @file.nil?%>
+</p>
+<p>
+Piece jointe: <%=@file.original_filename.gsub(/[^a-z0-9]+/i,'-') unless @file.nil?%>
+</p>
 </body>
 </html>
