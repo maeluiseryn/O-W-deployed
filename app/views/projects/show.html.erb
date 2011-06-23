@@ -224,9 +224,11 @@
         </li>
        <%# <li>
        = link_to'Uploader' ,:controller =>'projects' ,:action=>'upload_a_file',:tabindex=>'2'</li>%>
+        <% if !@project.message_box.nil?%>
          <li>
-    <%= (link_to 'Messages  ',message_box_path(@project.message_box.id ),:tabindex=>'3')unless @project.message_box.nil? %>
+    <%= (link_to 'Messages  ',message_box_path(@project.message_box.id ),:tabindex=>'3') %>
       </li>
+        <% end %>
         <li>
 <%= link_to('Fiche de RDV' ,fiche_de_rendez_vous_path(@project),:target=>'_blank',:tabindex=>'4')%>
        </li>
@@ -235,7 +237,8 @@
        </li>
         <li>
 <%= link_to'Fiche de RDV par mail ' ,fiche_de_rendez_vous_mail_path(@project),:tabindex=>'6'%>
-       </li>    <li>
+       </li>
+        <li>
 <%= link_to'Formulaire SAV par mail ' ,send_SAV_form_mail_path(@project),:tabindex=>'7'%>
        </li>
 <%if !@project.project_price.nil? %>
@@ -243,14 +246,14 @@
 <%= link_to'Factures du projet' , project_invoices_path(@project) %>
        </li>
 <%end%>
-<%if @project.aasm_current_state =='placement'%>
+<%if @project.aasm_current_state ==:placement%>
   <li>
 <%= link_to'Fermer projet' , close_project_path(@project),:tabindex=>'10'%>
        </li>
 <%end%>
-<%if @project.project_price.nil? %>
+<%if @project.project_price.nil? && @project.aasm_current_state!=:project_lost %>
         <li>
-<%= link_to'Project perdu' , lost_project_path(@project),:tabindex=>'10'%>
+<%= link_to'Projet perdu' , lost_project_path(@project),:tabindex=>'10'%>
        </li>
 <%end%>
 

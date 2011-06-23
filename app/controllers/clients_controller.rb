@@ -13,7 +13,7 @@ class ClientsController < ApplicationController
   end
    def user_clients
     @user= User.find(params[:user_id])
-    @clients =@user.clients
+    @clients =@user.clients.paginate(:page=>params[:page])
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @clients }

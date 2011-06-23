@@ -9,7 +9,7 @@ class ProjectsController < ApplicationController
   def current_user_projects
     session[:model_id]=nil
     session[:model]=nil
-    @projects=current_user.projects
+    @projects=current_user.projects.paginate(:page=>params[:page])
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @projects }
