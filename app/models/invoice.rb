@@ -1,8 +1,10 @@
+#encoding: UTF-8
 class Invoice < ActiveRecord::Base
   include AASM
   belongs_to :project
   has_many :payments, :dependent => :destroy
   validates :total_sum ,:numericality=>true, :presence=>true
+  validate :is_in_the_future?
   scope :paid_invoices , :conditions => [ "invoice_state = 'paid'" ]
 
   aasm_column :invoice_state # defaults to aasm_state
@@ -33,4 +35,12 @@ class Invoice < ActiveRecord::Base
     def create_invoice_ref
       "FS "+self.create_invoice_num+self.project.client.surname[0..3].upcase
     end
+   def is_in_the_future?
+     if due_date < Date.today
+       errors.add(:due_date_invalid,"Date d'echeance doit être dans le futur!!")
+     false
+     else
+     true
+     end
+   end
 end

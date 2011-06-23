@@ -54,7 +54,7 @@ class InvoicesController < ApplicationController
     @invoice.invoice_ref=@invoice.create_invoice_ref
     respond_to do |format|
       if @invoice.save
-        format.html { redirect_to(@invoice, :notice => 'Invoice was successfully created.') }
+        format.html { redirect_to(@invoice, :notice => 'Facture créé avec succes.') }
         format.xml  { render :xml => @invoice, :status => :created, :location => @invoice }
       else
         format.html { render :action => "new" }
@@ -71,7 +71,7 @@ class InvoicesController < ApplicationController
     @invoice.remaining_sum=@invoice.total_sum
     respond_to do |format|
       if @invoice.save
-        format.html { redirect_to(@invoice, :notice => 'Invoice was successfully updated.') }
+        format.html { redirect_to(@invoice, :notice => 'Facture modifiée avec succes.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -94,7 +94,7 @@ class InvoicesController < ApplicationController
  def new_payment
     @invoice=Invoice.find(params[:invoice_id])
     if @invoice.remaining_sum==0
-      redirect_to request.referer , :notice=>'Facture deja payéé entierement'
+      redirect_to request.referer , :notice=>'Facture déjà payéé entierement'
     else
            @payment=@invoice.payments.build
            respond_to do |format|
@@ -108,6 +108,9 @@ class InvoicesController < ApplicationController
   def create_payment
     @invoice=Invoice.find(params[:invoice_id])
     @payment= Payment.new(params[:payment])
+    if  @payment.sum_paid < 0
+      redirect_to request.referer ,:notice=>'Somme incorrecte'
+    else
     respond_to do |format|
       if @payment.save
          @invoice.payments<<@payment
@@ -120,14 +123,14 @@ class InvoicesController < ApplicationController
          
          @invoice.save
 
-        format.html { redirect_to(invoice_path(@invoice), :notice => 'Paiement creer.') }
+        format.html { redirect_to(invoice_path(@invoice), :notice => 'Paiement créé.') }
 
       else
-        format.html { redirect_to root_path }
+        format.html { redirect_to(invoice_path(@invoice), :notice => 'Creation du paiement impossible.') }
 
       end
     end
-
+  end
   end
   def destroy_payment
      @payment=Payment.find(params[:payment_id])
