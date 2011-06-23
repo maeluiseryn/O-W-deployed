@@ -1,3 +1,4 @@
+#encoding: UTF-8
 class InvoicesController < ApplicationController
   before_filter :authenticate
   # GET /invoices
@@ -93,7 +94,7 @@ class InvoicesController < ApplicationController
  def new_payment
     @invoice=Invoice.find(params[:invoice_id])
     if @invoice.remaining_sum==0
-      redirect_to request.referer , :notice=>'Facture deja payee entierement'
+      redirect_to request.referer , :notice=>'Facture deja payéé entierement'
     else
            @payment=@invoice.payments.build
            respond_to do |format|
@@ -107,7 +108,6 @@ class InvoicesController < ApplicationController
   def create_payment
     @invoice=Invoice.find(params[:invoice_id])
     @payment= Payment.new(params[:payment])
-
     respond_to do |format|
       if @payment.save
          @invoice.payments<<@payment

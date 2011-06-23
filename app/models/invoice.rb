@@ -2,7 +2,7 @@ class Invoice < ActiveRecord::Base
   include AASM
   belongs_to :project
   has_many :payments, :dependent => :destroy
-
+  validates :total_sum ,:numericality=>true, :presence=>true
   scope :paid_invoices , :conditions => [ "invoice_state = 'paid'" ]
 
   aasm_column :invoice_state # defaults to aasm_state

@@ -405,12 +405,12 @@ div.WordSection1
  <tr style='height:17.25pt'>
   <td valign=top style='padding:0cm 7.05pt 0cm 7.05pt;height:17.25pt'>
   <p class=MsoNormal style='margin-right:2.45pt'><span lang=FR
-  style='font-size:9.0pt'>&nbsp;Tel.&nbsp; CLIENT : <b>&nbsp;<%=@invoice.project.client.contacts.where("genre ='Fixe'").first.contact_data unless @invoice.project.client.contacts.where("genre ='Fixe'").first.nil? %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  style='font-size:9.0pt'>&nbsp;Tel.&nbsp; CLIENT : <b>&nbsp;<%=@invoice.project.client.contacts.where("genre ='Fixe'").first.contact_data unless @invoice.project.client.contacts.where("genre ='Fixe'").empty? %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   </b>T.V.A. :<b> <%=@invoice.project.client.financial_data.tva_number %> </b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;JETTE,
   LE <b>&nbsp;<%=Time.now.strftime("%d/%m/%Y")
  %></b></span></p>
   <p class=MsoNormal style='margin-right:2.45pt'><span lang=FR
-  style='font-size:9.0pt'>&nbsp;Fax. CLIENT : <b>&nbsp;<%=@invoice.project.client.contacts.where("genre ='Fax'").first.contact_data unless @invoice.project.client.contacts.where("genre ='GSM'").first.nil?%></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  style='font-size:9.0pt'>&nbsp;Fax. CLIENT : <b>&nbsp;<%=@invoice.project.client.contacts.where("genre ='Fax'").first.contact_data unless @invoice.project.client.contacts.where("genre ='GSM'").empty?%></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   GSM. CLIENT : <b>&nbsp;<%=@invoice.project.client.contacts.where("genre ='GSM'").first.contact_data unless @invoice.project.client.contacts.where("genre ='GSM'").first.nil?%></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
  </span></p>
   </td>
