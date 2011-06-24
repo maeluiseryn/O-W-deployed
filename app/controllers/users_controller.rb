@@ -123,17 +123,19 @@ end
        end
   end
   def save_smtp_account_settings
-
+   @user=User.find(params[:user_id])
    smtp_settings= YAML.load_file("#{RAILS_ROOT}/config/mailers.yml")
-   smtp_settings[Rails.env][current_user.name]={"enable_starttls_auto"=>true,
+   smtp_settings[Rails.env][@user.name]={"enable_starttls_auto"=>true,
               "address"=>"smtp.gmail.com",
               "port"=>587,
+              "host"=>"imap.gmail.com",
+              "port_imap"=>993,
               "domain"=>"gmail.com",
               "authentication"=>"plain",
               "user_name"=>params[:email_address],
               "password"=>params[:password]}
     File.open("#{RAILS_ROOT}/config/mailers.yml", "wb") { |f| f.write(smtp_settings.to_yaml) }
-    redirect_to current_user.user_profile
+    redirect_to @user.user_profile(@user)
   end
   private
   # def authenticate

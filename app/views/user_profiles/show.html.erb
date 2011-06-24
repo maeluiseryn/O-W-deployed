@@ -16,7 +16,7 @@
 </p>
   <p>
     <b>Email:</b>
-    <%= @user.email %>
+    <%= @user_profile.user.email %>
   </p>
 
 </div>
@@ -24,15 +24,15 @@
 
 <p>
   <b>Créé le :</b>
-  <%=I18n.l(@user.created_at) %>
+  <%=I18n.l(@user_profile.user.created_at) %>
 </p>
 <p>
   <b>Dossier utilisateur:</b>
-  <%= @user.home_directory %>
+  <%= @user_profile.user.home_directory %>
 </p>
   <p>
   <b>Etat de l'utilisateur:</b>
-  <%= @user.aasm_current_state %>
+  <%= @user_profile.user.aasm_current_state %>
 </p>
 </div>
 

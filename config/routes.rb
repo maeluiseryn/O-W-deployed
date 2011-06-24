@@ -1,4 +1,8 @@
 OW::Application.routes.draw do
+  match "/email_box/:id"=>'email_box#show'
+  match "/email_box"=>'email_box#index'
+  match "/email_box/:id/destroy"=>'email_box#destroy'
+
   resources :project_actions
 
   resources :message_boxes do

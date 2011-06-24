@@ -1,16 +1,29 @@
 # encoding: UTF-8
 
 class Document < ActionMailer::Base
+   def prepare_receive(email,user_name)
+     if user=User.find_by_name(user_name)
+     puts 'user trouvé'+user.name
+     end
+     receive(email)
+   end
    def receive(email)
+   puts 'in receive'
+
    body=nil
-
-
-    email.body.parts.each do |p|
+   email.body.parts.each do |p|
        if p.mime_type == "text/html"
-             body = p.body
+           puts  body = p.body
 
-          end
        end
+   end
+
+
+
+   puts email_db=EmailDb.new(:subject=>email.subject.to_s,:from=>email.from.to_yaml ,:to=>email.to ,:content=>body.to_yaml)
+
+  puts  email_db.content.size
+   puts email_db.save
 
     File.open("#{RAILS_ROOT}/public/mails.html", "a+") { |f| f.write(body)}
     #html =File.open("#{RAILS_ROOT}/public/mails.html", "r").read
