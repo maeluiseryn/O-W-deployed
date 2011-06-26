@@ -1,12 +1,7 @@
 # encoding: UTF-8
 
 class Document < ActionMailer::Base
-   def prepare_receive(email,user_name)
-     if user=User.find_by_name(user_name)
-     puts 'user trouvé'+user.name
-     end
-     receive(email)
-   end
+
    def receive(email)
    puts 'in receive'
 
@@ -18,14 +13,13 @@ class Document < ActionMailer::Base
        end
    end
 
+   puts email_db=EmailDb.new(:subject=>email.subject.to_s,:from=>email.from.to_yaml ,:to=>email.to )
 
-
-   puts email_db=EmailDb.new(:subject=>email.subject.to_s,:from=>email.from.to_yaml ,:to=>email.to ,:content=>body.to_yaml)
-
-  puts  email_db.content.size
    puts email_db.save
 
-    File.open("#{RAILS_ROOT}/public/mails.html", "a+") { |f| f.write(body)}
+   File.open("#{RAILS_ROOT}/public/mail/#{email_db.id}.html", "wb") { |f| f.write(body.to_s)}
+     email_db.content="/mail/#{email_db.id}.html"
+     email_db.save
     #html =File.open("#{RAILS_ROOT}/public/mails.html", "r").read
     #doc = Nokogiri::HTML(html)
     #puts doc

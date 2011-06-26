@@ -1,8 +1,8 @@
 #encoding: UTF-8
 class EmailBoxController < ApplicationController
   def index
-    @emails = EmailDb.all
-
+    
+    @emails =current_user.email_dbs
     respond_to do |format|
       format.html # index.html.erb
 
@@ -10,10 +10,12 @@ class EmailBoxController < ApplicationController
   end
   def destroy
     @email = EmailDb.find(params[:id])
-    @email.destroy
 
+    define_path
+    ServerFileOperation.delete(@email.content,@public_path)
+    @email.destroy
     respond_to do |format|
-      format.html { redirect_to(email_boxes_url) }
+      format.html { redirect_to(email_box_path) }
       format.xml  { head :ok }
     end
   end
@@ -21,9 +23,9 @@ class EmailBoxController < ApplicationController
   def show
      @email = EmailDb.find(params[:id])
      respond_to do |format|
-      format.html
+      format.html {render Rails.root.to_s+@email.content}
       end
   end
-  
+
 
 end

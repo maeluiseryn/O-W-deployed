@@ -1,10 +1,11 @@
-<h1>Listing Users</h1>
-<h3>Number of records: <%= @users.count %> </h3>
+<div class='span-18' style="min-height:50px"><h1>Liste des Utilisateurs</h1></div>
+<hr>
 
+<div class="span-18">
 
 <table>
-  <tr>
-    <th>Id</th>
+  <thead>
+    
     <th>Name</th>
     <th>Email</th>
     <th>Date de création</th>
@@ -15,17 +16,19 @@
     <th></th>
     <th></th>
     <th></th>
-  </tr>
+  <th></th>
+    <th></th>
+  </thead>
 
 <% @users.each do |user| %>
 
   <tr>
-    <td><%= user.id %></td>
+    
     <td><%= user.name %></td>
     <td><%= user.email %></td>
-    <td><%= user.created_at %></td>
+    <td><%=I18n.l( user.created_at )%></td>
     <td><%= user.home_directory %></td>
-     <td><%= user.aasm_current_state %></td>
+     <td><%=state_to_fr_string user.aasm_current_state %></td>
     <td><%= link_to 'Show', user %></td>
     <td><%= profile_show_or_create_link user %></td>
     <td><%= link_to "Client de l'utilisateur",user_clients_path(user) %></td>
@@ -36,5 +39,6 @@
   </tr>
 <% end %>
 </table>
+  </div>
 <br />
 <div id="new_user"></div>

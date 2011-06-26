@@ -2,6 +2,6 @@
   <td><%= email.from %></td>
   <td><%= email.to %></td>
   <td><%= email.subject %></td>
-
-
+ <td><%=link_to('voir',email.content)%> </td>
+<td><%= link_to 'Detruire', email_destroy_path(email), :confirm => 'Êtes-vous sûre?', :method => :delete %></td>
 </tr>

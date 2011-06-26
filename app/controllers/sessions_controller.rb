@@ -1,3 +1,4 @@
+#encoding: UTF-8
 class SessionsController < ApplicationController
 
   def new
@@ -13,13 +14,19 @@ class SessionsController < ApplicationController
         flash[:error] = "Invalid email/password combination."
         @title = "Failed Sign in"
         redirect_to request.referer
-        else
-        sign_in user
-        if signed_in?
-        redirect_back_or user
-        else
+    else
+      if user.inactive? || user.created?
+        flash[:error] = "Utilisateur désactivé contactez l'administrateur."
+        @title = "Failed Sign in"
         redirect_to request.referer
-        end
+      else
+      sign_in user
+      if signed_in?
+        redirect_back_or user
+      else
+        redirect_to request.referer
+      end
+      end
     end
   end
   def destroy

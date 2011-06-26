@@ -15,6 +15,9 @@ loop do
 
   begin
     config_hash.each_key do |config|
+      user=User.find_by_name(config.to_s)
+        if !user.nil?
+
     puts " try connect #{config_hash[config]['user_name']}"
     # make a connection to imap account
     imap = Net::IMAP.new(config_hash[config]['host'], config_hash[config]['port_imap'], true)
@@ -30,7 +33,8 @@ loop do
       source   = imap.uid_fetch(uid, ['RFC822']).first.attr['RFC822']
      puts 'avant receive'
       Document.receive(source)
-
+     email=EmailDb.last
+     user.email_dbs<<email
 
       imap.uid_store(uid, "+FLAGS", [:Deleted])
 
@@ -40,7 +44,10 @@ loop do
     imap.expunge
     imap.logout
     imap.disconnect
-  end
+        else
+          puts 'abort'
+        end
+    end
   # NoResponseError and ByResponseError happen often when imap'ing
   rescue Net::IMAP::NoResponseError => e
     # send to log file, db, or email

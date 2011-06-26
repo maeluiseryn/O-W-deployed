@@ -42,7 +42,7 @@
 <div class="span-15">
   <br/>
   <h3><b>Etat de la facture:</b>
-  <%= @invoice.aasm_current_state %>
+  <%=state_to_fr_string @invoice.aasm_current_state %>
 </h3>
 </div>
 </div>
@@ -80,7 +80,7 @@
        </li>
 
        <li>
-         <%= link_to 'Générer document facture', facture_path(@invoice) %>
+         <%= link_to 'Générer document facture', facture_path(@invoice) ,:target=>'_blank'%>
        </li>
         <li>
          <%= link_to 'Modifier', edit_invoice_path(@invoice) %>

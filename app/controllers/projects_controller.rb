@@ -15,6 +15,15 @@ class ProjectsController < ApplicationController
       format.xml  { render :xml => @projects }
     end
   end
+    def unasigned_projects
+    session[:model_id]=nil
+    session[:model]=nil
+    @projects=Project.active.paginate(:page=>params[:page])
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @projects }
+    end
+  end
 
   def index
     session[:model_id]=nil

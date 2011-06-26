@@ -1,15 +1,20 @@
-<h1>Liste des Fichiers</h1>
+<div class='span-18' style="min-height:50px"><h1>Liste des Fichiers</h1></div>
 
-<h3>Number of records: <%= @uploaded_files.count %> </h3>
+
 <%= link_to 'New upload', :action => 'upload' %>
 <table id="gallery">
   <tr>
-    <th>Id</th>
-    <th>Nom </th>
-   <!-- <th>Path</th>-->
-    <th>Type de contenu</th>
-    <th>Taille</th>
-    <th></th>
+
+              <thead>
+              <th></th>
+              <th>Nom du Fichier</th>
+              <th>Type de Fichier</th>
+              <th>Taille du Fichier</th>
+              <th>Propriétaire du Fichier</th>
+              <th>SlideShow</th>
+              <th></th>
+
+              </thead>
   </tr>
 
   <%= render :partial => 'show_file' ,:collection => @uploaded_files ,:as=>:uploaded%>

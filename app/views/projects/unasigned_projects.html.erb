@@ -1,4 +1,4 @@
-<div class="span-18" style="min-height:50px"><h1>Liste des projets de l'utilisateur</h1></div>
+<div class="span-18" style="min-height:50px"><h1>Liste des projets non-assignés</h1></div>
 <hr>
 <% if !@projects.empty?%>
 <%= will_paginate :previous_label=>'&larr; Précédent',:next_label=>'Suivant &rarr;' %>
@@ -21,7 +21,7 @@
 </table>
 <%= will_paginate :previous_label=>'&larr; Précédent',:next_label=>'Suivant &rarr;' %>
 <%else %>
-    <p align="center"><b>Pas de projets </b></p>
+    <p align="center"><b>Pas de projets non-assignés</b></p>
 <%end%>
     <br />
 <%= link_to 'Back' ,user_path(current_user) %>

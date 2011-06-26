@@ -68,8 +68,9 @@ class ServerFileOperation
 
           while  File.exist?("#{path}")
 
-            path=change_path(path,name)#don't recreate !!!!!!!'/ok
-
+            path_hash=change_path(path,name)#don't recreate !!!!!!!'/ok
+            path=path_hash[:path]
+            name=path_hash[:name]
           end
          File.open(path, "wb") { |f| f.write(post_upload['datafile'].read) }
          if File.exist?("#{path}")

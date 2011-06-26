@@ -13,7 +13,7 @@
   </p>
      <p><b>Type de projet: </b><%=@project.project_type%></p>
     <p>
-      <b>Etat du projet: </b> <%=@project.aasm_current_state%>
+      <b>Etat du projet: </b> <%=state_to_fr_string @project.aasm_current_state%>
     </p>
 
     <p><b>Creer le: </b><%=I18n.l(@project.created_at)%>

@@ -49,9 +49,11 @@ class InvoicesController < ApplicationController
   def create
     @project = Project.find(params[:invoice][:project_id])
     @invoice = Invoice.new(params[:invoice])
+    if @invoice.total_sum <= @project.project_price-@project.invoices.sum(:total_sum)
     @invoice.remaining_sum=@invoice.total_sum
     @invoice.invoice_num=@invoice.create_invoice_num
     @invoice.invoice_ref=@invoice.create_invoice_ref
+
     respond_to do |format|
       if @invoice.save
         format.html { redirect_to(@invoice, :notice => 'Facture créé avec succes.') }
@@ -61,7 +63,10 @@ class InvoicesController < ApplicationController
         format.xml  { render :xml => @invoice.errors, :status => :unprocessable_entity }
       end
     end
-  end
+    else
+      redirect_to project_invoices_path(@project,:notice=>'Montant de la facture trop grand')
+    end
+    end
 
   # PUT /invoices/1
   # PUT /invoices/1.xml
@@ -108,7 +113,7 @@ class InvoicesController < ApplicationController
   def create_payment
     @invoice=Invoice.find(params[:invoice_id])
     @payment= Payment.new(params[:payment])
-    if  @payment.sum_paid < 0
+    if  @payment.sum_paid < 0 || @payment.sum_paid > @invoice.remaining_sum
       redirect_to request.referer ,:notice=>'Somme incorrecte'
     else
     respond_to do |format|

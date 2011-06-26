@@ -6,7 +6,7 @@
   <td><%= client.client_type%></td>
   <td><%= client.society%></td>
 
-  <td><%= client.client_state %></td>
+  <td><%=state_to_fr_string client.aasm_current_state %></td>
   <td><%= link_to 'Voir', client %></td>
   <td><%= link_to 'Modifier', edit_client_path(client) %></td>
   <td><%= link_to 'Effacer', client, :confirm => 'Êtes-vous sûre ?', :method => :delete %></td>

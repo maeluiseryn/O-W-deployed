@@ -1,7 +1,7 @@
 OW::Application.routes.draw do
-  match "/email_box/:id"=>'email_box#show'
-  match "/email_box"=>'email_box#index'
-  match "/email_box/:id/destroy"=>'email_box#destroy'
+  match "/email_box/:id"=>'email_box#show', :as =>:email_show
+  match "/email_box"=>'email_box#index', :as=>:email_box
+  match "/email_box/:id/destroy"=>'email_box#destroy',:as=>:email_destroy
 
   resources :project_actions
 
@@ -68,7 +68,7 @@ OW::Application.routes.draw do
   match "/projects/:id/lost_project"=>"projects#lost_project",:as=>:lost_project
   match "/projects/:id/activate_project"=>"projects#activate_project",:as=>:activate_project
   match "/clients/:id/change_state"=>"clients#change_state",:as=>:client_change_state
-
+  match "/unasigned_projects"=>'projects#unasigned_projects',:as =>:unasigned_projects
   match "/current_user_projects"=>'projects#current_user_projects',:as =>:current_user_projects
   match "/current_user_clients"=>'clients#current_user_clients',:as =>:current_user_clients
   match "/user_clients/:user_id"=>'clients#user_clients',:as =>:user_clients

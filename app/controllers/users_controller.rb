@@ -72,7 +72,7 @@ end
          define_path
          @user.create_home_directory(@public_path)
          @user.save
-         format.html { redirect_to(@user, :notice => 'Utilisateur cree avec succes.') }
+         format.html { redirect_to(root_path, :notice => 'Utilisateur cree avec succes.') }
          format.xml  { render :xml => @user, :status => :created, :location => @user }
        else
          format.html { render :action => "new" }
@@ -106,7 +106,7 @@ end
 
   def de_re_activate_user
     @user=User.find(params[:id])
-    if @user.aasm_current_state==:inactive
+    if @user.aasm_current_state==:inactive || @user.aasm_current_state==:created
       @user.re_activate_user
 
     elsif  @user.aasm_current_state==:active || @user.aasm_current_state==:admin

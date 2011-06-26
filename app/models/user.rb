@@ -10,7 +10,7 @@ has_many :clients ,:through => :user_clients
 has_many :uploaded_files ,:as =>:file_owner
 has_many :comments, :dependent => :destroy
 has_many :project_actions
-
+has_many :email_dbs, :dependent=>:destroy
 attr_accessor :password , :save_switch
 
 
@@ -57,7 +57,7 @@ aasm_column :user_state # defaults to aasm_state
       transitions :to => :inactive, :from => [:active, :admin]
     end
     aasm_event :reactivated do
-      transitions :to => :active , :from => [:inactive]
+      transitions :to => :active , :from => [:inactive ,:created]
     end
 
  def has_password?(submitted_password)

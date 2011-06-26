@@ -1,3 +1,4 @@
+#encoding: UTF-8
 module ApplicationHelper
   def date
     Time.now
@@ -99,7 +100,7 @@ end
       :Clients=>{:clients=>link_to('Nouveau client',new_client_path),:client_list=>link_to('Liste des clients',clients_path),
                  :current_user_client=>link_to("Clients de l'utilisateur",current_user_clients_path),
                  },
-      :Projets=>{:user_projects=>link_to("Projets de l'utilisateur",current_user_projects_path),
+      :Projets=>{:user_projects=>link_to("Projets de l'utilisateur",current_user_projects_path),:unasigned_projects=>link_to("Projets non-assignés",unasigned_projects_path),
                  :projects=>link_to(" Tous les Projets ", projects_path)},
 
       :Fichiers=>{:file_browser=>link_to('Explorer les fichiers',file_browser_path),
@@ -107,8 +108,12 @@ end
       :Messages=>{:message_box=>link_to('Mes messages',message_box_path(current_user.message_box)),:new_message=>link_to('Nouveau message',
                                                                               new_message_box_comment_path(current_user.message_box))} ,
       :Emails=>{:email=>link_to('Nouvel e-mail',custom_mail_path),:new_message=>link_to('Nouvel e-mail avec piece-jointe sur serveur',
-                                                                              piece_jointes_path)} ,
+                                                                              piece_jointes_path),
+                :email_box=>link_to('Boîte de réception',email_box_path)} ,
       :Recherche=>{:Global=>link_to('Globale',search_new_search_path)}}
+    if current_user.is_admin?
+      @arr[:Administrateur]={:manage_user=>link_to('Gestion des utilisateurs' ,users_path),:manage_message_box=>link_to('Gestion des boîte à message' ,message_boxes_path)}
+    end
     @arr.each_pair do|key,value|
       ret=ret+content_tag(:li,"<a href='#'>#{key}</a>".html_safe+sub_nav_ul(value))
     end
@@ -267,6 +272,53 @@ end
   end
   def size_collection array
     array.size
+  end
+  def state_to_fr_string state
+    if state==:active
+      return 'actif'
+    elsif state==:admin
+      return 'administrateur'
+    elsif state==:created
+      return 'créé'
+    elsif state==:unread
+      return 'non-lu'
+    elsif state==:read
+      return 'lu'
+    elsif state==:mark_for_delete
+      return 'dans la corbeille'
+    elsif state==:archive
+      return 'à archiver'
+    elsif state==:offer
+      return 'offre'
+    elsif state==:production
+      return 'production'
+    elsif state==:placement
+      return 'placement'
+succes
+    elsif state==:waiting_payment
+      return 'en attente de paiement'
+    elsif state==:close
+      return 'finalisé'
+       elsif state==:project_lost
+      return 'perdu'
+     elsif state==:emitted
+      return 'émise'
+       elsif state==:paid
+      return 'payée'
+       elsif state==:active_project
+      return 'projet actif'
+       elsif state==:no_active_project
+      return 'pas de projets'
+       elsif state==:failure
+             return 'echec'
+        elsif state==:open
+             return 'ouvert'
+      elsif state==:success
+             return 'succes'
+      elsif state==:inactive
+             return 'inactif'
+    end
+
   end
  
 end

@@ -5,7 +5,7 @@
 
 <div  class="span-18">  <h2>Page d'acceuil de <%= @user.name.capitalize %></h2><hr></div>
 
-<div  class="span-12"><br/><p><b>Etat de l'utilisateur:</b> <%= @user.aasm_current_state %>
+<div  class="span-12"><br/><p><b>Etat de l'utilisateur:</b> <%= state_to_fr_string @user.aasm_current_state %>
 </p>
 
 
