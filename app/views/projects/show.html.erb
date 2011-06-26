@@ -229,6 +229,7 @@
     <%= (link_to 'Messages  ',message_box_path(@project.message_box.id ),:tabindex=>'3') %>
       </li>
         <% end %>
+        <%if @project.project_price.nil? %>
         <li>
 <%= link_to('Fiche de RDV' ,fiche_de_rendez_vous_path(@project),:target=>'_blank',:tabindex=>'4')%>
        </li>
@@ -238,6 +239,7 @@
         <li>
 <%= link_to'Fiche de RDV par mail ' ,fiche_de_rendez_vous_mail_path(@project),:tabindex=>'6'%>
        </li>
+       <%end%>
 <%if @project.aasm_current_state==:after_sales_service %>
         <li>
 <%= link_to'Formulaire SAV par mail ' ,send_SAV_form_mail_path(@project),:tabindex=>'7'%>
@@ -264,7 +266,7 @@
        </li>
 <%end%>
 
-       <% if !already_associated(@project) %>
+       <% if !already_associated(@project) && @project.aasm_current_state !=:close && @project.aasm_current_state !=:project_lost %>
         <li>
       <%= (link_to 'Suivre projet ',follow_project_path(@project),:tabindex=>'11')  %>
       </li>
@@ -277,11 +279,13 @@
       <%= link_to 'Projet accepté ',set_project_price_path(@project,:format=>:js),:remote=>true,:tabindex=>'12' %>
       </li>
         <%end%>
-         <li>
+        <% if @project.aasm_current_state != :close &&!@project.aasm_current_state != :project_lost%>
+        <li>
       <%= link_to 'Nouvelle action ',new_project_project_action_path(@project) %>
       </li>
         <li><%= link_to 'Modifier', edit_project_path(@project)  %>
         </li>
+         <%end%>
         <li><%= link_to 'Retour', client_path(@project.client_id) %></li>
       </ul>
     </div>
