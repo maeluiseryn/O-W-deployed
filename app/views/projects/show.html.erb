@@ -238,17 +238,24 @@
         <li>
 <%= link_to'Fiche de RDV par mail ' ,fiche_de_rendez_vous_mail_path(@project),:tabindex=>'6'%>
        </li>
+<%if @project.aasm_current_state==:after_sales_service %>
         <li>
 <%= link_to'Formulaire SAV par mail ' ,send_SAV_form_mail_path(@project),:tabindex=>'7'%>
        </li>
-<%if !@project.project_price.nil? %>
+<%end%>
+        <%if !@project.project_price.nil? %>
 <li>
 <%= link_to'Factures du projet' , project_invoices_path(@project) %>
        </li>
 <%end%>
-<%if @project.aasm_current_state ==:placement%>
+<%if @project.aasm_current_state ==:placement || @project.aasm_current_state==:after_sales_service%>
   <li>
 <%= link_to'Fermer projet' , close_project_path(@project),:tabindex=>'10'%>
+       </li>
+<%end%>
+<%if @project.aasm_current_state ==:close %>
+  <li>
+<%= link_to'Service après-vente' , sav_project_path(@project),:tabindex=>'10'%>
        </li>
 <%end%>
 <%if @project.project_price.nil? && @project.aasm_current_state!=:project_lost %>

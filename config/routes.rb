@@ -58,7 +58,7 @@ OW::Application.routes.draw do
   match "/comments/:id/trash"=>"comments#trash_comment",:as=>:trash_comment
   match "/comments/:id/respond"=>"comments#respond_to_comment",:as=>:respond_comment
   match "/projects/:id/activate_project"=>"projects#activate_project",:as=>:activate_project
-
+   match "/projects/:id/sav"=>"projects#reopen_for_sav",:as=>:sav_project
   match "/users/:id/activate_user"=>"users#activate_user",:as=>:activate_user
   match "/users/:id/admin"=>"users#admin_user_on_off",:as=>:admin_user
   match "/users/:id/deactivated"=>"users#de_re_activate_user",:as=>:deactivate_user

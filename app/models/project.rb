@@ -68,7 +68,7 @@ aasm_column :project_state # defaults to aasm_state
        transitions :to => :placement , :from => [:production] ,:guard =>:is_eighty_percent_paid?
     end
     aasm_event :closed do
-      transitions :to => :close, :from => [:placement ,:production] ,:guard =>:hundred_percent_paid_and_no_open_actions?
+      transitions :to => :close, :from => [:placement ,:production,:after_sales_service] ,:guard =>:hundred_percent_paid_and_no_open_actions?
     end
     aasm_event :lost do
        transitions :to => :project_lost, :from => [:active ,:waiting,:offer]

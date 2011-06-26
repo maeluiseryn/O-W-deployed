@@ -269,6 +269,22 @@ class ProjectsController < ApplicationController
       format.js
     end
   end
+   def reopen_for_sav
+    notice=""
+    @project =Project.find(params[:id])
+    if @project.aasm_events_for_current_state.include? :to_s_a_v
+    if @project.to_s_a_v
+    @project.save
+    @project.client.reopen_with_sav
+    notice="Project #{@project.project_ref_string} est en service après-vente."
+    else
+    notice='Le projet ne satisfait pas aux conditions de réouverture'
+    end
+    else
+    notice="Transition d'état invalide."
+    end
+    redirect_to request.referer, :notice =>notice
+  end
 private
    def user_is_following_project
      @project = Project.find(params[:id])
